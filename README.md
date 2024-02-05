@@ -1,4 +1,6 @@
-# Bloomify White Paper
+# Bloomify
+
+A modern question paper setting AI agent based on Bloom's taxonomy
 
 ## What Is Bloom’s Taxonomy?
 
@@ -46,11 +48,11 @@ The proposed solution is a chatbot designed to revolutionize the assessment proc
 - [Designs](https://www.figma.com/file/Fdse68FQCX0phhGjqC4V1t/Bloomify?type=design&node-id=0%3A1&mode=design&t=K8RRjuxKmWcPTNi7-1)
 - [Prototype](https://www.figma.com/proto/Fdse68FQCX0phhGjqC4V1t/Bloomify?page-id=0%3A1&type=design&node-id=1-63&viewport=141%2C335%2C0.13&t=USLg2zLv94kT1wtX-1&scaling=scale-down&starting-point-node-id=1%3A63&show-proto-sidebar=1&mode=design)
 - [Flow Diagram](https://www.figma.com/file/MuEqYu3SXNl9gePIa9ml1T/Bloomify?type=whiteboard&node-id=0%3A1&t=AIndCYpS6GoYhD0C-1)
-- [Sample Prompts & Answers](#) (Link not provided)
+- [Sample Prompts & Answers](https://docs.google.com/document/d/1jAzaLs9wlfR2xooXSUO2T6gJprsC9xQTl012WNRq3cc/view?usp=sharing)
 
 ## Criteria
 
-Comparison with Existence Project Selection Criteria:
+Comparison with Existence's project selection criteria:
 
 1. **Alignment With Holistic Philosophy:**
    - The project contributes to the holistic development of individuals across diverse educational levels, aligning with Bloom's Taxonomy.
@@ -77,8 +79,8 @@ Distributed under the GNU-GPL License. See [LICENSE](LICENSE.md) for more inform
 
 ## Code of Conduct
 
-Please review our [Code of Conduct](#).
+Please review our [Code Of Conduct](CODE_OF_CONDUCT.md) to maintain a rightful atmosphere in the club
 
 ## Contributing
 
-Contributions are welcome! Check our
+Contributions are welcome! Check our [Contributing Guide](CONTRIBUTING.md) to start contributing to Bloomify
