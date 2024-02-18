@@ -51,39 +51,53 @@ const handler = NextAuth({
         })
     ],
    
-  callbacks: {
-          async signIn({ user, account, info }) {
-            if (account.provider === "google") {
-              const { name, email } = user
-              try {
-                await connectToDB();
-                const userExists = await User.findOne({ email })
-
-                if (!userExists) {
-                  const res = await fetch("http://localhost:3000/api/user", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      name,
-                      email,
-                      username: info.username,
-                      university: info.university
-                    }),
-                  })
-
-                  if (res.ok) {
-                    return user
-                  }
+    callbacks: {
+      // Callback triggered when a user signs in
+        async signIn({ user, account, info }) {
+          // Check if the sign-in is via Google
+          if (account.provider === "google") {
+            // Destructure user information
+            const { name, email } = user;
+      
+            try {
+              // Connect to the database
+              await connectToDB();
+      
+              // Check if the user already exists in the database
+              const userExists = await User.findOne({ email });
+      
+              // If the user doesn't exist, proceed with creating a new user
+              if (!userExists) {
+                // Send a POST request to the signup endpoint to create a new user
+                const res = await fetch("http://localhost:3000/api/signup", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  // Provide user information for signup
+                  body: JSON.stringify({
+                    name,
+                    email,
+                    username: info.username,
+                    university: info.university,
+                  }),
+                });
+      
+                // If the signup request is successful, return the user
+                if (res.ok) {
+                  return user;
                 }
-              } catch (error) {
-                console.log(error)
               }
+            } catch (error) {
+              // Log any errors that occur during the process
+              console.log(error);
             }
-
-            return user;
+          }
+      
+          // Return the user
+          return user;
         },
+    
     
         // Define session callback to customize session creation
         async session({ session }) {
