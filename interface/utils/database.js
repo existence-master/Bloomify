@@ -32,4 +32,4 @@ export const connectToDB = async () => {
         // Log any errors that occur during connection
         console.log(error)
     }
-};
+}

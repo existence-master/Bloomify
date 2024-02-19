@@ -45,7 +45,7 @@ const handler = NextAuth({
                     return { id: user._id.toString(), email: user.email }
                 } catch (error) {
                     console.log(error);
-                    return null; // Return null in case of an error
+                    return null // Return null in case of an error
                 }
             }
         })
@@ -57,14 +57,14 @@ const handler = NextAuth({
           // Check if the sign-in is via Google
           if (account.provider === "google") {
             // Destructure user information
-            const { name, email } = user;
+            const { name, email } = user
       
             try {
               // Connect to the database
               await connectToDB();
       
               // Check if the user already exists in the database
-              const userExists = await User.findOne({ email });
+              const userExists = await User.findOne({ email })
       
               // If the user doesn't exist, proceed with creating a new user
               if (!userExists) {
@@ -81,7 +81,7 @@ const handler = NextAuth({
                     username: info.username,
                     university: info.university,
                   }),
-                });
+                })
       
                 // If the signup request is successful, return the user
                 if (res.ok) {
@@ -90,7 +90,7 @@ const handler = NextAuth({
               }
             } catch (error) {
               // Log any errors that occur during the process
-              console.log(error);
+              console.log(error)
             }
           }
       
@@ -104,7 +104,7 @@ const handler = NextAuth({
             // Find the user in the database based on the session user's email
             const sessionUser = await User.findOne({
                 email: session.user.email 
-            });
+            })
             
             // Set the user's ID in the session for identification
             session.user.id = sessionUser._id.toString()
@@ -112,8 +112,12 @@ const handler = NextAuth({
             // Return the modified session object
             return session;
         }
-    }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  }
 })
 
 // Export the NextAuth handler for both GET and POST requests
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST }
