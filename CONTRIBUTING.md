@@ -10,26 +10,72 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 We welcome contributions in the form of bug reports, feature requests, code changes, and more. You can find the open issues in the tracking boards of the project. Multiple clean contributions can result in invitation to join the internal team at Existence. Here's how you can contribute:
 
-1. Fork the repository to your GitHub account.
-2. Clone the forked repository to your local machine.
-3. Create a new branch for your contribution: 
-```shell
-git checkout -b feature/your-feature
-```
-or 
-```shell
-git checkout -b bugfix/your-bugfix
-```
-4. Make your changes and commit them: 
-```shell
-git commit -m "description of your changes"
-```
-5. Push your changes to your forked repository: 
-```shell
-git push origin feature/your-feature
-```
-6. Open a pull request (PR) from your forked repository to the main repository.
-7. Provide a clear and concise description of your changes in the pull request.
+1. **Understand the Project:**
+
+   Before contributing, familiarize yourself with the project. Read the README, contributing guidelines, and any documentation available to understand the project's structure and conventions.
+
+2. **Choose an Issue:**
+
+   Browse the repository's issues to find one you're interested in or feel you can address. Issues are usually labeled to indicate their difficulty or type.
+
+3. **Comment on the Issue:**
+
+   Comment on the issue expressing your interest in working on it. This helps avoid duplicate efforts and allows maintainers to guide you.
+
+4. **Fork the Repository:**
+
+   Fork the repository to create your own copy on GitHub. This will be the space where you make your changes.
+
+5. **Clone Your Fork:**
+
+   Clone your forked repository to your local machine using the `git clone` command. This gives you a local copy of the codebase.
+
+   ```shell
+   git clone https://github.com/your-username/repository.git
+   ```
+
+6. **Create Branch**
+
+   Create a new branch for your contribution:
+
+   ```shell
+   git checkout -b feature/your-feature
+   ```
+
+   or
+
+   ```shell
+   git checkout -b bugfix/your-bugfix
+   ```
+
+7. **Make Changes**
+
+   Make the necessary code changes to address the issue you're working on. Ensure your changes follow the project's coding standards.
+
+8. **Commit Changes**
+
+   Commit your changes using descriptive commit messages.
+
+   ```shell
+   git add .
+   git commit -m "description of your changes"
+   ```
+
+9. **Push Changes**
+
+   Push your changes to your forked repository:
+
+   ```shell
+   git push origin branch-name
+   ```
+
+10. **Create a Pull Request (PR)**
+
+    Go to your forked repository on GitHub and create a pull request. This informs the project maintainers that you have changes you'd like them to review and merge into the main codebase. Provide a clear and concise description of your changes in the pull request.
+
+11. **Follow Up**
+
+    Engage in discussions with maintainers and address any feedback. Be responsive to comments on your pull request. The result can be a merger of your pull request. Congrats! Or in other case, don't despair, you can try for other issues.
 
 ## Code Style
 
