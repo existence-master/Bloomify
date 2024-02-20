@@ -10,18 +10,19 @@ def app():
     
     title_container = st.container()
     col1, col2 = st.columns([5,20])
+
     with title_container:
         with col1:
-            st.image(bloomify_logo, width = 64)
+            st.image(bloomify_logo, width = 100)
         with col2:
             st.title("Bloomify")
     
     # Dropdown to select classification or suggestion
-    option = st.selectbox("Choose an option : ", ("Classify", "Suggest"))
+    option = st.selectbox("**Choose an option :** ", ("Classify", "Suggest"))
 
-    if option == 'Classify':
+    if option == "Classify":
         # Text input for classification
-        question = st.text_input('Enter text for classification:')
+        question = st.text_input("**Enter text for classification :**")
         
         # Classify button
         if st.button("Classify"):
@@ -35,7 +36,7 @@ def app():
 
     elif option == "Suggest":
         # Text input for suggestion
-        question = st.text_input("Enter text for suggestion : ")
+        question = st.text_input("**Enter text for suggestion : **")
         
         # Suggest button
         if st.button("Suggest"):
