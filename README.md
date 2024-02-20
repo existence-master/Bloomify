@@ -1,4 +1,4 @@
-# Bloomify
+![Bloomify GitHub Banner](.github/assets/banner.png)
 
 A modern question paper setting AI agent based on Bloom's taxonomy
 

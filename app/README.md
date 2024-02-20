@@ -26,6 +26,11 @@
     pip install -r requirements.txt
     ```
 
+5. **Create a .env file and add your API key**
+    ```shell
+    touch secrets.env
+    ```
+
 5. **Run the application**
     ```shell
     streamlit run app.py
