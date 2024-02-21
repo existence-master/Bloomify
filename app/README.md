@@ -26,12 +26,17 @@
     pip install -r requirements.txt
     ```
 
-5. **Create a .env file and add your API key**
+5. **Login with dotenv**
     ```shell
-    touch secrets.env
+    npx dotenv-vault@latest login
     ```
 
-5. **Run the application**
+6. **Pull env keys**
+    ```shell
+    npx dotenv-vault@latest pull
+    ```
+
+7. **Run the application**
     ```shell
     streamlit run app.py
     ```
