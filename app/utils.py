@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai as genai
 
-load_dotenv("secrets.env")
+load_dotenv()
 genai.configure(api_key = os.environ["GOOGLE_API_KEY"])
 
 generation_config = {

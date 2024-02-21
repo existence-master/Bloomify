@@ -38,3 +38,7 @@ next-env.d.ts
 
 # python cache
 __pycache__/
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
