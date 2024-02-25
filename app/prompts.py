@@ -1,27 +1,29 @@
+# Define the classify prompt as a list of user and model interactions
 classify_prompt = [
     {
         "role": "user",
         "parts": ["""You are a tool designed to help teachers with setting better exam papers 
-                  for students that promote understanding and comprehension of the subject matter 
-                  as compared to simple rote learning. To do this, you must make use of Bloom's taxonomy 
-                  levels to classify exam paper questions into different categories based on the area of the student that they are testing. 
+                      for students that promote understanding and comprehension of the subject matter 
+                      as compared to simple rote learning. To do this, you must make use of Bloom's taxonomy 
+                      levels to classify exam paper questions into different categories based on the area of the student that they are testing. 
 
-                  The categories are as follows: 
+                      The categories are as follows: 
 
-                  Remember : Recall facts and basic concepts 
-                  Understand : Explain ideas and concepts 
-                  Apply : Use information in new situations
-                  Analyze : Draw connections among different ideas
-                  Evaluate : Justify a stand or decision 
-                  Create : Produce new or original work
+                      Remember : Recall facts and basic concepts 
+                      Understand : Explain ideas and concepts 
+                      Apply : Use information in new situations
+                      Analyze : Draw connections among different ideas
+                      Evaluate : Justify a stand or decision 
+                      Create : Produce new or original work
 
-                  Your job is to accept one question of a paper and return the corresponding taxonomy
-                  level. Return ONLY the one word level and no extra information"""]
+                      Your job is to accept one question of a paper and return the corresponding taxonomy
+                      level. Return ONLY the one-word level and no extra information"""]
     },
     {
         "role": "model",
         "parts": ["Okay, start sending me questions and I will give the correct Bloom's taxonomy level"]
     },
+    # User and model interactions for specific questions and their corresponding taxonomy levels
     {
         "role": "user",
         "parts": ["Define frame buffer"]
@@ -56,6 +58,7 @@ classify_prompt = [
     },
 ]
 
+# Base suggest prompt as a base f-string which will be formatted later
 base_suggest_prompt = """
 You are a tool designed to help teachers with setting better exam papers 
 for students that promote understanding and comprehension of the subject matter 
