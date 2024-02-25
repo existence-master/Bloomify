@@ -109,25 +109,28 @@ def app():
                 # Check if inputs are provided
                 if university and degree and branch and year and subject and paper_type and syllabus:
                     try:
-                        # Call your Generate function with the input data
+                        # Call generate function with the input data
                         result = generate(university, degree, branch, year, subject, paper_type, syllabus)
                         if result:
                             st.success("Paper generated  \n")
                         else: 
                             raise Exception("Internal error")
                     except Exception as e:
+                        # Handle any exceptions that may occur during generation
                         st.error(f"An error occurred: {e}")
                 else:
+                    # Warn the user if all required information for generation is not provided
                     st.warning("Please enter all required information for generation")
 
-        if result:     
-            with open("./result/generated_paper.pdf", "rb") as file:     
-                st.download_button(
-                    label="Download paper",
-                    data=file,
-                    file_name="generated_paper.pdf",
-                    mime="application/pdf"
-                    )
+    # If the result is generated, provide a download button for the generated paper
+    if result:     
+        with open("./result/generated_paper.pdf", "rb") as file:     
+            st.download_button(
+                label="Download paper",
+                data=file,
+                file_name="generated_paper.pdf",
+                mime="application/pdf"
+            )
                         
 # Run the app if the script is executed directly
 if __name__ == "__main__":

@@ -78,6 +78,7 @@ Transform the following question to the Bloom's Taxonomy level '{selected_level}
 Return only the transformed question and no extra information.
 """
 
+# Base generate prompt as a base f-string which will be formatted later
 base_generate_prompt = """
 
 You are a tool designed to help teachers with setting better exam papers 

@@ -60,40 +60,48 @@ def suggest(syllabus, selected_level, question):
 
 
 def generate(university, degree, branch, year, subject, paper_type, syllabus):
+    # Get marking scheme from the session state based on university, degree, branch, and paper type
     marking_scheme = st.session_state[f"{university.lower()}_{degree.lower().replace(' ', '_')}_{branch.lower()}"][paper_type.lower()]
-    generate_prompt = base_generate_prompt.format(university = university,
-                                                  degree = degree,
-                                                  year = year,
-                                                  branch = branch,
-                                                  subject = subject,
-                                                  paper_type = paper_type,
-                                                  syllabus = syllabus,
-                                                  total_marks = marking_scheme["total_marks"],
-                                                  total_questions = marking_scheme["total_questions"],
-                                                  optional_questions = marking_scheme["optional_questions"],
-                                                  marks_per_question = marking_scheme["marks_per_question"],
-                                                  sub_questions = marking_scheme["sub_questions"],
+    
+    # Format the generate prompt using the base_generate_prompt template
+    generate_prompt = base_generate_prompt.format(university=university,
+                                                  degree=degree,
+                                                  year=year,
+                                                  branch=branch,
+                                                  subject=subject,
+                                                  paper_type=paper_type,
+                                                  syllabus=syllabus,
+                                                  total_marks=marking_scheme["total_marks"],
+                                                  total_questions=marking_scheme["total_questions"],
+                                                  optional_questions=marking_scheme["optional_questions"],
+                                                  marks_per_question=marking_scheme["marks_per_question"],
+                                                  sub_questions=marking_scheme["sub_questions"],
                                                   )
     
+    # Send the generate prompt to the model and get the response
     response = generate_chat.send_message(generate_prompt)
     generated_paper = response.text
     
+    # Check if the "result" directory exists, create it if not
     if not os.path.isdir("result"):
         os.mkdir("result")
     
+    # Write the generated paper to a text file
     with open("./result/generated_paper.txt", "w+") as f:
         f.write(generated_paper)
 
+    # Create an FPDF object
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size = 10)
-    # open the text file in read mode
-    f = open("./result/generated_paper.txt", "r")
+    pdf.set_font("Arial", size=10)
     
-    # insert the texts in pdf
-    for x in f:
-        pdf.cell(200, 10, txt = x, ln = 1, align = "L")
+    # Open the text file in read mode
+    with open("./result/generated_paper.txt", "r") as f:
+        # Insert the texts into the PDF
+        for x in f:
+            pdf.cell(200, 10, txt=x, ln=1, align="L")
     
+    # Save the PDF file
     pdf.output("./result/generated_paper.pdf") 
 
-    return True  
+    return True
