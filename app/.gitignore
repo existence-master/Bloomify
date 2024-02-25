@@ -42,3 +42,6 @@ __pycache__/
 .flaskenv*
 !.env.project
 !.env.vault
+
+# custom
+result/

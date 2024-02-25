@@ -31,7 +31,7 @@ def app():
             st.title("Bloomify")
 
     # Dropdown to select classification or suggestion
-    option = st.selectbox("**Choose an option :** ", ("Classify", "Suggest"))
+    option = st.selectbox("**Choose an option :** ", ("Classify", "Suggest", "Generate"))
 
     # Classification option
     if option == "Classify":
@@ -90,6 +90,45 @@ def app():
                 else:
                     st.warning("Please enter all required information for suggestion")
 
+    # Generate option
+    elif option == "Generate":
+        result = None
+
+        with st.form("generate_form", clear_on_submit=False, border=False):
+            # Input fields for Generate option
+            university = st.selectbox("**Select University :**", ("SPPU",))
+            degree = st.selectbox("**Select Degree :**", ("Bachelor of Engineering",))
+            branch = st.selectbox("**Enter Branch :**", ("CS", "IT", "ENTC", "AIDS", "MECH"))
+            year = st.selectbox("**Select Year:**", ("FE", "SE", "TE", "BE"))
+            subject = st.selectbox("**Enter Subject :**", ("ANN", "CS", "DS", "NLP"))
+            paper_type = st.selectbox("**Select Paper Type :**", ("Insem", "Endsem"))
+            syllabus = st.text_area("**Enter Syllabus :**")
+
+            # Generate button
+            if st.form_submit_button("Generate"):
+                # Check if inputs are provided
+                if university and degree and branch and year and subject and paper_type and syllabus:
+                    try:
+                        # Call your Generate function with the input data
+                        result = generate(university, degree, branch, year, subject, paper_type, syllabus)
+                        if result:
+                            st.success("Paper generated  \n")
+                        else: 
+                            raise Exception("Internal error")
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+                else:
+                    st.warning("Please enter all required information for generation")
+
+        if result:     
+            with open("./result/generated_paper.pdf", "rb") as file:     
+                st.download_button(
+                    label="Download paper",
+                    data=file,
+                    file_name="generated_paper.pdf",
+                    mime="application/pdf"
+                    )
+                        
 # Run the app if the script is executed directly
 if __name__ == "__main__":
     app()

@@ -77,3 +77,73 @@ Question: {question}
 Transform the following question to the Bloom's Taxonomy level '{selected_level}' given the above syllabus.
 Return only the transformed question and no extra information.
 """
+
+base_generate_prompt = """
+
+You are a tool designed to help teachers with setting better exam papers 
+for students that promote understanding and comprehension of the subject matter 
+as compared to simple rote learning. To do this, you have generate question papers balanced
+according to Bloom's taxonomy levels. For that purpose, here are some details and desired format.
+Also an example output is also given
+
+Details:
+
+* University: {university}
+* Degree: {degree}
+* Year: {year}
+* Branch: {branch}
+* Subject: {subject}
+* Paper Type: {paper_type}
+* Syllabus : {syllabus}
+* Total Marks: {total_marks}
+* Number of questions: {total_questions}
+* Marks per question: {marks_per_question}
+* Sub-questions per question: {sub_questions}
+* Optional questions: {optional_questions}
+
+Desired Format:
+
+* The generated paper should include {total_questions} questions. No heading is required for the question. Just the number is enough
+* Each question must have {sub_questions} sub-questions.
+* The total marks for the paper must sum up to {total_marks} and for each question must be {marks_per_question}. 
+* The total marks per question must be distributed between the fixed number of sub-questions with any combination. 
+* The sub-questions should be clearly numbered and follow a logical order.
+* The questions should cover the essential topics within the specified syllabus.
+* The whole paper must be balanced in terms of Bloom's taxonomy levels. That is all levels should be equally included in the paper
+* Alongside each sub question, give the Bloom's taxonomy level of that question.
+* See that the marks are distributed according to the taxonomy level of the question
+* With each question there is an optional question, so total {optional_questions} optional questions with their {sub_questions} sub-questions are there
+
+Example Output:
+
+**university - degree**
+
+**year - branch**
+
+**subject - paper_type**
+
+**Question 1 (Marks: marks_for_question_1)**
+
+* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1)  (Taxonomy Level : level_for_sub_question_1.1)**
+    sub_question_text_1.1
+* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_1.2)**
+    sub_question_text_1.2
+* ... (Additional sub-questions if applicable)
+
+or
+
+**Optional Question 1 (Marks: marks_for_optional_question_1)**
+
+* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1) (Taxonomy Level : level_for_sub_question_2.1**
+    sub_question_text_1.1
+* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_2.2**
+    sub_question_text_1.2
+* ... (Additional sub-questions if applicable)
+
+
+... (Repeat for remaining questions)
+
+
+Return only the generated paper and no extra information
+"""
+
