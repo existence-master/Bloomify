@@ -1,4 +1,5 @@
 import os
+from prompts import *
 from dotenv import load_dotenv
 import google.generativeai as genai
 
@@ -25,68 +26,18 @@ model = genai.GenerativeModel(
     safety_settings = safety_settings,
 )
 
-chat = model.start_chat(history = [
-    {
-        "role": "user",
-        "parts": ["""You are a tool designed to help teachers with setting better exam papers 
-                  for students that promote understanding and comprehension of the subject matter 
-                  as compared to simple rote learning. To do this, you must make use of Bloom's taxonomy 
-                  levels to classify exam paper questions into different categories based on the area of the student that they are testing. 
-
-                  The categories are as follows: 
-
-                  Remember : Recall facts and basic concepts 
-                  Understand : Explain ideas and concepts 
-                  Apply : Use information in new situations
-                  Analyze : Draw connections among different ideas
-                  Evaluate : Justify a stand or decision 
-                  Create : Produce new or original work
-
-                  Your job is to accept one question of a paper and return the corresponding taxonomy
-                  level. Return ONLY the one word level and no extra information"""]
-    },
-    {
-        "role": "model",
-        "parts": ["Okay, start sending me questions and I will give the correct Bloom's taxonomy level"]
-    },
-    {
-        "role": "user",
-        "parts": ["Define frame buffer"]
-    },
-    {
-        "role": "model",
-        "parts": ["Remember"]
-    },
-    {
-        "role": "user",
-        "parts": ["Differentiate between paging and segmentation"]
-    },
-    {
-        "role": "model",
-        "parts": ["Analyze"]
-    },
-    {
-        "role": "user",
-        "parts": ["You need to predict the price of a house based on several features given that describe the house. the predicted price will be a floating point number. will you use linear regression or logistic regression? explain why."]
-    },
-    {
-        "role": "model",
-        "parts": ["Analyze"]
-    },
-    {
-        "role": "user",
-        "parts": ["Create an architecture for a Convolutional Neural Network that can classify handwritten digits from the MNIST Dataset. Explain how you will process images into a format that the model can interpret."]
-    },
-    {
-        "role": "model",
-        "parts": ["Create"]
-    },
-])
+classify_chat = model.start_chat(history = classify_prompt)
+suggest_chat = model.start_chat()
 
 def classify(question):
-    response = chat.send_message(question)
+    response = classify_chat.send_message(question)
     level = response.text
     return level
 
-def suggest(question):
-    return "Suggestion in progress"
+def suggest(syllabus, selected_level, question):
+    suggest_prompt = base_suggest_prompt.format(syllabus = syllabus, 
+                                                selected_level = selected_level, 
+                                                question = question)
+    response = suggest_chat.send_message(suggest_prompt)
+    transformed_question = response.text
+    return transformed_question
