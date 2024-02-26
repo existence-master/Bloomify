@@ -122,15 +122,15 @@ def app():
                     # Warn the user if all required information for generation is not provided
                     st.warning("Please enter all required information for generation")
 
-    # If the result is generated, provide a download button for the generated paper
-    if result:     
-        with open("./result/generated_paper.pdf", "rb") as file:     
-            st.download_button(
-                label="Download paper",
-                data=file,
-                file_name="generated_paper.pdf",
-                mime="application/pdf"
-            )
+        # If the result is generated, provide a download button for the generated paper
+        if result:     
+            with open("./result/generated_paper.pdf", "rb") as file:     
+                st.download_button(
+                    label="Download paper",
+                    data=file,
+                    file_name="generated_paper.pdf",
+                    mime="application/pdf"
+                )
                         
 # Run the app if the script is executed directly
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Import necessary modules and libraries
 import os
-import marking_scheme
+from marking_scheme import *
 from fpdf import FPDF
 from prompts import *
 import streamlit as st
