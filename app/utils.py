@@ -1,6 +1,5 @@
 # Import necessary modules and libraries
 import os
-from marking_scheme import *
 from fpdf import FPDF
 from prompts import *
 import streamlit as st
@@ -81,6 +80,7 @@ def generate(university, degree, branch, year, subject, paper_type, syllabus):
     # Send the generate prompt to the model and get the response
     response = generate_chat.send_message(generate_prompt)
     generated_paper = response.text
+    generated_paper = generated_paper.replace("**", "")
     
     # Check if the "result" directory exists, create it if not
     if not os.path.isdir("result"):

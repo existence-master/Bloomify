@@ -6,6 +6,10 @@ import streamlit as st
 if "current_level" not in st.session_state:
     st.session_state["current_level"] = None
 
+if "sppu_bachelor_of_engineering_aids" not in st.session_state:
+    # Initialize the session state variable with default values for the specified paper type
+    st.session_state["sppu_bachelor_of_engineering_aids"] = None
+
 # Function to reset the current level in the session state
 def set_current_level():
     st.session_state["current_level"] = None
