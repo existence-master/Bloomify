@@ -3,6 +3,7 @@ import os
 from fpdf import FPDF
 from prompts import *
 import streamlit as st
+from marking_scheme import *
 from dotenv import load_dotenv
 import google.generativeai as genai
 
