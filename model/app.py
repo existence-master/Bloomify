@@ -5,7 +5,7 @@ import google.generativeai as genai
 
 app = FastAPI()
 
-genai.configure(api_key="AIzaSyB3DF-jhsSbsRMBHuL14-hAwhITAERmXQk")
+genai.configure(api_key="YOUR_API_KEY_HERE")
 
 generation_config = {
     "temperature": 0.9,
