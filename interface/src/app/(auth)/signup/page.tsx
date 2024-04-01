@@ -55,7 +55,7 @@ const Signup = () => {
             console.log(error);
         }
     };
-    return  <div className= "h-screen w-secreen bg-black flex">
+    return  <div className= "h-screen w-screen bg-black flex">
         <div className="h-full w-6/12 bg-blue-300">
             <img className="h-full w-full object-cover"src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg" alt="books" />
         </div>
