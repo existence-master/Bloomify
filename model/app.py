@@ -1,12 +1,15 @@
-from fastapi import FastAPI, HTTPException
+import os
+from fastapi import FastAPI
+from dotenv import load_dotenv
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
 import google.generativeai as genai
+
+load_dotenv()
 
 app = FastAPI()
 
-genai.configure(api_key="AIzaSyB3DF-jhsSbsRMBHuL14-hAwhITAERmXQk")
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 origins = ["http://localhost:3000"]
 app.add_middleware(
@@ -33,14 +36,11 @@ safety_settings = [
 
 # Model for classification endpoint
 classify_model = genai.GenerativeModel(
-# Model for classification endpoint
-classify_model = genai.GenerativeModel(
     model_name="gemini-1.0-pro",
     generation_config=generation_config,
     safety_settings=safety_settings,
 )
 
-classify_convo = classify_model.start_chat(history=[
 classify_convo = classify_model.start_chat(history=[
     {
         "role": "user",

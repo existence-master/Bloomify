@@ -1,88 +1,57 @@
 "use client";
+
 import { useState } from "react";
-// const cors = require('cors');
-// app.use(cors());
-// app=
-const cors = require("cors");
 
-const corsOptions = {
-  origin: "http://localhost:5000",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"],
-  optionsSuccessStatus: 200,
-};
-
-const DialogBox = () => {
-  // const client = useClient();
+const DialogBox = ({mode = "classification"}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [query, setQuery] = useState(mode === "classification" ? { "question": "" } : { "question": "", "desired_level": "" });
   const [isLoading, setIsLoading] = useState(false);
   const [responseText, setResponseText] = useState("");
   const [error, setError] = useState("");
 
+  const url = mode === "classification" ? "http://localhost:5000/classify" : ""
 
   const openDialog = () => {
     setIsOpen(true);
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Input event fired'); // Log to check if the function is called
+    console.log("Input event fired"); // Log to check if the function is called
     const inputValue = e.target.value;
-    console.log('Input value:', inputValue); // Log input value
-    setMessage(inputValue); // Update message state with user input
-    console.log('Message state:', message); // Log message state after update
+    (inputValue); // Update uery state with user input
   };
 
   const closeDialog = () => {
     setIsOpen(false);
-    setMessage("");
+    ("");
     setResponseText("");
   };
 
-  const sendMessage = async () => {
+  const sendMessage = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsLoading(true);
-    try {
-      const userInput = { input_text: message }; // Format user input
-      console.log('User Input:', userInput);
-      console.log(JSON.stringify(userInput));
-      
-      // const response = await fetch("http://localhost:5000/classify/", {
-      //   mode: 'no-cors',
-      //   method: "POST",
-      //   headers: {
-      //     "Content-type": "application/json",
-      //     // accept: "application/json",
-      //     // "Access-Control-Allow-Origin": "*",
-      //     // "Access-Control-Allow-Credentials": "true",
-      //   },
-      //   body: JSON.stringify(userInput), // Send user input in the specified format
-      // });
 
-      const response = await fetch("http://localhost:5000/hello", {
-        method: "GET",
+    try {
+      const response = await fetch(url, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
         },
-        body: JSON.stringify(userInput), // Send user input in the specified format
+        mode: "cors",
+        body: JSON.stringify(query), // Send user input in the specified format
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        throw new Error("Failed to send query");
       }
 
-      
-      
       const responseData = await response.text();
       setResponseText(responseData);
-      console.log("Message sent successfully");
+      console.log("Query sent successfully");
       console.log("Response:", responseData); // Print response text
     } catch (error) {
-      // console.error('Error sending message:', error.message);
-      // console.error('Error stack:', error.stack); // Log error stack trace
-      // Optionally, you can handle error here
+      console.log(error);
     } finally {
       setIsLoading(false);
       closeDialog();
@@ -113,35 +82,26 @@ const DialogBox = () => {
               &#8203;
             </span>
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      <form>
-                        <input
-                          type="text"
-                          id="claasify-box"
-                          className="w-full h-14 pl-2"
-                          placeholder="Enter your questions"
-                        />
-                      </form>
-                    </h3>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        value={message}
-                        // onChange={(e) => setMessage(e.target.value)}
-                        onChange={handleInput}
-                        className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                      />
-                    </div>
-                  </div>
+              {mode === "classification"
+                ? 
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                Enter your question
+              </h3>
+              <input
+                type="text"
+                value={query.question}
+                onChange={handleInput}
+                className="mt-2 w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              />
                 </div>
-              </div>
+                :
+                <div><h3>Suggestion Form</h3></div>
+            } 
+              
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   onClick={sendMessage}
-                  // onChange={(e) => setMessage(e.target.value)}
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Send
