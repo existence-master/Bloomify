@@ -4,21 +4,32 @@ import { useState } from "react";
 
 const DialogBox = ({mode = "classification"}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState(mode === "classification" ? { "question": "" } : { "question": "", "desired_level": "" });
+  const [query, setQuery] = useState(mode === "classification" ? { "question": "" } : { "question": "", "desired_level": "" }); //Conditional state for easy query handling
   const [isLoading, setIsLoading] = useState(false);
   const [responseText, setResponseText] = useState("");
   const [error, setError] = useState("");
 
-  const url = mode === "classification" ? "http://localhost:5000/classify" : ""
+  const url = mode === "classification" ? "http://localhost:5000/classify" : "" // Conditional url
 
   const openDialog = () => {
     setIsOpen(true);
   };
 
+  /*
+  const classificationForm = TSX // Can declare like this instead of return
+  */
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Input event fired"); // Log to check if the function is called
     const inputValue = e.target.value;
-    (inputValue); // Update uery state with user input
+    if (mode === "classification") {
+      setQuery(prevState => ({
+        ...prevState,
+        question: inputValue
+      }));
+    } else {
+      // Handle other modes or set the query to a different value
+    }    
   };
 
   const closeDialog = () => {
@@ -96,7 +107,7 @@ const DialogBox = ({mode = "classification"}) => {
               />
                 </div>
                 :
-                <div><h3>Suggestion Form</h3></div>
+                <div><h3>Suggestion Form</h3></div> // Conditional rendering according to mode
             } 
               
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
