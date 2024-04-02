@@ -1,16 +1,5 @@
 "use client";
 import { useState } from "react";
-// const cors = require('cors');
-// app.use(cors());
-// app=
-const cors = require("cors");
-
-const corsOptions = {
-  origin: "http://localhost:5000",
-  methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type"],
-  optionsSuccessStatus: 200,
-};
 
 const DialogBox = () => {
   // const client = useClient();
@@ -20,17 +9,14 @@ const DialogBox = () => {
   const [responseText, setResponseText] = useState("");
   const [error, setError] = useState("");
 
-
   const openDialog = () => {
     setIsOpen(true);
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Input event fired'); // Log to check if the function is called
+    console.log("Input event fired"); // Log to check if the function is called
     const inputValue = e.target.value;
-    console.log('Input value:', inputValue); // Log input value
     setMessage(inputValue); // Update message state with user input
-    console.log('Message state:', message); // Log message state after update
   };
 
   const closeDialog = () => {
@@ -39,33 +25,22 @@ const DialogBox = () => {
     setResponseText("");
   };
 
-  const sendMessage = async () => {
+  const sendMessage = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsLoading(true);
+
     try {
       const userInput = { input_text: message }; // Format user input
-      console.log('User Input:', userInput);
+      console.log("User Input:", userInput);
       console.log(JSON.stringify(userInput));
-      
-      // const response = await fetch("http://localhost:5000/classify/", {
-      //   mode: 'no-cors',
-      //   method: "POST",
-      //   headers: {
-      //     "Content-type": "application/json",
-      //     // accept: "application/json",
-      //     // "Access-Control-Allow-Origin": "*",
-      //     // "Access-Control-Allow-Credentials": "true",
-      //   },
-      //   body: JSON.stringify(userInput), // Send user input in the specified format
-      // });
 
-      const response = await fetch("http://localhost:5000/hello", {
-        method: "GET",
+      const response = await fetch("http://localhost:5000/classify/", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
         },
+        mode: "cors",
         body: JSON.stringify(userInput), // Send user input in the specified format
       });
 
@@ -73,16 +48,12 @@ const DialogBox = () => {
         throw new Error("Failed to send message");
       }
 
-      
-      
       const responseData = await response.text();
       setResponseText(responseData);
       console.log("Message sent successfully");
       console.log("Response:", responseData); // Print response text
     } catch (error) {
-      // console.error('Error sending message:', error.message);
-      // console.error('Error stack:', error.stack); // Log error stack trace
-      // Optionally, you can handle error here
+      console.log(error);
     } finally {
       setIsLoading(false);
       closeDialog();
@@ -117,24 +88,23 @@ const DialogBox = () => {
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:text-left">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      <form>
-                        <input
-                          type="text"
-                          id="claasify-box"
-                          className="w-full h-14 pl-2"
-                          placeholder="Enter your questions"
-                        />
-                      </form>
-                    </h3>
-                    <div className="mt-2">
                       <input
                         type="text"
+                        id="classify-box"
+                        className="w-full h-14 pl-2"
+                        placeholder="Enter your questions"
                         value={message}
-                        // onChange={(e) => setMessage(e.target.value)}
                         onChange={handleInput}
+                      />
+                    </h3>
+                    {/* <div className="mt-2">
+                      <input
+                        type="text"
+                        
+                        
                         className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

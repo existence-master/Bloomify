@@ -32,7 +32,7 @@ safety_settings = [
 ]
 
 # Model for classification endpoint
-classify_model = genai.GenerativeModel(
+# classify_model = genai.GenerativeModel(
 # Model for classification endpoint
 classify_model = genai.GenerativeModel(
     model_name="gemini-1.0-pro",
@@ -40,7 +40,7 @@ classify_model = genai.GenerativeModel(
     safety_settings=safety_settings,
 )
 
-classify_convo = classify_model.start_chat(history=[
+# classify_convo = classify_model.start_chat(history=[
 classify_convo = classify_model.start_chat(history=[
     {
         "role": "user",
