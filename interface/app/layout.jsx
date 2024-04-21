@@ -14,7 +14,10 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <SessionProvider session={session}>
-          {children} 
+        {/* <div className="mx-auto text-xl  mb-10"> */}
+             {/* <Navbar />   */}
+            {children}
+        {/* </div>  */}
         </SessionProvider>
       </body>
     </html>

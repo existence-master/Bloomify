@@ -25,9 +25,11 @@ const Dashboard = () => {
   }
 
   const updateChat = (request, response) => {
+    console.log(request)
+    console.log(response)
     setUserInput(request);
     setModelResponse(response);
-    // Handle chat history now
+    // Can handle chat history now
   }
 
   return (
