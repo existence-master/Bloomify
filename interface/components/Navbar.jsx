@@ -5,7 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const { data: session }: any = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   return (
     <div>

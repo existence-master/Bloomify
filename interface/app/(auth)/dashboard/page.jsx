@@ -1,22 +1,26 @@
 "use client";
-import DialogBox from '@/components/DialogBox-classify';
-import DialogBox2 from '@/components/DialogBox-suggest';
-import GenerateDialogBox from '@/components/DialogBox-generate';
-import { useState } from "react";
-// import App from '@/components/app-chat';
 
+import DialogBox from '@/components/DialogBox';
+import { useState } from "react";
 import React from "react";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirect} from "next/navigation";
 import { FaUser , FaPlusCircle } from "react-icons/fa";
 
 const Dashboard = () => {
-  const session =  getServerSession();
+  const session = getServerSession()
   const [userInput, setUserInput] = useState("");
-  const [modelResponse, setModelResponse] = useState("");
-  
-  if (!session) {
-    redirect("/login");
+  const [modelResponse, setModelResponse] = useState({});
+
+  if (!session)
+  {
+    redirect("/login")
+  }
+
+  const updateChat = (request, response) => {
+    setUserInput(request);
+    setModelResponse(response);
+    // Handle chat history now
   }
 
   return (
@@ -53,30 +57,13 @@ const Dashboard = () => {
       </div>    
       </div>
       <div className="h-full w-3/4 bg-red-200">
-      {/* <form>
-      <input type="text" className=" form control mt-[610px] pt-8 pb-8 pl-5 w-11/12 ml-8 rounded-lg border-black border-5 h-5 bg-amber-100 text-black " placeholder="Type your academic question here..." required/>
-      </form> */}
-      <button className="whitespace-nowrap mt-[640px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[1000px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
-      </button>
-      <div id='msg-btn' className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
-      <DialogBox setUserInput={setUserInput} setModelResponse={setModelResponse} />
+        <button className="whitespace-nowrap mt-[640px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[1000px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
+        </button>
+        <div id="msg-btn" className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
+          <DialogBox mode = "suggestion" updateChat={updateChat} />
+        </div>
       </div>
-      <div id='msg-btn' className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
-      <DialogBox2 />
-      </div>
-      <GenerateDialogBox />
-      </div>
-      <div>
-         <p className='text-black'>User Input: {userInput}</p>
-        <p className='text-black'>Model Response: {modelResponse}</p> 
-      </div>
-      {/* <div>
-        <App />
-      </div> */}
-      {/* <form>
-        <input type="text" id="claasify-box" placeholder="Enter your questions" />
-      </form> */}
-      </div>
+    </div>
   );
 };
 

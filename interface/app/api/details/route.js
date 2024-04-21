@@ -4,7 +4,7 @@ import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-export const POST = async (request : any) => {
+export const POST = async (request) => {
     const {username, university} = await request.json();
 
     await connect();
@@ -22,7 +22,7 @@ export const POST = async (request : any) => {
     try{
         await newUsername.save();
         return new NextResponse("Username Registered", {status : 200});
-    } catch (err:any) {
+    } catch (err) {
          return new NextResponse(err, {
             status: 500,
          });

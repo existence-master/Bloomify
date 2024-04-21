@@ -1,4 +1,5 @@
 import os
+from prompts import *
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from pydantic import BaseModel
@@ -11,10 +12,9 @@ app = FastAPI()
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
-origins = ["http://localhost:3000"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -190,51 +190,44 @@ generate_convo = generate_model.start_chat(history=[
 ])
 
 
-class UserInput(BaseModel):
-    input_text: str
+class ClassificationInput(BaseModel):
+    question: str
+class SuggestionInput(BaseModel):
+    question: str
+    desired_level: str
+class GenerationInput(BaseModel):
+    university: str
+    degree: str
+    branch: str
+    year: str
+    subject: str
+    paper_type: str
 
 @app.get("/hello")
-async def helloWorld(user_input: UserInput):
+async def helloWorld():
     return "hello world"
 
-@app.post("/classify/")
-async def classify_question(user_input: UserInput):
-    #convo = classify_model.start_chat(history=[...])  # Initialize context for classification
-    classify_convo.send_message(user_input.input_text)
-    model_response = classify_convo.last.text
-    return {"gemini_response_classify": model_response}
+@app.post("/classify")
+async def classify_question(input: ClassificationInput):
+    prompt = classification_prompt.format(input.question)
+    response = classify_convo.send_message(prompt)
+    level = response.text
+    return {"level": level}
 
-@app.post("/suggest/")
-async def suggest_question(user_input: UserInput):
-    #convo = suggest_model.start_chat(history=[...])  # Initialize context for suggestion
-    suggest_convo.send_message(user_input.input_text)
-    model_response = suggest_convo.last.text
-    return {"gemini_response_suggest": model_response}
+@app.post("/suggest")
+async def suggest_question(input: SuggestionInput):
+    prompt = suggestion_prompt.format(input.question, input.desired_level)
+    response = suggest_convo.send_message(prompt)
+    transformed_question = response.text
+    print(transformed_question)
+    return {"transformed_question": transformed_question}
 
-@app.post("/generate/")
-async def generate_questions(user_input: UserInput):
-    #convo = generate_model.start_chat(history=[...])  # Initialize context for generation
-    generate_convo.send_message(user_input.input_text)
-    model_response = generate_convo.last.text
-    return {"gemini_response_generate": model_response}
-    #convo = classify_model.start_chat(history=[...])  # Initialize context for classification
-    classify_convo.send_message(user_input.input_text)
-    model_response = classify_convo.last.text
-    return {"gemini_response_classify": model_response}
-
-@app.post("/suggest/")
-async def suggest_question(user_input: UserInput):
-    #convo = suggest_model.start_chat(history=[...])  # Initialize context for suggestion
-    suggest_convo.send_message(user_input.input_text)
-    model_response = suggest_convo.last.text
-    return {"gemini_response_suggest": model_response}
-
-@app.post("/generate/")
-async def generate_questions(user_input: UserInput):
-    #convo = generate_model.start_chat(history=[...])  # Initialize context for generation
-    generate_convo.send_message(user_input.input_text)
-    model_response = generate_convo.last.text
-    return {"gemini_response_generate": model_response}
+@app.post("/generate")
+async def generate_questions(input: GenerationInput):
+    prompt = generation_prompt.format(input.syllabus, input.desired_level)
+    response = generate_convo.send_message(prompt)
+    generated_question = response.text
+    return {"generated_question": generated_question}
 
 if __name__ == "__main__":
     import uvicorn

@@ -5,10 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/User";
 import connect from "@/utils/db";
-import Credentials from "next-auth/providers/credentials";
 
-
-export const authOptions: any = {
+export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
@@ -18,7 +16,7 @@ export const authOptions: any = {
             email: {label: "Email", type: "text"},
             password: {label: "Password", type: "password"},
         },
-        async authorize(credentials:any){
+        async authorize(credentials){
             await connect();
             try{
                 const user = await User.findOne({email: credentials.email});
@@ -31,19 +29,19 @@ export const authOptions: any = {
                         return user;
                     }
                 }
-            }catch (err:any){
+            }catch (err){
                 throw new Error(err);
             }
         }
     }),
     GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID!,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     // ...add more providers here
   ],
   callbacks: {
-    async signIn({user, account}: {user: AuthUser, account:Account}){
+    async signIn({user, account}){
         if(account.provider == "credentials"){
             return true;
         }
