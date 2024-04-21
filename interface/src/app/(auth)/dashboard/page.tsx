@@ -1,11 +1,20 @@
-import DialogBox from '@/components/DialogBox';
+"use client";
+import DialogBox from '@/components/DialogBox-classify';
+import DialogBox2 from '@/components/DialogBox-suggest';
+import GenerateDialogBox from '@/components/DialogBox-generate';
+import { useState } from "react";
+// import App from '@/components/app-chat';
+
 import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { FaUser , FaPlusCircle } from "react-icons/fa";
 
-const Dashboard = async () => {
-  const session = await getServerSession();
+const Dashboard = () => {
+  const session =  getServerSession();
+  const [userInput, setUserInput] = useState("");
+  const [modelResponse, setModelResponse] = useState("");
+  
   if (!session) {
     redirect("/login");
   }
@@ -50,13 +59,24 @@ const Dashboard = async () => {
       <button className="whitespace-nowrap mt-[640px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[1000px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
       </button>
       <div id='msg-btn' className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
-      <DialogBox />
+      <DialogBox setUserInput={setUserInput} setModelResponse={setModelResponse} />
       </div>
+      <div id='msg-btn' className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
+      <DialogBox2 />
+      </div>
+      <GenerateDialogBox />
+      </div>
+      <div>
+         <p className='text-black'>User Input: {userInput}</p>
+        <p className='text-black'>Model Response: {modelResponse}</p> 
+      </div>
+      {/* <div>
+        <App />
+      </div> */}
       {/* <form>
         <input type="text" id="claasify-box" placeholder="Enter your questions" />
       </form> */}
       </div>
-    </div>
   );
 };
 

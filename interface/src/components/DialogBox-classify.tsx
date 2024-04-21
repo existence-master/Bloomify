@@ -3,6 +3,8 @@ import { useState } from "react";
 
 const DialogBox = () => {
   // const client = useClient();
+  const [userInput, setUserInput] = useState(""); // State variable for user input
+  const [modelResponse, setModelResponse] = useState(""); // State variable for model response
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +51,8 @@ const DialogBox = () => {
       }
 
       const responseData = await response.text();
+      setModelResponse(responseData); // Update model response
+      setUserInput(message); // Update user input
       setResponseText(responseData);
       console.log("Message sent successfully");
       console.log("Response:", responseData); // Print response text
@@ -66,7 +70,7 @@ const DialogBox = () => {
         onClick={openDialog}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
-        Send Message
+        Classify
       </button>
       {isOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -122,6 +126,7 @@ const DialogBox = () => {
                 >
                   Cancel
                 </button>
+                
               </div>
             </div>
           </div>
