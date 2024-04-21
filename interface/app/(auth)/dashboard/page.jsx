@@ -1,6 +1,6 @@
 "use client";
 
-import DialogBox from '@/components/DialogBox';
+import DialogBox from '@components/DialogBox';
 import { useState } from "react";
 import React from "react";
 import { getServerSession } from "next-auth";
