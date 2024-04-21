@@ -12,13 +12,15 @@ import { useSession, getSession } from "next-auth/react"
 const Dashboard = () => {
   const [userInput, setUserInput] = useState("");
   const [modelResponse, setModelResponse] = useState({});
-  const { data: session, status } = useSession()
+  const session = useSession()
 
-  if (status === "loading") {
+  if (session?.status === "loading") {
     return <p>Loading...</p>
   }
 
-  if (status === "unauthenticated") {
+  console.log(session)
+  
+  if (session?.status !== "authenticated") {
     return <p>Access Denied</p>
   }
 

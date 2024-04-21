@@ -3,7 +3,6 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
-import { getServerSession } from "next-auth";
 
 const login = () => {
     const [error, setError] = useState("");
