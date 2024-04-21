@@ -5,16 +5,21 @@ import { useState } from "react";
 import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect} from "next/navigation";
-import { FaUser , FaPlusCircle } from "react-icons/fa";
+import { FaUser, FaPlusCircle } from "react-icons/fa";
+import { useSession, getSession } from "next-auth/react"
+
 
 const Dashboard = () => {
-  const session = getServerSession()
   const [userInput, setUserInput] = useState("");
   const [modelResponse, setModelResponse] = useState({});
+  const { data: session, status } = useSession()
 
-  if (!session)
-  {
-    redirect("/login")
+  if (status === "loading") {
+    return <p>Loading...</p>
+  }
+
+  if (status === "unauthenticated") {
+    return <p>Access Denied</p>
   }
 
   const updateChat = (request, response) => {

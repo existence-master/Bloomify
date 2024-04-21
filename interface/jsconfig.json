@@ -1,26 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@*": ["./*"]
     }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth]/route.js", "src/components/DialogBox.jsx", "src/app/(auth)/dashboard/page.jsx", "src/app/api/register/route.js", "src/app/(auth)/details/page.jsx", "src/app/(auth)/login/page.jsx", "src/app/(auth)/signup/page.jsx", "src/app/(auth)/settings/page.jsx", "src/app/api/details/route.js", "src/app/layout.jsx", "src/app/page.jsx", "src/components/app-chat.jsx", "src/components/Navbar.jsx", "tailwind.config.js"],
-  "exclude": ["node_modules"]
+  }
 }
