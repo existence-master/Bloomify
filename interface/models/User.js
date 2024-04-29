@@ -17,11 +17,11 @@ const userSchema = new Schema(
         username: {
             type: String,
             unique: true,
-            required: true
+            required: false
         },
         university: {
             type: String,
-            required: true,
+            required: false,
         },
         chat: {
             type: Schema.Types.ObjectId, // Reference to the Chat model
