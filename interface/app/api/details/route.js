@@ -1,26 +1,22 @@
 import User from "@models/User";
-import Details from "@models/Details";
 import connect from "@utils/db";
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
-  const { username, university } = await request.json();
+  const { username, university, userEmail } = await request.json();
 
   await connect();
   const existingUsername = await User.findOne({ username });
   if (existingUsername) {
     return new NextResponse("This username is already taken", { status: 400 });
   }
-
-  // const hashedPassword = await bcrypt.hash(password, 5);
-  const newUsername = new Details({
-    username,
-    university,
-  });
-
+ 
   try {
-    await newUsername.save();
+    await User.findOneAndUpdate(
+      { email: userEmail }, // Condition to find the user
+      { username: username, university: university }, // Data to update
+      { new: true } // Return the updated document
+    );
     return new NextResponse("Username Registered", { status: 200 });
   } catch (err) {
     return new NextResponse(err, {

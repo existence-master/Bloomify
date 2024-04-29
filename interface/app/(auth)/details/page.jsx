@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -8,6 +7,8 @@ const Details = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
+
+  const userEmail = session.user?.email
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ const Details = () => {
         body: JSON.stringify({
           username,
           university,
+          userEmail
         }),
       });
 
