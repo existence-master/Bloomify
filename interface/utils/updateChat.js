@@ -12,29 +12,25 @@ const updateChat = async (session, query, responseData) => {
     await connect(); // Ensure database connection
 
     try {
-        // Step 1: Get the user's email from the session
-        const userEmail = session.userEmail; // Assume you have the email in the session
+        const userEmail = session.userEmail; 
         
         if (!userEmail) {
             throw new Error("User email not found in session");
         }
 
-        // Step 2: Retrieve the user by email
         const user = await User.findOne({ email: userEmail });
 
         if (!user) {
             throw new Error(`User with email ${userEmail} not found`);
         }
 
-        // Step 3: Retrieve the associated chat
-        const chatId = user.chat; // Assuming `user.chat` contains the `Chat` ObjectId
+        const chatId = user.chat; 
         const chat = await Chat.findById(chatId);
 
         if (!chat) {
             throw new Error(`Chat with ID ${chatId} not found`);
         }
 
-        // Step 4: Create a new PairedMessage
         const pairedMessage = new PairedMessage({
             input: query, // Using the query object for the `input` field
             response: responseData, // The response to be stored
@@ -43,7 +39,6 @@ const updateChat = async (session, query, responseData) => {
         // Save the PairedMessage to the database
         const savedPairedMessage = await pairedMessage.save(); // Create the new PairedMessage
 
-        // Step 5: Add the PairedMessage to chatHistory and save
         chat.chatHistory.push(savedPairedMessage._id); // Add the PairedMessage to chatHistory
         const updatedChat = await chat.save(); // Save the updated Chat
 
