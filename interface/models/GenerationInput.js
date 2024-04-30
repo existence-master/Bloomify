@@ -45,7 +45,7 @@ const generationInputSchema = new Schema(
             type: markingSchemeSchema, // an object defining the marking scheme
             required: true
         },
-        bloomsScore: {
+        averageBloomsScore: {
             type: Number,
             min: 1,
             max: 6,

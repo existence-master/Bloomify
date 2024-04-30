@@ -7,9 +7,23 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
 
   // Default state initialization based on the mode
   const initialQueryState = {
-    classification: { question: "" },
-    suggestion: { question: "", desired_level: "" },
-    generation: { university: "", degree: "", branch: "", year: "", subject: "", paper_type: ""},
+    classification: {
+      question: ""
+    },
+    suggestion: {
+      question: "",
+      desired_level: ""
+    },
+    generation: {
+      syllabus: [{ unit: 1, content: "" }],
+      marking_scheme: {
+        marks_per_unit: 0,
+        main_questions_per_unit: 0,
+        sub_questions_per_main_question: 0,
+        marks_per_main_question: 0
+      },
+      average_blooms_score: 0
+    },
   };
 
   const [query, setQuery] = useState(initialQueryState[mode] || {});
@@ -31,24 +45,44 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
 
   const handleInput = (e) => {
     const { name, value } = e.target; // Get the name and value of the input field
-    
-    if (name === "paperType") { // Special query for generation
-      setQuery({
-        university: "SPPU",
-        degree: "BTech",
-        branch: "AI & DS",
-        year: "TE",
-        subject: "ANN",
-        paper_type: value
-      })
-    }
-    else {
       setQuery((prevState) => ({
         ...prevState,
         [name]: value, // Dynamically update the property based on the name
       }));
-    }
   };
+
+  const handleFormInput = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
+    // Collect form data
+    const formData = new FormData(e.target);
+    const formName = e.target.name
+    let formDetails = null
+
+    if (formName === "marking_scheme") {
+      // Create an object to store the marking scheme data
+      formDetails = {}
+
+      for (const [key, value] of formData.entries()) {
+        formDetails[key] = value
+        };
+    }
+
+    else if (formName === "syllabus") {
+      formDetails = []
+      for (const [key, value] of formData.entries()) {
+        formDetails.push({
+          unit: parseInt(key),
+          content: value
+        });
+    }
+    }
+  
+    setQuery((prevState) => ({
+      ...prevState,
+      formName: formDetails, // Dynamically update the property based on the name
+    }));
+  }
 
   const closeDialog = () => {
     setIsOpen(false);
@@ -136,6 +170,7 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
     </div>
   );
 
+  // Varad, create separate forms for syllabus and marking scheme input in generationForm
   const generationForm = (
     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
       <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -206,7 +241,6 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
                 >
                   Cancel
                 </button>
-                
               </div>
             </div>
           </div>
