@@ -2,7 +2,7 @@ import User from '@models/User'; // Import the User model
 import Chat from '@models/Chat'; // Import the Chat model
 
 const getChatHistory = async (session) => {
-    const user = await User.findById(session?.user.email);
+    const user = await User.findById(session.user.email);
 
     if (!user || !user.chat) {
         console.error('User not found or user has no associated chat');

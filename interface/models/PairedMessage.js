@@ -1,3 +1,4 @@
+import connect from "@utils/db";
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
@@ -16,6 +17,8 @@ const pairedMessageSchema = new Schema(
     },
     { timestamps: true }
 );
+
+await connect()
 
 const PairedMessage = mongoose.models.PairedMessage || mongoose.model("PairedMessage", pairedMessageSchema);
 
