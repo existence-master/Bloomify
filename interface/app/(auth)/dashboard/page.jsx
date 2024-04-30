@@ -3,10 +3,8 @@
 import DialogBox from '@components/DialogBox';
 import { useState } from "react";
 import React from "react";
-import { getServerSession } from "next-auth";
-import { redirect} from "next/navigation";
 import { FaUser, FaPlusCircle } from "react-icons/fa";
-import { useSession, getSession } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 
 const Dashboard = () => {
@@ -23,8 +21,7 @@ const Dashboard = () => {
   }
 
   const updateChat = (request, response) => {
-    console.log(request)
-    console.log(response)
+    
     setUserInput(request);
     setModelResponse(response);
     // Can handle chat history now

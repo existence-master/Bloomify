@@ -2,16 +2,11 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+// Define the schema with a dynamic `input` field
 const pairedMessageSchema = new Schema(
     {
         input: {
-            type: Schema.Types.ObjectId,
-            refPath: "inputModel", // This allows for referencing multiple models
-            required: true,
-        },
-        inputModel: {
-            type: String,
-            enum: ["ClassificationInput", "SuggestionInput"], // Valid model references
+            type: Schema.Types.Mixed, // This allows for dynamic data types
             required: true,
         },
         response: {
@@ -22,7 +17,6 @@ const pairedMessageSchema = new Schema(
     { timestamps: true }
 );
 
-// Ensure unique indexes on the chat history
 const PairedMessage = mongoose.models.PairedMessage || mongoose.model("PairedMessage", pairedMessageSchema);
 
 export default PairedMessage;

@@ -114,9 +114,9 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
         throw new Error("Failed to send query");
       }
 
-      const responseData = await response.json();
+      const responseData = await response.text;
       console.log(responseData)
-      updateChat(message, responseData);
+      updateChat(mode, query, responseData);
     }
 
     catch (error) {
