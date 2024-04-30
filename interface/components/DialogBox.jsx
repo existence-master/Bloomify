@@ -1,8 +1,9 @@
 "use client";
 
+import updateChat from "@utils/updateChat";
 import { useState } from "react";
 
-const DialogBox = ({ mode = "classification" , updateChat}) => {
+const DialogBox = ({ mode = "classification"}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // Default state initialization based on the mode
@@ -114,9 +115,9 @@ const DialogBox = ({ mode = "classification" , updateChat}) => {
         throw new Error("Failed to send query");
       }
 
-      const responseData = await response.text;
+      const responseData = response.text;
       console.log(responseData)
-      updateChat(mode, query, responseData);
+      updateChat(query, responseData);
     }
 
     catch (error) {

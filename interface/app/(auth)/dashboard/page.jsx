@@ -5,26 +5,25 @@ import { useState } from "react";
 import React from "react";
 import { FaUser, FaPlusCircle } from "react-icons/fa";
 import { useSession } from "next-auth/react"
+import getChatHistory from '@utils/getChatHistory';
 
 
 const Dashboard = () => {
-  const [userInput, setUserInput] = useState("");
-  const [modelResponse, setModelResponse] = useState({});
   const { data: session, status } = useSession()
+  const [chatHistory, setChatHistory] = useState({})
 
+  useEffect(() => {
+    setChatHistory(getChatHistory(session))
+  }, [session])
+
+  console.log(chatHistory)
+  
   if (status === "loading") {
     return <p>Loading...</p>
   }
   
   if (status !== "authenticated") {
     return <p>Access Denied</p>
-  }
-
-  const updateChat = (request, response) => {
-    
-    setUserInput(request);
-    setModelResponse(response);
-    // Can handle chat history now
   }
 
   return (

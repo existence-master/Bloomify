@@ -6,7 +6,7 @@ import Chat from "@models/Chat" // Chat model
 import PairedMessage from '@models/PairedMessage'; // PairedMessage model
 import { useSession } from 'next-auth/react';
 
-const updateChat = async (session, query, responseData) => {
+const updateChat = async (query, responseData) => {
 
     const {data: session} = useSession()
     await connect(); // Ensure database connection
@@ -53,3 +53,5 @@ const updateChat = async (session, query, responseData) => {
         mongoose.connection.close(); 
     }
 };
+
+export default updateChat
