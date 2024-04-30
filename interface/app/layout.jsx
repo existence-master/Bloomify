@@ -12,7 +12,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="bg-[#fffbe6]">
+      <body>
         <SessionProvider session={session}>
         {/* <div className="mx-auto text-xl  mb-10"> */}
              {/* <Navbar />   */}

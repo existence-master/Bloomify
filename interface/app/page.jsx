@@ -5,6 +5,7 @@ import Image from "next/image";
 export default function Home(){
   return (
   <>
+  <div className="bg-[#fffbe6]">
     <nav class="bg-transparent">
       <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -126,7 +127,7 @@ export default function Home(){
           </div>
         </div>
     </footer>
-
+  </div>
   </>
   )
 }
