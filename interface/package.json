@@ -20,7 +20,7 @@
     "react-icons": "^5.0.1"
   },
   "devDependencies": {
-    "bcryptjs": "^2.4.6",
+    "bcryptjs": "^2.4.3",
     "node": "^20",
     "react": "^18",
     "react-dom": "^18",
