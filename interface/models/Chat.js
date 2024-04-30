@@ -1,3 +1,4 @@
+import connect from '@utils/db';
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
@@ -28,6 +29,8 @@ const chatSchema = new Schema(
     },
     { timestamps: true }
 );
+
+await connect()
 
 const Chat = mongoose.models.Chat || mongoose.model('Chat', chatSchema);
 

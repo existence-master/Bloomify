@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import connect from "@utils/db";
 
 const { Schema } = mongoose;
 
@@ -31,6 +32,8 @@ const userSchema = new Schema(
     },
     { timestamps: true }
 );
+
+await connect()
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
