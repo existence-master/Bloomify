@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-export default function Home(){
+const ContactUs = () => {
   return (
   <>
   <div className="bg-[#fffbe6]">
@@ -122,4 +122,6 @@ export default function Home(){
   </div>
   </>
   )
-}
+};
+
+export default ContactUs;
