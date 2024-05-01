@@ -1,9 +1,12 @@
 "use client";
 
-import updateChat from "@utils/updateChat";
 import { useState } from "react";
+import updateChat from "@utils/updateChat";
+import { useSession } from "next-auth/react";
 
-const DialogBox = ({ mode = "classification"}) => {
+const DialogBox = ({ mode = "classification" }) => {
+  
+  const {data: session} = useSession()
   const [isOpen, setIsOpen] = useState(false);
 
   // Default state initialization based on the mode
@@ -40,6 +43,7 @@ const DialogBox = ({ mode = "classification"}) => {
         ? "http://localhost:5000/generate"
         : "" 
 
+  
   const openDialog = () => {
     setIsOpen(true);
   };
@@ -116,8 +120,7 @@ const DialogBox = ({ mode = "classification"}) => {
       }
 
       const responseData = response.text;
-      console.log(responseData)
-      updateChat(query, responseData);
+      await updateChat(session, query, responseData);
     }
 
     catch (error) {

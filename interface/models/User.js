@@ -1,6 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import connect from "@utils/db";
 
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
+
+async function run() {
+    await connect()
+  }
 
 // Define the User Schema
 const userSchema = new Schema(
@@ -32,6 +37,8 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+run()
+
+const User = models.User || model("User", userSchema);
 
 export default User;

@@ -1,22 +1,28 @@
 "use client"
 
-import connect from './db'; // Database connection utility
-import User from '@models/User'; // User model
+import User from "@models/User"; // User model
 import Chat from "@models/Chat" // Chat model
 import PairedMessage from '@models/PairedMessage'; // PairedMessage model
-import { useSession } from 'next-auth/react';
+import connect from "./db";
 
-const updateChat = async (query, responseData) => {
+async function run() {
+    await connect()
+  }
 
-    const {data: session} = useSession()
-    await connect(); // Ensure database connection
+const updateChat = async (session, query, responseData) => {
+
+    console.log(session)
+    console.log(query)
+    console.log(responseData)
 
     try {
-        const userEmail = session.userEmail; 
+        const userEmail = session.user.email; 
         
         if (!userEmail) {
             throw new Error("User email not found in session");
         }
+        
+        console.log(User)
 
         const user = await User.findOne({ email: userEmail });
 
@@ -44,14 +50,10 @@ const updateChat = async (query, responseData) => {
 
         console.log("Updated Chat:", updatedChat);
 
-        return updatedChat; // Return the updated Chat document
     } catch (error) {
         console.error("Error updating user chat:", error);
         throw error; // Handle errors appropriately
-    } finally {
-        // Optionally, close the MongoDB connection if needed
-        mongoose.connection.close(); 
-    }
+    } 
 };
 
 export default updateChat

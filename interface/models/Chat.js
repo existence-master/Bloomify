@@ -1,6 +1,11 @@
+import connect from '@utils/db';
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
+
+async function run() {
+    await connect()
+  }
 
 // Define the Chat Schema
 const chatSchema = new Schema(
@@ -29,6 +34,8 @@ const chatSchema = new Schema(
     { timestamps: true }
 );
 
-const Chat = mongoose.models.Chat || mongoose.model('Chat', chatSchema);
+run()
+
+const Chat = models?.Chat || model('Chat', chatSchema);
 
 export default Chat;
