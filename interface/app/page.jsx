@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-export default function Home(){
+const Home = () => {
   return (
   <>
     <nav class="bg-transparent">
@@ -130,3 +130,5 @@ export default function Home(){
   </>
   )
 }
+
+export default Home

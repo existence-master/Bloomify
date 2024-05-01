@@ -3,7 +3,7 @@
 import updateChat from "@utils/updateChat";
 import { useState } from "react";
 
-const DialogBox = ({ mode = "classification", session }) => {
+const DialogBox = ({ mode = "classification", session = {} }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   console.log(session)
