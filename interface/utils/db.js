@@ -1,9 +1,4 @@
 import mongoose from "mongoose";
-
-
-async function run() {
-    await mongoose.connect(process.env.MONGO_URL);
-}
   
 // Connection function
 const connect = async () => {
@@ -15,7 +10,8 @@ const connect = async () => {
 
     try {
         // Connect to MongoDB with connection options
-        run()
+        await mongoose.connect(process.env.MONGO_URL);
+        console.log("Connection to MongoDB established")
         
     } catch (error) {
         console.error("Error connecting to MongoDB:", error.message);

@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
-import connect from "@utils/db";
 
 const { Schema, model, models } = mongoose;
-
-async function run() {
-    await connect()
-  }
 
 // Define the User Schema
 const userSchema = new Schema(
@@ -36,8 +31,6 @@ const userSchema = new Schema(
     },
     { timestamps: true }
 );
-
-run()
 
 const User = models.User || model("User", userSchema);
 

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import updateChat from "@utils/updateChat";
 import { useSession } from "next-auth/react";
 
-const DialogBox = ({ mode = "classification" }) => {
+const DialogBox = ({ mode = "classification" , reloadChat}) => {
   
   const {data: session} = useSession()
   const [isOpen, setIsOpen] = useState(false);
@@ -106,7 +105,7 @@ const DialogBox = ({ mode = "classification" }) => {
 
 
     try {
-      const response = await fetch(url, {
+      let response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,8 +118,26 @@ const DialogBox = ({ mode = "classification" }) => {
         throw new Error("Failed to send query");
       }
 
-      const responseData = response.text;
-      await updateChat(session, query, responseData);
+      const responseData = await response.json();
+
+      response = await fetch("/api/update-chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify({
+          session,
+          query,
+          responseData
+        }), // Send user input in the specified format
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update chat");
+      }
+
+      reloadChat()
     }
 
     catch (error) {
