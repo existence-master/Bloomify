@@ -1,6 +1,7 @@
 import os
 from prompts import *
 from fastapi import FastAPI
+from fastapi.responses import PlainTextResponse
 from dotenv import load_dotenv
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -207,27 +208,26 @@ class GenerationInput(BaseModel):
 async def helloWorld():
     return "hello world"
 
-@app.post("/classify")
+@app.post("/classify", response_class=PlainTextResponse)
 async def classify_question(input: ClassificationInput):
     prompt = classification_prompt.format(input.question)
     response = classify_convo.send_message(prompt)
     level = response.text
-    return {"level": level}
+    return level
 
-@app.post("/suggest")
+@app.post("/suggest", response_class=PlainTextResponse)
 async def suggest_question(input: SuggestionInput):
     prompt = suggestion_prompt.format(input.question, input.desired_level)
     response = suggest_convo.send_message(prompt)
     transformed_question = response.text
-    print(transformed_question)
-    return {"transformed_question": transformed_question}
+    return transformed_question
 
-@app.post("/generate")
+@app.post("/generate", response_class=PlainTextResponse)
 async def generate_questions(input: GenerationInput):
     prompt = generation_prompt.format(input.syllabus, input.desired_level)
     response = generate_convo.send_message(prompt)
     generated_question = response.text
-    return {"generated_question": generated_question}
+    return generated_question
 
 if __name__ == "__main__":
     import uvicorn

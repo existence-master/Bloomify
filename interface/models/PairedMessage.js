@@ -1,7 +1,7 @@
 import connect from "@utils/db";
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
 
 // Define the schema with a dynamic `input` field
 const pairedMessageSchema = new Schema(
@@ -18,8 +18,6 @@ const pairedMessageSchema = new Schema(
     { timestamps: true }
 );
 
-await connect()
-
-const PairedMessage = mongoose.models.PairedMessage || mongoose.model("PairedMessage", pairedMessageSchema);
+const PairedMessage = models.PairedMessage || model("PairedMessage", pairedMessageSchema);
 
 export default PairedMessage;

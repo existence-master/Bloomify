@@ -1,21 +1,27 @@
 "use client";
 
-import DialogBox from '@components/DialogBox';
 import { useState } from 'react';
 import { FaUser, FaPlusCircle } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
-import getChatHistory from '@utils/getChatHistory';
+import DialogBox from '@components/DialogBox';
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
   const [chatHistory, setChatHistory] = useState({})
 
-  // useEffect(() => {
-  //   setChatHistory()
-  // }, [])
+  const reloadChat = async () => {
+    const response = await fetch("/api/get-chat-history", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors" // Send user input in the specified format
+    });
 
-  // getChatHistory(session)
-  // console.log(chatHistory)
+    const responseData = await response.json()
+
+    setChatHistory(responseData)
+  }
   
   if (status === "loading") {
     return <p>Loading...</p>
@@ -62,7 +68,7 @@ const Dashboard = () => {
         <button className="whitespace-nowrap mt-[640px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[1000px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
         </button>
         <div id="msg-btn" className="whitespace-nowrap mt-[-400px] pt-2 pb-2 pl-2 pr-2 w-30 text-center ml-[900px] rounded-lg border-black border-5 h-10 bg-amber-100 text-black">
-          <DialogBox mode = "suggestion" session={session}/>
+          <DialogBox mode = "suggestion" reloadChat={reloadChat}/>
         </div>
       </div>
     </div>

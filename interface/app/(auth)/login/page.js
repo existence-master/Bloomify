@@ -6,9 +6,7 @@ import { useEffect, useState } from "react";
 const login = () => {
     const [error, setError] = useState("");
     const router = useRouter();
-    const session = useSession();
-    console.log(session);
-    
+    const session = useSession();    
 
     useEffect(() => {
         if(session?.status === "authenticated" ){

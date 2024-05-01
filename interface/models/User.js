@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-import connect from "@utils/db";
 
-const { Schema } = mongoose;
+const { Schema, model, models } = mongoose;
 
 // Define the User Schema
 const userSchema = new Schema(
@@ -33,8 +32,6 @@ const userSchema = new Schema(
     { timestamps: true }
 );
 
-await connect()
-
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = models.User || model("User", userSchema);
 
 export default User;
