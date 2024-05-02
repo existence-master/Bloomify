@@ -105,16 +105,20 @@ def app():
             branch = st.selectbox("**Enter Branch :**", ("CS", "IT", "ENTC", "AIDS", "MECH"))
             year = st.selectbox("**Select Year:**", ("FE", "SE", "TE", "BE"))
             subject = st.selectbox("**Enter Subject :**", ("ANN", "CS", "DS", "NLP"))
-            paper_type = st.selectbox("**Select Paper Type :**", ("Insem", "Endsem"))
             syllabus = st.text_area("**Enter Syllabus :**")
+            total_marks = st.number_input("**Enter Total Marks**")
+            total_questions = st.number_input("**Enter Total Questions (Include any/all optional Questions)**")
+            marks_per_question = st.number_input("**Enter Marks Per Question**")
+            sub_questions = st.number_input("**Enter Number of Sub-Questions per Main Question**")
+            extra_instructions = st.text_area("**Enter Additional Instructions (Optional)**", "")
 
             # Generate button
             if st.form_submit_button("Generate"):
                 # Check if inputs are provided
-                if university and degree and branch and year and subject and paper_type and syllabus:
+                if university and degree and branch and year and subject and syllabus:
                     try:
                         # Call generate function with the input data
-                        result = generate(university, degree, branch, year, subject, paper_type, syllabus)
+                        result = generate(university, degree, branch, year, subject, syllabus, total_marks, total_questions, marks_per_question, sub_questions, extra_instructions)
                         if result:
                             st.success("Paper generated  \n")
                         else: 

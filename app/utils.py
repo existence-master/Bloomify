@@ -59,9 +59,9 @@ def suggest(syllabus, selected_level, question):
     return transformed_question
 
 
-def generate(university, degree, branch, year, subject, paper_type, syllabus):
+def generate(university, degree, branch, year, subject, syllabus, total_marks, total_questions, marks_per_question, sub_questions, extra_instructions):
     # Get marking scheme from the session state based on university, degree, branch, and paper type
-    marking_scheme = st.session_state[f"{university.lower()}_{degree.lower().replace(' ', '_')}_{branch.lower()}"][paper_type.lower()]
+    #marking_scheme = st.session_state[f"{university.lower()}_{degree.lower().replace(' ', '_')}_{branch.lower()}"][paper_type.lower()]
     
     # Format the generate prompt using the base_generate_prompt template
     generate_prompt = base_generate_prompt.format(university=university,
@@ -69,13 +69,17 @@ def generate(university, degree, branch, year, subject, paper_type, syllabus):
                                                   year=year,
                                                   branch=branch,
                                                   subject=subject,
-                                                  paper_type=paper_type,
                                                   syllabus=syllabus,
-                                                  total_marks=marking_scheme["total_marks"],
-                                                  total_questions=marking_scheme["total_questions"],
-                                                  optional_questions=marking_scheme["optional_questions"],
-                                                  marks_per_question=marking_scheme["marks_per_question"],
-                                                  sub_questions=marking_scheme["sub_questions"],
+                                                #   total_marks=marking_scheme["total_marks"],
+                                                #   total_questions=marking_scheme["total_questions"],
+                                                #   optional_questions=marking_scheme["optional_questions"],
+                                                #   marks_per_question=marking_scheme["marks_per_question"],
+                                                #   sub_questions=marking_scheme["sub_questions"],
+                                                  total_marks=total_marks,
+                                                  total_questions=total_questions,
+                                                  marks_per_question=marks_per_question,
+                                                  sub_questions=sub_questions,
+                                                  extra_instructions=extra_instructions,
                                                   )
     
     # Send the generate prompt to the model and get the response

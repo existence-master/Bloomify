@@ -94,13 +94,12 @@ Details:
 * Year: {year}
 * Branch: {branch}
 * Subject: {subject}
-* Paper Type: {paper_type}
 * Syllabus : {syllabus}
 * Total Marks: {total_marks}
 * Number of questions: {total_questions}
 * Marks per question: {marks_per_question}
 * Sub-questions per question: {sub_questions}
-* Optional questions: {optional_questions}
+* Extra instructions: {extra_instructions}
 
 Desired Format:
 
@@ -113,7 +112,6 @@ Desired Format:
 * The whole paper must be balanced in terms of Bloom's taxonomy levels. That is all levels should be equally included in the paper
 * Alongside each sub question, give the Bloom's taxonomy level of that question.
 * See that the marks are distributed according to the taxonomy level of the question
-* With each question there is an optional question, so total {optional_questions} optional questions with their {sub_questions} sub-questions are there
 
 Example Output:
 
@@ -121,7 +119,7 @@ Example Output:
 
 **year - branch**
 
-**subject - paper_type**
+**subject - subject**
 
 **Question 1 (Marks: marks_for_question_1)**
 
