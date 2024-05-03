@@ -120,7 +120,7 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
         throw new Error("Failed to send query");
       }
 
-      const responseData = await response.json();
+      const responseData = await response.text();
 
       response = await fetch("/api/update-chat", {
         method: "POST",

@@ -6,13 +6,14 @@ import { useSession } from 'next-auth/react';
 import DialogBox from '@components/DialogBox';
 import Link from 'next/link';
 import SignoutButton from '@components/SignoutButton';
+import { renderWithLineBreaks } from '@utils/helpers';
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
   const [chatHistory, setChatHistory] = useState({})
   const [username, setUsername] = useState("")
 
-  useEffect(async () => {
+  const getUserDetails = async () => {
     const response = await fetch("/api/get-chat-history", {
       method: "GET",
       headers: {
@@ -21,12 +22,11 @@ const Dashboard = () => {
       mode: "cors" // Send user input in the specified format
     });
 
-    const {pairedChatData, userName} = await response.json()
+    const { pairedChatData, userName } = await response.json()
 
     setChatHistory(pairedChatData)
     setUsername(userName)
-    
-  }, [])
+  }
 
   const reloadChat = async () => {
     const response = await fetch("/api/get-chat-history", {
@@ -37,10 +37,14 @@ const Dashboard = () => {
       mode: "cors" // Send user input in the specified format
     });
 
-    const responseData = await response.json()
+    const { pairedChatData, userName } = await response.json()
 
-    setChatHistory(responseData)
+    setChatHistory(pairedChatData)
   }
+
+  useEffect(() => {
+    getUserDetails()
+  }, [])
   
   if (status === "loading") {
     return <p>Loading...</p>
@@ -122,7 +126,7 @@ const Dashboard = () => {
           </div>
           <div id="left-bottom" className="gap-2 flex">
             <div>
-              {session.user.email}
+              {username}
             </div>
             <div>
               <SignoutButton />
@@ -138,7 +142,7 @@ const Dashboard = () => {
           {Object.keys(chatHistory).map((key, index) => (
             <div key={index} className="pairedMessage">
               {/* Render input message */}
-              <div className="input-message">{chatHistory[key].input}</div>
+              <div className="input-message">{renderWithLineBreaks(chatHistory[key].input)}</div>
               {/* Render response message */}
               <div className="response-message">{chatHistory[key].response}</div>
             </div>
