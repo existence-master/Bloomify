@@ -106,10 +106,10 @@ def app():
             year = st.selectbox("**Select Year:**", ("FE", "SE", "TE", "BE"))
             subject = st.selectbox("**Enter Subject :**", ("ANN", "CS", "DS", "NLP"))
             syllabus = st.text_area("**Enter Syllabus :**")
-            total_marks = st.number_input("**Enter Total Marks**")
-            total_questions = st.number_input("**Enter Total Questions (Include any/all optional Questions)**")
-            marks_per_question = st.number_input("**Enter Marks Per Question**")
-            sub_questions = st.number_input("**Enter Number of Sub-Questions per Main Question**")
+            total_marks = st.number_input("**Enter Total Marks**", step=1)
+            total_questions = st.number_input("**Enter Total Questions (Include any/all optional Questions)**", step=1)
+            marks_per_question = st.number_input("**Enter Marks Per Question**", step=1)
+            sub_questions = st.number_input("**Enter Number of Sub-Questions per Main Question**", step=1)
             extra_instructions = st.text_area("**Enter Additional Instructions (Optional)**", "")
 
             # Generate button
