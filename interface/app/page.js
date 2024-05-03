@@ -76,7 +76,7 @@ const Home = () => {
     <section className="bg-transparent dark:bg-transparent py-12">
       <div className="container max-w-full mx-auto flex flex-col md:flex-row items-center justify-center sm:px-6 lg:px-4 gap-10">
           <div className="w-1/2 md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <p className="bg-[#007991] rounded-full p-10 leading-relaxed text-sm text-white justify-normal">From accurate question classNameification to dynamic suggestion and generation features driven by cutting-edge AI, Bloomify streamlines the assessment process, saving you time and promoting higher order thinking among students.</p>
+              <p className="bg-[#007991] rounded-full p-10 leading-relaxed text-sm text-white justify-normal">From accurate question classification to dynamic suggestion and generation features driven by cutting-edge AI, Bloomify streamlines the assessment process, saving you time and promoting higher order thinking among students.</p>
           </div>
           <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
               <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2 self-center">Product VS Research</h2>

@@ -5,6 +5,7 @@ import { FaUser, FaPlusCircle } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
 import DialogBox from '@components/DialogBox';
 import Link from 'next/link';
+import SignoutButton from '@components/SignoutButton';
 
 const Dashboard = () => {
   const { data: session, status } = useSession()
@@ -119,13 +120,18 @@ const Dashboard = () => {
               <button type="button" className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center">New Chat</button>          
             </div>
           </div>
-          <div id="left-bottom" className="">
-            Username
+          <div id="left-bottom" className="gap-2 flex">
+            <div>
+              {session.user.email}
+            </div>
+            <div>
+              <SignoutButton />
+            </div>
           </div>
         </div>
       </aside>
       <div id="right" className="h-full w-3/4">
-        {/*<DialogBox mode = "suggestion" reloadChat={reloadChat}/>*/}
+        <DialogBox mode = "suggestion" reloadChat={reloadChat}/>
         {/*to display message history*/}
         <div>
           {/* Iterate over the chatHistory object and render chat bubbles */}
