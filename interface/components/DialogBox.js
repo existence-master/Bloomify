@@ -7,8 +7,13 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
   
   const {data: session} = useSession()
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(session)
+  const [units, setUnits] = useState([{ unit: 1, content: '' }]);
+  const [markingScheme, setMarkingScheme] = useState({
+    marksPerUnit: 0,
+    mainQuestionsPerUnit: 0,
+    subQuestionsPerMainQuestion: 0,
+    marksPerMainQuestion: 0,
+  });
 
   // Default state initialization based on the mode
   const initialQueryState = {
@@ -44,9 +49,28 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
         ? "http://localhost:5000/generate"
         : "" 
 
+  // Function to add a new unit to the syllabus
+  const addUnit = () => {
+    setUnits((prevUnits) => [...prevUnits, { unit: prevUnits.length + 1, content: '' }]);
+  };
+
+  // Function to handle changes in the unit inputs
+  const handleUnitChange = (index, event) => {
+    const updatedUnits = [...units];
+    updatedUnits[index].content = event.target.value;
+    setUnits(updatedUnits);
+  };
   
   const openDialog = () => {
     setIsOpen(true);
+  };
+  
+  const handleMarkingSchemeChange = (event) => {
+    const { name, value } = event.target;
+    setMarkingScheme((prev) => ({
+      ...prev,
+      [name]: parseInt(value), // Ensure the value is an integer
+    }));
   };
 
   const handleInput = (e) => {
@@ -196,16 +220,76 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
   // Varad, create separate forms for syllabus and marking scheme input in generationForm
   const generationForm = (
     <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-      <h3 className="text-lg leading-6 font-medium text-gray-900">
-        Paper Type:
-      </h3>
-      <input
-        type="text"
-        name="paperType"
-        value={query.question}
-        onChange={handleInput}
-        className="mb-3 w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-      />
+      <form name="syllabus" onSubmit={handleFormInput}>
+      <h3>Syllabus</h3>
+      {units.map((unit, index) => (
+        <div key={index} className="syllabus-unit">
+          <label>{`Unit ${unit.unit}`}</label>
+          <input
+            type="text"
+            name={unit.unit}
+            value={unit.content}
+            onChange={(e) => handleUnitChange(index, e)}
+            className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+        </div>
+      ))}
+      <button type="button" onClick={addUnit} className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md">
+        Add Unit
+      </button>
+      {/* Submit button to submit the form */}
+      <button type="submit" className="mt-3 px-4 py-2 bg-green-500 text-white rounded-md">
+        Submit Syllabus
+      </button>
+      </form>
+      <form name="marking_scheme" onSubmit={handleFormInput}>
+      <h3>Marking Scheme</h3>
+      <div className="flex flex-col gap-2">
+        <label>
+          Marks Per Unit
+          <input
+            type="number"
+            name="marks_per_unit"
+            value={markingScheme.marksPerUnit}
+            onChange={handleMarkingSchemeChange}
+            className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+        </label>
+        <label>
+          Main Questions Per Unit
+          <input
+            type="number"
+            name="main_questions_per_unit"
+            value={markingScheme.mainQuestionsPerUnit}
+            onChange={handleMarkingSchemeChange}
+            className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+        </label>
+        <label>
+          Sub-Questions Per Main Question
+          <input
+            type="number"
+            name="sub_questions_per_main_question"
+            value={markingScheme.subQuestionsPerMainQuestion}
+            onChange={handleMarkingSchemeChange}
+            className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+        </label>
+        <label>
+          Marks Per Main Question
+          <input
+            type="number"
+            name="marks_per_main_question"
+            value={markingScheme.marksPerMainQuestion}
+            onChange={handleMarkingSchemeChange}
+            className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+          </label>
+        </div>
+        <button type="submit" className="mt-3 px-4 py-2 bg-green-500 text-white rounded-md">
+          Submit Marking Scheme
+        </button>
+    </form>
     </div>
   );
 

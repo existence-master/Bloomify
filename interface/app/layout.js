@@ -1,10 +1,10 @@
 import "./globals.css";
-import AuthProvider from "@utils/AuthProvider";
+import AuthProvider from "@components/AuthProvider";
 import { getServerSession } from "next-auth"; // Importing the session fetching function
 
 export const metadata = {
   title: "Bloomify",
-  description: "AI Based Assessment Creator for teachers. - question paper setting AI tool",
+  description: "AI Based Assessment Creator For Teachers",
 };
 
 export default async function RootLayout({ children }) {
@@ -14,10 +14,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <AuthProvider session={session}>
-        {/* <div className="mx-auto text-xl  mb-10"> */}
-             {/* <Navbar />   */}
             {children}
-        {/* </div>  */}
         </AuthProvider>
       </body>
     </html>
