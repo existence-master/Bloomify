@@ -9,6 +9,23 @@ import Link from 'next/link';
 const Dashboard = () => {
   const { data: session, status } = useSession()
   const [chatHistory, setChatHistory] = useState({})
+  const [username, setUsername] = useState("")
+
+  useEffect(async () => {
+    const response = await fetch("/api/get-chat-history", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors" // Send user input in the specified format
+    });
+
+    const {pairedChatData, userName} = await response.json()
+
+    setChatHistory(pairedChatData)
+    setUsername(userName)
+    
+  }, [])
 
   const reloadChat = async () => {
     const response = await fetch("/api/get-chat-history", {
@@ -24,11 +41,6 @@ const Dashboard = () => {
     setChatHistory(responseData)
   }
   
-    // UseEffect hook to load chat history on component mount
-    useEffect(() => {
-      reloadChat();
-    }, []); // Empty dependency array ensures this effect runs only once on component mount
-
   if (status === "loading") {
     return <p>Loading...</p>
   }
@@ -118,7 +130,7 @@ const Dashboard = () => {
         <div>
           {/* Iterate over the chatHistory object and render chat bubbles */}
           {Object.keys(chatHistory).map((key, index) => (
-            <div key={index} className="chat-bubble">
+            <div key={index} className="pairedMessage">
               {/* Render input message */}
               <div className="input-message">{chatHistory[key].input}</div>
               {/* Render response message */}
