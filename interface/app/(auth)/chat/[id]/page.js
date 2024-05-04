@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import DialogBox from "@components/DialogBox";
 import Link from "next/link";
@@ -131,6 +131,27 @@ const Dashboard = () => {
     }));
   }
 
+  //Send Message Dropdown Logic
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   console.log(chatDetails.chatTitle)
   
   if (status === "loading") {
@@ -140,6 +161,7 @@ const Dashboard = () => {
   if (status !== "authenticated") {
     return <p>Access Denied</p>
   }
+  
 
   return (
     <div className="bg-[#FFFAE3] w-screen h-screen flex">
@@ -248,11 +270,32 @@ const Dashboard = () => {
           </div>
         </div>
       </aside>
-      <div id="right" className="h-full w-3/4">
+      <div id="right" className="flex h-full w-3/4">
         <div id = "chat-title">
           {chatDetails.chatTitle}
         </div>
-        <DialogBox mode="suggestion" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } />
+        {/* <DialogBox mode="suggestion" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } /> */}
+        <div className="absolute bottom-0 right-0 p-10">
+          <div ref={dropdownRef} className="relative">
+            <button
+              onClick={toggleMenu}
+              className="flex items-center p-2 justify-center rounded-2xl border-2 border-black bg-[#007991] text-white hover:text-gray-900 hover:bg-gray-300 focus:outline-none"
+            >
+              {/* Placeholder for icon */}
+              Send Message
+            </button>
+
+            {/* Dropdown menu */}
+            {isOpen && (
+              <div className="absolute z-10 -top-44 bottom-0 right-8 mt-8 w-12 bg-transparent">
+                {/* Menu items */}
+                <DialogBox mode="classification" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } />
+                <DialogBox mode="suggestion" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } />
+                <DialogBox mode="generation" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } />
+              </div>
+            )}
+          </div>
+        </div>
         <div className="flex">
           {/* Iterate over the chatHistory object and render chat bubbles */}
           {chatDetails.chatHistory?.map((message, index) => (

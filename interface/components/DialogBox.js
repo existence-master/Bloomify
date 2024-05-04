@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, university}) => {
   
@@ -302,18 +303,38 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
   );
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center">
       <button
         onClick={openDialog}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-transparent"
       >
-        {mode === "classification"
-          ? "Classify"
-          : mode === "suggestion"
-            ? "Suggest"
-            : mode === "generation"
-              ? "Generate"
-              : ""}
+      {mode === "classification" && (
+        <Image
+          src="/classifyicon.svg"
+          alt="Classify Icon"
+          className="w-8 h-8 mx-auto my-2 cursor-pointer"
+          width={8}
+          height={8}
+        />
+      )}
+      {mode === "suggestion" && (
+        <Image
+          src="/suggesticon.svg"
+          alt="Suggest Icon"
+          className="w-8 h-8 mx-auto my-2 cursor-pointer"
+          width={8}
+          height={8}
+        />
+      )}
+      {mode === "generation" && (
+        <Image
+          src="/generateicon.svg"
+          alt="Generate Icon"
+          className="w-8 h-8 mx-auto my-2 cursor-pointer"
+          width={8}
+          height={8}
+        />
+      )}
       </button>
       {isOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
