@@ -126,10 +126,10 @@ const Dashboard = () => {
     <div className="bg-[#FFFAE3] w-screen h-screen flex">
       <aside
         id="left-sidebar"
-        className="border-4 fixed top-0 left-0 z-40 w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0"
+        className="border-r-2 border-black flex w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
+        <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
           <div>
             <ul className="space-y-2 font-medium">
               <li>
@@ -265,7 +265,7 @@ const Dashboard = () => {
           </div>
           ))}
           </div>
-          <div id="left-bottom" className="gap-2 flex">
+          <div id="left-bottom" className="gap-20 flex">
             <div>{userDetails.username}</div>
             <div>
               <SignoutButton />
@@ -273,12 +273,12 @@ const Dashboard = () => {
           </div>
         </div>
       </aside>
-      <div className="p-8 bg-gray-100 min-h-screen flex justify-center items-center">
-      <form onSubmit={handleCreateNewChat} className="bg-white p-6 rounded-lg shadow-lg w-80">
-        <h2 className="text-xl font-bold mb-4">Enter Chat Details</h2>
+      <div className="p-8 w-full bg-[#FFFAE3] min-h-screen flex justify-center items-center">
+      <form onSubmit={handleCreateNewChat} className="bg-[#FFFAE3] flex flex-col justify-between p-6 rounded-lg shadow-lg w-1/2 h-3/4">
+        <h2 className="text-4xl font-bold mb-4">Enter Chat Details</h2>
 
         <div className="mb-4">
-          <label className="block text-gray-700">Degree</label>
+          <label className="block text-xl text-gray-700">Chat Title</label>
           <input
             type="text"
             name="title"
@@ -288,7 +288,7 @@ const Dashboard = () => {
           />
           </div>
           <div>
-            <label className="block text-gray-700">Degree</label>
+            <label className="block text-xl text-gray-700">Degree</label>
             <select
             name="degree"
             value={newChatDetails.degree}
@@ -302,7 +302,7 @@ const Dashboard = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Branch</label>
+        <label className="block text-xl text-gray-700">Branch</label>
         <select
           name="branch"
           value={newChatDetails.branch}
@@ -318,7 +318,7 @@ const Dashboard = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Year</label>
+        <label className="block text-xl text-gray-700">Year</label>
         <select
           name="year"
           value={newChatDetails.year}
@@ -333,7 +333,7 @@ const Dashboard = () => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-gray-700">Subject</label>
+        <label className="block text-xl text-gray-700">Subject</label>
         <select
           name="subject"
           value={newChatDetails.subject}
@@ -349,7 +349,7 @@ const Dashboard = () => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          className="bg-[#007991] w-full text-white py-2 px-4 rounded hover:bg-blue-600"
         >
           Create New Chat
         </button>

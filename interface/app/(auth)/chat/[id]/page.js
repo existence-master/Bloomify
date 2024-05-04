@@ -143,8 +143,12 @@ const Dashboard = () => {
 
   return (
     <div className="bg-[#FFFAE3] w-screen h-screen flex">
-      <aside id="left-sidebar" className="border-4 fixed top-0 left-0 z-40 w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-        <div className="h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
+      <aside 
+        id="left-sidebar" 
+        className="border-r-2 border-black flex w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0" 
+        aria-label="Sidebar"
+      >
+        <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
             <div>
               <ul className="space-y-2 font-medium">
                 <li>
@@ -222,7 +226,7 @@ const Dashboard = () => {
                   </select>
                 </div>
               </div>
-              <button type="button" className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center">New Chat</button>          
+              <Link href="/dashboard"><button type="button" className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center">New Chat</button></Link>          
             </div>
           </div>
           <div id="filtered-chats">
@@ -249,7 +253,7 @@ const Dashboard = () => {
           {chatDetails.chatTitle}
         </div>
         <DialogBox mode="suggestion" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } />
-        <div>
+        <div className="flex">
           {/* Iterate over the chatHistory object and render chat bubbles */}
           {chatDetails.chatHistory?.map((message, index) => (
           <div key={index} className="pairedMessage">
