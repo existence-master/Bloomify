@@ -5,8 +5,9 @@ import { useSession } from "next-auth/react";
 import DialogBox from "@components/DialogBox";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
-import { renderWithLineBreaks } from "@utils/helpers";
 import { useRouter, useParams } from "next/navigation";
+import ChatBubble from "@components/ChatBubble";
+import Image from "next/image";
 
 const Dashboard = () => {
   const router = useRouter()
@@ -167,20 +168,20 @@ const Dashboard = () => {
     <div className="bg-[#FFFAE3] w-screen h-screen flex">
       <aside 
         id="left-sidebar" 
-        className="border-r-2 border-black flex w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0" 
+        className="border-r-2 border-black flex w-1/5 h-dvh transition-transform -translate-x-full sm:translate-x-0" 
         aria-label="Sidebar"
       >
         <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
             <div>
               <ul className="space-y-2 font-medium">
                 <li>
-                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group">
+                    <Link href="/dashboard" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group">
                       <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                           <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                           <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                       </svg>
                       <span className="ms-3">Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
                 <li>
                     <Link href="/" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group">
@@ -247,41 +248,66 @@ const Dashboard = () => {
                     <option value="DS">DS</option>
                   </select>
                 </div>
-              </div>
-              <Link href="/dashboard"><button type="button" className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center">New Chat</button></Link>          
+              </div>       
             </div>
           </div>
-          <div id="filtered-chats">
+          <div id="filtered-chats" className="h-full mt-10">
           {filteredChats.map((chat, index) => (
-          <div key={index} id="filtered-chat" onClick={() => handleChatClick(chat._id)}>
-            <h3 id="chat-title">
+          <div key={index} id="filtered-chat">
+            <button className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2" onClick={() => handleChatClick(chat._id)}>
               {chat.title}
-            </h3>
+            </button>
           </div>
           ))}
           </div>
           <div id="left-bottom" className="gap-2 flex">
             <div>
+              <Image 
+                src = "/user.svg"
+                width = {36}
+                height={36}
+              />
+            </div>
+            <div className="text-xl font-bold">
               {userDetails.username}
             </div>
             <div>
               <SignoutButton />
             </div>
+            <div className="absolute right-10">
+              <Link href="/dashboard">
+                <div className="rounded-full p-2 bg-[#007991]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="3"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </div>
+              </Link>   
+            </div>
           </div>
         </div>
       </aside>
-      <div id="right" className="flex h-full w-3/4">
-        <div id = "chat-title">
+      <div id="right" className="flex flex-col h-dvh w-full">
+        <div id="chat-title" className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300">
           {chatDetails.chatTitle}
         </div>
         {/* <DialogBox mode="suggestion" reloadChat={reloadChat} chatDetails={chatDetails} university={ userDetails.university } /> */}
-        <div className="absolute bottom-0 right-0 p-10">
+        <div className="fixed bottom-0 right-0 p-10">
           <div ref={dropdownRef} className="relative">
             <button
               onClick={toggleMenu}
               className="flex items-center p-2 justify-center rounded-2xl border-2 border-black bg-[#007991] text-white hover:text-gray-900 hover:bg-gray-300 focus:outline-none"
             >
-              {/* Placeholder for icon */}
               Send Message
             </button>
 
@@ -296,20 +322,16 @@ const Dashboard = () => {
             )}
           </div>
         </div>
-        <div className="flex">
+        <div className="bg-[#FFFAE3] flex flex-col flex-grow mt-4 p-4 overflow-y-auto">
           {/* Iterate over the chatHistory object and render chat bubbles */}
           {chatDetails.chatHistory?.map((message, index) => (
-          <div key={index} className="pairedMessage">
-            {/* Render the input message */}
-            <div className="input-message">
-              {renderWithLineBreaks(message.input)} 
+            <div key={index} className="pairedMessage">
+              {/* Render the input message */}
+              <ChatBubble role="User" message={message.input} />
+              {/* Render the response message */}
+              <ChatBubble role="Bloomify" message={message.response} />
             </div>
-            {/* Render the response message */}
-            <div className="response-message">
-              {message.response}
-            </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
     </div>

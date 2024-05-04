@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -126,7 +127,7 @@ const Dashboard = () => {
     <div className="bg-[#FFFAE3] w-screen h-screen flex">
       <aside
         id="left-sidebar"
-        className="border-r-2 border-black flex w-1/4 h-full transition-transform -translate-x-full sm:translate-x-0"
+        className="border-r-2 border-black flex w-1/5 h-full transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
         <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
@@ -248,27 +249,50 @@ const Dashboard = () => {
                   </select>
                 </div>
               </div>
-              <button
-                type="button"
-                className="w-full px-5 py-2.5 text-sm font-medium text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center"
-              >
-                New Chat
-              </button>
             </div>
           </div>
-          <div id="filtered-chats">
+          <div id="filtered-chats" className="h-full mt-10">
           {filteredChats.map((chat, index) => (
-          <div key={index} id="filtered-chat" onClick={() => handleChatClick(chat._id)}>
-            <h3 id="chat-title">
+          <div key={index} id="filtered-chat">
+            <button className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2" onClick={() => handleChatClick(chat._id)}>
               {chat.title}
-            </h3>
+            </button>
           </div>
           ))}
           </div>
-          <div id="left-bottom" className="gap-20 flex">
-            <div>{userDetails.username}</div>
+          <div id="left-bottom" className="gap-2 flex">
+            <div>
+              <Image 
+                src = "/user.svg"
+                width = {36}
+                height={36}
+              />
+            </div>
+            <div className="text-xl font-bold">
+              {userDetails.username}
+            </div>
             <div>
               <SignoutButton />
+            </div>
+            <div className="absolute right-10">
+              <Link href="/dashboard">
+                <div className="rounded-full p-2 bg-[#007991]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="3"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </div>
+              </Link>   
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 // SignoutButton.js
 
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 
 const SignoutButton = () => {
   const handleSignout = async () => {
@@ -12,7 +13,11 @@ const SignoutButton = () => {
     }
   };
 
-  return <button className="text-white bg-[#007991] hover:bg-[#222E50] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-[#007991] dark:hover:bg-[#222E50] focus:outline-none dark:focus:ring-blue-800" onClick={handleSignout}>Sign out</button>;
+  return (
+  <div onClick={handleSignout}>
+    <Image src="/signout.svg" className="cursor-pointer" width={40} height={40}/>
+  </div>
+  );
 };
 
 export default SignoutButton;
