@@ -197,12 +197,14 @@ class SuggestionInput(BaseModel):
     question: str
     desired_level: str
 class GenerationInput(BaseModel):
+    syllabus: dict
+    marking_scheme: dict
     university: str
     degree: str
     branch: str
     year: str
     subject: str
-    paper_type: str
+    average_blooms_score: int
 
 @app.get("/hello")
 async def helloWorld():
@@ -217,14 +219,14 @@ async def classify_question(input: ClassificationInput):
 
 @app.post("/suggest", response_class=PlainTextResponse)
 async def suggest_question(input: SuggestionInput):
-    prompt = suggestion_prompt.format(input.question, input.desired_level)
+    prompt = suggestion_prompt.format(input.question, "Apply")
     response = suggest_convo.send_message(prompt)
     transformed_question = response.text
     return transformed_question
 
 @app.post("/generate", response_class=PlainTextResponse)
 async def generate_questions(input: GenerationInput):
-    prompt = generation_prompt.format(input.syllabus, input.desired_level)
+    prompt = generation_prompt.format("C Programming", input.desired_level)
     response = generate_convo.send_message(prompt)
     generated_question = response.text
     return generated_question

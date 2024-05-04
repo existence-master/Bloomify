@@ -1,11 +1,13 @@
 import User from "@models/User";
 import connect from "@utils/db";
 import bcrypt from "bcryptjs";
+import {faker} from "@faker-js/faker";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   try {
     await connect();
+    faker.seed(Math.floor(Math.random() * 10000))
 
     const { email, password } = await request.json();
 
@@ -24,6 +26,7 @@ export const POST = async (request) => {
     const newUser = new User({
       email,
       password: hashedPassword,
+      username: faker.internet.userName()
     });
 
     await newUser.save();

@@ -5,6 +5,10 @@ const { Schema, model, models } = mongoose;
 // Define the Chat Schema
 const chatSchema = new Schema(
     {
+        title: {
+            type: String,
+            required: false
+        },
         degree: {
             type: String,
             required: true,

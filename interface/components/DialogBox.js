@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-const DialogBox = ({ mode = "classification" , reloadChat}) => {
+const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, university}) => {
   
   const {data: session} = useSession()
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +25,11 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
       desired_level: ""
     },
     generation: {
+      university: university,
+      degree: chatDetails.degree,
+      branch: chatDetails.branch,
+      year: chatDetails.year,
+      subject: chatDetails.subject,
       syllabus: [{ unit: 1, content: "" }],
       marking_scheme: {
         marks_per_unit: 0,
@@ -32,7 +37,7 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
         sub_questions_per_main_question: 0,
         marks_per_main_question: 0
       },
-      average_blooms_score: 0
+      average_blooms_score: 3
     },
   };
 
@@ -131,6 +136,7 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
 
 
     try {
+
       let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -146,6 +152,8 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
 
       const responseData = await response.text();
 
+      const {chatId} = chatDetails
+
       response = await fetch("/api/update-chat", {
         method: "POST",
         headers: {
@@ -153,7 +161,7 @@ const DialogBox = ({ mode = "classification" , reloadChat}) => {
         },
         mode: "cors",
         body: JSON.stringify({
-          session,
+          chatId,
           query,
           responseData
         }), // Send user input in the specified format

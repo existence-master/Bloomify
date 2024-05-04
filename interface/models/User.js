@@ -23,11 +23,11 @@ const userSchema = new Schema(
             type: String,
             required: false,
         },
-        chat: {
+        chats: [{
             type: Schema.Types.ObjectId, // Reference to the Chat model
-            ref: 'Chat',
+            ref: "Chat",
             required: false, // This can be optional, depending on use-case
-        },
+        }],
     },
     { timestamps: true }
 );

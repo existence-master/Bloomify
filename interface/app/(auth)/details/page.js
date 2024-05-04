@@ -1,19 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Details = () => {
   const [error, setError] = useState("");
   const router = useRouter();
-  const { data: session } = useSession();
-
-  const userEmail = session.user?.email
+  const searchParams = useSearchParams()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const username = e.target[0].value;
     const university = e.target[1].value;
+    const userEmail = searchParams.get("userEmail")
 
     try {
       const res = await fetch("/api/details", {

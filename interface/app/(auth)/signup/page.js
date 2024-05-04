@@ -11,9 +11,10 @@ const Signup = () => {
 
     useEffect(() => {
         if(session?.status === "authenticated" ){
-            router.replace("/details")
+            router.push("/dashboard")
         }
     }, [session, router]);
+
     const isValidEmail = (email) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return emailRegex.test(email);
@@ -48,7 +49,10 @@ const Signup = () => {
                 setError("This email is already registered")
             }if(res.status == 200){
                 setError("");
-                router.push("/details");
+                router.push({
+                    pathname: "/details",
+                    query: { userEmail: email }
+                });
             }
         }catch(error){
             setError("Error, try again");
