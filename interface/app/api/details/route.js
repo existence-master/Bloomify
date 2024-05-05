@@ -12,10 +12,11 @@ export const POST = async (request) => {
     if (existingUsername) {
       return new NextResponse("This username is already taken", { status: 400 });
     }
+
+    console.log(userEmail)
     await User.findOneAndUpdate(
       { email: userEmail }, // Condition to find the user
       { username: username, university: university }, // Data to update
-      { new: true } // Return the updated document
     );
     return new NextResponse("Username Registered", { status: 200 });
   } catch (err) {

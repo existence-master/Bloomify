@@ -13,6 +13,10 @@ const pairedMessageSchema = new Schema(
             type: String,
             required: true,
         },
+        mode: {
+            type: String,
+            required: true
+        }
     },
     { timestamps: true }
 );

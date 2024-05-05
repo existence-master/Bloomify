@@ -27,6 +27,8 @@ export const POST = async (request) => {
     const query = {
       _id: { $in: user.chats }, // Only consider chats that belong to this user
     };
+
+    console.log(user.chats)
     
     // Conditionally add filters to the query object
     if (degree !== "Degree") {
