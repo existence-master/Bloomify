@@ -137,7 +137,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 		setIsLoading(true);
 
 		const requestData = convertToMessage(query);
-
+		console.log(requestData)
 		try {
 
 			let response = await fetch(url, {

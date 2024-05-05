@@ -34,7 +34,7 @@ const Chat = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef(null);
   
-  
+  	console.log(chatDetails)
 	useEffect(() => {
 	  document.addEventListener("mousedown", handleClickOutside);
 	  return () => {
