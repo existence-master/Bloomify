@@ -39,8 +39,9 @@ export const POST = async (request) => {
 
     // Append an object with the input and response to the array
     chatHistory.push({
-        input: formatKeyValueString(message.input), 
-        response: message.response,
+      input: formatKeyValueString(message.input), 
+      response: message.response,
+      mode: message.mode
     });
     }
 

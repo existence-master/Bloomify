@@ -32,6 +32,32 @@ const renderWithLineBreaks = (text) => {
         ))}
       </div>
     );
-  };
+};
+  
+const capitalizeFirstLetter = (word) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
-export { formatKeyValueString, renderWithLineBreaks };
+const convertToMessage = (obj, indent = 0) => {
+  let message = '';
+  const indentation = '  '.repeat(indent); // Create an indentation string based on the level
+
+  Object.entries(obj).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      message += `${indentation}${key}:\n`;
+      value.forEach((item, index) => {
+        message += `${indentation}  [${index}]:\n`;
+        message += convertToMessage(item, indent + 2); // Increase indent for nested objects
+      });
+    } else if (typeof value === 'object' && value !== null) {
+      message += `${indentation}${key}:\n`;
+      message += convertToMessage(value, indent + 1); // Recursively handle nested objects
+    } else {
+      message += `${indentation}${key}: ${value}\n`;
+    }
+  });
+
+  return message;
+}
+
+export { formatKeyValueString, renderWithLineBreaks, capitalizeFirstLetter, convertToMessage };

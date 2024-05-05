@@ -2,19 +2,23 @@ import Chat from "@models/Chat"; // Chat model
 import PairedMessage from "@models/PairedMessage"; // PairedMessage model
 import connect from "@utils/db";
 import { NextResponse } from "next/server";
+import { capitalizeFirstLetter } from "@utils/helpers";
+
 
 export const POST = async (request) => {
-  const { chatId, query, responseData } = await request.json();
+  const { chatId, query, responseData, mode } = await request.json();
   await connect();
 
   try {
 
     const chat = await Chat.findById(chatId);
+    console.log(chat)
 
     // Create the new PairedMessage and save it
     const pairedMessage = new PairedMessage({
       input: query,
       response: responseData,
+      mode: capitalizeFirstLetter(mode)
     });
 
     const savedPairedMessage = await pairedMessage.save();

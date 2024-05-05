@@ -7,7 +7,6 @@ const Signup = () => {
     const [error, setError] = useState("");
     const router = useRouter();
     const session = useSession();
-    console.log(session);
 
     useEffect(() => {
         if(session?.status === "authenticated" ){
@@ -49,10 +48,7 @@ const Signup = () => {
                 setError("This email is already registered")
             }if(res.status == 200){
                 setError("");
-                router.push({
-                    pathname: "/details",
-                    query: { userEmail: email }
-                });
+                router.push(`/details?userEmail=${email}`);
             }
         }catch(error){
             setError("Error, try again");
