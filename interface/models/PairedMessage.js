@@ -6,7 +6,7 @@ const { Schema, model, models } = mongoose;
 const pairedMessageSchema = new Schema(
     {
         input: {
-            type: Schema.Types.Mixed, // This allows for dynamic data types
+            type: String, // This allows for dynamic data types
             required: true,
         },
         response: {

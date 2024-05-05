@@ -6,17 +6,18 @@ import { capitalizeFirstLetter } from "@utils/helpers";
 
 
 export const POST = async (request) => {
-  const { chatId, query, responseData, mode } = await request.json();
+  const { chatId, requestData, responseData, mode } = await request.json();
   await connect();
 
   try {
 
     const chat = await Chat.findById(chatId);
     console.log(chat)
+    console.log(requestData)
 
     // Create the new PairedMessage and save it
     const pairedMessage = new PairedMessage({
-      input: query,
+      input: requestData,
       response: responseData,
       mode: capitalizeFirstLetter(mode)
     });
