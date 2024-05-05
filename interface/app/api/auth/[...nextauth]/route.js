@@ -37,7 +37,7 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    // ...add more providers here
+    // add more providers here
   ],
   callbacks: {
     async signIn({ user, account }) {
@@ -54,7 +54,7 @@ export const authOptions = {
             });
 
             await newUser.save();
-            return true;
+            return `/details?userEmail=${user.email}`;
           }
           return true;
         } catch (err) {
@@ -62,6 +62,13 @@ export const authOptions = {
           return false;
         }
       }
+    },
+    async redirect({url, baseUrl}) {
+      if (url.startsWith("/details")) {
+        return url; // Redirect to the /details page
+      }
+      
+      return "/dashboard"; // Redirect to dashboard is user exists
     },
   },
 };
