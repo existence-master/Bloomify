@@ -41,7 +41,7 @@ const Home = () => {
         </div>
       </div>
     </nav>
-    <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0">
+    <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0 overflow-hidden">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
           <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
               <h2 className="text-xl font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
@@ -56,7 +56,7 @@ const Home = () => {
           </div>
       </div>
     </section>
-    <section className="bg-transparent dark:bg-transparent py-12">
+    <section className="bg-transparent dark:bg-transparent py-12 h-1/12">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
           <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
               <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2">About Us</h2>
@@ -73,20 +73,26 @@ const Home = () => {
           </div>
       </div>
     </section>
-    <section className="bg-transparent dark:bg-transparent py-12">
-      <div className="container max-w-full mx-auto flex flex-col md:flex-row items-center justify-center sm:px-6 lg:px-4 gap-10">
-          <div className="w-1/2 md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <p className="bg-[#007991] rounded-full p-10 leading-relaxed text-sm text-white justify-normal">From accurate question classification to dynamic suggestion and generation features driven by cutting-edge AI, Bloomify streamlines the assessment process, saving you time and promoting higher order thinking among students.</p>
+    <section className="bg-transparent dark:bg-transparent py-12 overflow-hidden">
+      <div className="container max-w-full mx-auto flex flex-col md:flex-row items-center justify-center sm:px-6 lg:px-4 gap-10 relative">
+        <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+          <div className="absolute -top-24 bg-[#007991] rounded-full p-24 leading-relaxed text-sm text-white justify-normal -left-16 w-96 h-96">
+            <p className="text-justify">From accurate question classification to dynamic suggestion and generation features driven by cutting-edge AI, Bloomify streamlines the assessment process, saving you time and promoting higher order thinking among students.</p>
           </div>
-          <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2 self-center">Product VS Research</h2>
-              <p className="bg-[#222E50] rounded-xl p-8 leading-relaxed text-xl text-white justify-normal">The development of Bloomify was driven by extensive research efforts aimed at addressing prevalent challenges in educational assessment. Leveraging insights from Bloom's Taxonomy, our research team embarked on a journey to revolutionize assessment practices through the integration of artificial intelligence. Through meticulous data collection, analysis, and experimentation with cutting-edge natural language processing techniques, we laid the foundation for Bloomify's advanced features. Our research endeavors were guided by a commitment to enhancing cognitive assessment, fostering critical thinking skills, and promoting practical application of knowledge. The resulting product, Bloomify, represents the culmination of our research efforts, offering educators a powerful tool to create balanced question papers aligned with Bloom's Taxonomy effortless.</p>
+        </div>
+        <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+          <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2 self-center">Product VS Research</h2>
+          <p className="bg-[#222E50] rounded-xl p-8 leading-relaxed text-xl text-white justify-normal">The development of Bloomify was driven by extensive research efforts aimed at addressing prevalent challenges in educational assessment. Leveraging insights from Bloom's Taxonomy, our research team embarked on a journey to revolutionize assessment practices through the integration of artificial intelligence. Through meticulous data collection, analysis, and experimentation with cutting-edge natural language processing techniques, we laid the foundation for Bloomify's advanced features. Our research endeavors were guided by a commitment to enhancing cognitive assessment, fostering critical thinking skills, and promoting practical application of knowledge. The resulting product, Bloomify, represents the culmination of our research efforts, offering educators a powerful tool to create balanced question papers aligned with Bloom's Taxonomy effortlessly.</p>
+        </div>
+        <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+          <div className="absolute bg-[#007991] rounded-full p-24 leading-relaxed text-sm text-white justify-normal -bottom-40 -right-16 w-96 h-96">
+            <p className="text-justify">Revolutionize your assessment practices with Bloomify – the all-in-one platform empowering educators to effortlessly create balanced exam papers aligned with Bloom's Taxonomy.</p>
           </div>
-          <div className="w-1/2 md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <p className="bg-[#007991] rounded-full p-10 leading-relaxed text-sm text-white justify-normal">Revolutionize your assessment practices with Bloomify – the all-in-one platform empowering educators to effortlessly create balanced exam papers aligned with Bloom's Taxonomy.</p>
-          </div>
+        </div>
       </div>
     </section>
+
+
     <hr className="my-6 border-[#222E50] border-8 sm:mx-auto lg:my-8 mb-2" />
     <hr className="my-6 border-[#007991] border-8 sm:mx-auto lg:my-8 mt-2" />
     <section className="bg-transparent dark:bg-transparent py-12">
