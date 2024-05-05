@@ -136,12 +136,8 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 		e.stopPropagation();
 		setIsLoading(true);
 
-		const message = convertToMessage(query);
-		// Object.entries(query).forEach(([key, value]) => {
-		// 	message += `${key}: ${value}\n`; // Append each key-value pair to the message with a newline for readability
-		// });
-
-
+		const requestData = convertToMessage(query);
+		console.log(requestData)
 		try {
 
 			let response = await fetch(url, {
@@ -167,7 +163,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				mode: "cors",
 				body: JSON.stringify({
 					chatId,
-					query,
+					requestData,
 					responseData,
 					mode
 				}), // Send user input in the specified format

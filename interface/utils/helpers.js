@@ -44,19 +44,19 @@ const convertToMessage = (obj, indent = 0) => {
 
   Object.entries(obj).forEach(([key, value]) => {
     if (Array.isArray(value)) {
-      message += `${indentation}${key}:\n`;
-      value.forEach((item, index) => {
-        message += `${indentation}  [${index}]:\n`;
+      message += `${indentation}${capitalizeWords(key.replace(/_/g, " "))}\n`;
+      value.forEach((item) => {
         message += convertToMessage(item, indent + 2); // Increase indent for nested objects
       });
     } else if (typeof value === 'object' && value !== null) {
-      message += `${indentation}${key}:\n`;
+      message += `${indentation}${capitalizeWords(key.replace(/_/g, " "))}:\n`;
       message += convertToMessage(value, indent + 1); // Recursively handle nested objects
     } else {
-      message += `${indentation}${key}: ${value}\n`;
+      message += `${indentation}${capitalizeWords(key.replace(/_/g, " "))}: ${value}\n`;
     }
   });
 
+  console.log(message)
   return message;
 }
 

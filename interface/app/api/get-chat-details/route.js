@@ -2,7 +2,6 @@ import Chat from "@models/Chat";
 import connect from "@utils/db";
 import { NextResponse } from "next/server";
 import PairedMessage from "@models/PairedMessage";
-import { formatKeyValueString } from "@utils/helpers";
 
 export const POST = async (request) => {
   try {
@@ -39,7 +38,7 @@ export const POST = async (request) => {
 
     // Append an object with the input and response to the array
     chatHistory.push({
-      input: formatKeyValueString(message.input), 
+      input: message.input, 
       response: message.response,
       mode: message.mode
     });

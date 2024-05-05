@@ -324,6 +324,7 @@ const Dashboard = () => {
 						onChange={handleInputChange}
 						className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 					>
+						<option value="">Select</option>
 						<option value="BTech">BTech</option>
 						<option value="MTech">MTech</option>
 					</select>
@@ -337,6 +338,7 @@ const Dashboard = () => {
 					onChange={handleInputChange}
 					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
+					<option value="">Select</option>
 					<option value="AI DS">AI DS</option>
 					<option value="CS">CS</option>
 					<option value="IT">IT</option>
@@ -352,6 +354,7 @@ const Dashboard = () => {
 					onChange={handleInputChange}
 					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
+					<option value="">Select</option>					
 					<option value="SE">SE</option>
 					<option value="TE">TE</option>
 					<option value="BE">BE</option>
@@ -366,6 +369,7 @@ const Dashboard = () => {
 					onChange={handleInputChange}
 					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
+					<option value="">Select</option>				
 					<option value="ANN">ANN</option>
 					<option value="CS">CS</option>
 					<option value="DS">DS</option>
