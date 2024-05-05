@@ -12,6 +12,9 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <link rel='icon' href='/favicon.ico' />
+      </head>
       <body>
         <AuthProvider session={session}>
             {children}

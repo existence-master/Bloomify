@@ -167,11 +167,20 @@ const Dashboard = () => {
 											stroke="currentColor"
 											strokeLinecap="round"
 											strokeLinejoin="round"
-											stroke-width="2"
+											strokeWidth="2"
 											d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
 										/>
 									</svg>
 									<span className="flex-1 ms-3 whitespace-nowrap">Home</span>
+								</Link>
+							</li>
+							<li>
+								<Link
+									href="/settings"
+									className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
+								>
+									<Image src="/settingsicon.svg" width={20} height={20} alt="Settings Icon"/>
+									<span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
 								</Link>
 							</li>
 							<li>
@@ -265,18 +274,20 @@ const Dashboard = () => {
 					))}
 					</div>
 					<div id="left-bottom" className="gap-2 flex">
-						<div>
-							<Image 
+						<Link href="/settings" className="flex">
+							<div>
+								<Image 
 								src = "/user.svg"
 								width = {36}
 								height={36}
 								alt = "User Icon"
-							/>
-						</div>
-						<div className="text-xl font-bold">
-							{userDetails.username}
-						</div>
-						<div>
+								/>
+							</div>
+							<div className="text-xl font-bold">
+								{userDetails.username}
+							</div>
+						</Link>
+						<div className="ml-4">
 							<SignoutButton />
 						</div>
 						<div className="absolute right-10">
@@ -313,7 +324,7 @@ const Dashboard = () => {
 						name="title"
 						value={newChatDetails.title}
 						onChange={handleInputChange}
-						className="mt-1 block w-full border-gray-300 rounded-md"
+						className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl"
 					/>
 					</div>
 					<div>
@@ -323,12 +334,12 @@ const Dashboard = () => {
 						value={newChatDetails.degree}
 						onChange={handleInputChange}
 						className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-					>
-						<option value="">Select</option>
-						<option value="BTech">BTech</option>
-						<option value="MTech">MTech</option>
-					</select>
-			</div>
+						>
+							<option value="">Select</option>
+							<option value="BTech">BTech</option>
+							<option value="MTech">MTech</option>
+						</select>
+					</div>
 
 			<div className="mb-4">
 				<label className="block text-xl text-gray-700">Branch</label>
@@ -383,7 +394,7 @@ const Dashboard = () => {
 					Create New Chat
 				</button>
 			</form>
-		</div>
+			</div>
 		</div>
 	);
 };
