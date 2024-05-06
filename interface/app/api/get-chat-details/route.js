@@ -49,6 +49,12 @@ export const POST = async (request) => {
     });
   } catch (error) {
     console.error("Error during GET request:", error);
+    if (error.message === "Chat not found") {
+      return new NextResponse(
+        JSON.stringify({ message: error.message, error: error }),
+        { status: 404 }
+      );
+    }
     return new NextResponse(
       JSON.stringify({ message: error.message, error: error }),
       { status: 500 }

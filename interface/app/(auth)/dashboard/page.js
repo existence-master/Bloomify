@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,7 @@ import Image from "next/image";
 
 const Dashboard = () => {
 	const router = useRouter();
+	const { status } = useSession();
 	const [userDetails, setUserDetails] = useState({
 		username: "",
 	})
@@ -25,6 +27,14 @@ const Dashboard = () => {
 		year: "",
 		subject: ""
 	})
+
+	if (status === "loading") {
+		return <p>Loading...</p>;
+	}
+
+	if (status !== "authenticated") {
+		router.push("/unauthenticated")
+	}
 
 	useEffect(() => {
 		const fetchUserDetails = async () => {
@@ -111,14 +121,6 @@ const Dashboard = () => {
 			console.error('Error submitting form:', error);
 		}
 	};
-
-	if (status === "loading") {
-		return <p>Loading...</p>;
-	}
-
-	if (status !== "authenticated") {
-		return <p>Access Denied</p>;
-	}
 
 	return (
 		<div className="bg-[#FFFAE3] w-screen h-screen flex">

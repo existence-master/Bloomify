@@ -12,7 +12,7 @@ import Image from "next/image";
 const Chat = () => {
   const router = useRouter()
   const { id: chatId} = useParams()
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const [userDetails, setUserDetails] = useState({
 	username: "",
 	university: ""
@@ -33,8 +33,15 @@ const Chat = () => {
 	//Send Message Dropdown Logic
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef(null);
+
+	if (status === "loading") {
+		return <p>Loading...</p>;
+	}
+
+	if (status !== "authenticated") {
+		router.push("/unauthenticated");
+	}
   
-  	console.log(chatDetails)
 	useEffect(() => {
 	  document.addEventListener("mousedown", handleClickOutside);
 	  return () => {
@@ -66,16 +73,22 @@ const Chat = () => {
 		  chatId: chatId
 		}),
 	  });
+		if (response.ok) {
+			const { chatTitle, chatFilters, chatHistory } = await response.json()
+			setChatDetails((prevState) => ({
+			  ...prevState, 
+			  chatTitle,
+			  chatFilters, 
+			  chatHistory, 
+			}));
+	  
+			setChatFilters(chatFilters)
+		}
 
-	  const { chatTitle, chatFilters, chatHistory } = await response.json()
-	  setChatDetails((prevState) => ({
-		...prevState, 
-		chatTitle,
-		chatFilters, 
-		chatHistory, 
-	  }));
-
-	  setChatFilters(chatFilters)
+		if (response.status === 404) {
+			router.push("/not-found")
+		}
+		
 	}
 
 	fetchUserDetails()
