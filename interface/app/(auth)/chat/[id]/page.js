@@ -182,9 +182,18 @@ const Chat = () => {
 				<li>
 					<Link href="/" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group">
 					  <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-						  <path stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+						  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
 					  </svg>
 					  <span className="flex-1 ms-3 whitespace-nowrap">Home</span>
+					</Link>
+				</li>
+				<li>
+					<Link
+						href="/settings"
+						className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
+					>
+						<Image src="/settingsicon.svg" width={20} height={20} alt="Settings Icon"/>
+						<span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
 					</Link>
 				</li>
 				<li>
@@ -263,18 +272,20 @@ const Chat = () => {
 		  ))}
 		  </div>
 		  <div id="left-bottom" className="gap-2 flex">
-			<div>
-			  <Image 
-				src = "/user.svg"
-				width = {36}
-				height={36}
-				alt = "User Icon"
-			  />
-			</div>
-			<div className="text-xl font-bold">
-			  {userDetails.username}
-			</div>
-			<div>
+			<Link href="/settings" className="flex">
+				<div>
+					<Image 
+						src = "/user.svg"
+						width = {36}
+						height={36}
+						alt = "User Icon"
+					/>
+				</div>
+				<div className="text-xl font-bold">
+					{userDetails.username}
+				</div>
+			</Link>
+			<div className="ml-4">
 			  <SignoutButton />
 			</div>
 			<div className="absolute right-10">
@@ -328,7 +339,7 @@ const Chat = () => {
 		<div className="bg-[#FFFAE3] flex flex-col flex-grow mt-4 p-4 overflow-y-auto">
 		  {/* Iterate over the chatHistory object and render chat bubbles */}
 		  {chatDetails.chatHistory?.map((message, index) => (
-			<div key={index} className="pairedMessage">
+			<div key={index} className="w-full">
 			  {/* Render the input message */}
 				  <ChatBubble role="User" message={message.input} mode={message.mode} />
 			  {/* Render the response message */}

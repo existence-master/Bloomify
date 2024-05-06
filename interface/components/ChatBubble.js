@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Image from 'next/image';
+import MarkdownRenderer from '@components/MarkdownRenderer';
 
 const ChatBubble = ({ role, message, mode }) => {
   const [isCopied, setIsCopied] = useState(false);
@@ -37,13 +38,13 @@ const ChatBubble = ({ role, message, mode }) => {
             className='rounded-full bg-gray-200 p-1'
           />
         )}
-      <div className={`bg-[#BCD8C1] border-2 border-gray-400 flex flex-col w-96 leading-1.5 p-4 rounded-xl ${bubbleAlignClass}`}>
+      <div className={`bg-[#BCD8C1] border-2 border-gray-400 flex flex-col w-1/3 leading-1.5 p-4 rounded-xl ${bubbleAlignClass}`}>
         <div className="flex items-center space-x-2 rtl:space-x-reverse">
         {mode === "Classification" && (
           <>
           <Image
             src="/classifyicon.svg"
-            alt="User Icon"
+            alt="Classify Icon"
             width={24}
             height={24}
           />
@@ -54,7 +55,7 @@ const ChatBubble = ({ role, message, mode }) => {
           <>
           <Image
             src="/suggesticon.svg"
-            alt="User Icon"
+            alt="Suggest Icon"
             width={24}
             height={24}
           />
@@ -65,7 +66,7 @@ const ChatBubble = ({ role, message, mode }) => {
           <>
           <Image
             src="/generateicon.svg"
-            alt="User Icon"
+            alt="Generate Icon"
             width={24}
             height={24}
           />
@@ -73,7 +74,7 @@ const ChatBubble = ({ role, message, mode }) => {
           </>
         )}
         </div>
-        <p className="text-xl font-normal py-2.5 text-gray-900">{message}</p>
+        <p className="text-xl font-normal py-2.5 text-gray-900"><MarkdownRenderer message={message} /></p>
       </div>
       {role === "User" && (
           <Image
