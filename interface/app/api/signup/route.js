@@ -26,7 +26,8 @@ export const POST = async (request) => {
     const newUser = new User({
       email,
       password: hashedPassword,
-      username: faker.internet.userName()
+      username: faker.internet.userName(), // Temporary fake username to avoid null value conflicts
+      googleUser: false // Signed up with email and password
     });
 
     await newUser.save();

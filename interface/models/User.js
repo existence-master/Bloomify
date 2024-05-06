@@ -28,6 +28,10 @@ const userSchema = new Schema(
             ref: "Chat",
             required: false, // This can be optional, depending on use-case
         }],
+        googleUser: { // Mainly for settings
+            type: Boolean,
+            required: false
+        }
     },
     { timestamps: true }
 );

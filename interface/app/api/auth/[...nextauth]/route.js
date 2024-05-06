@@ -51,6 +51,7 @@ export const authOptions = {
           if (!existingUser) {
             const newUser = new User({
               email: user.email,
+              googleUser: true // Signed up with Google
             });
 
             await newUser.save();
@@ -63,12 +64,12 @@ export const authOptions = {
         }
       }
     },
-    async redirect({url, baseUrl}) {
+    async redirect({url}) {
       if (url.startsWith("/details")) {
         return url; // Redirect to the /details page
       }
       
-      return "/dashboard"; // Redirect to dashboard is user exists
+      return "/dashboard"; // Redirect to dashboard if user exists
     },
   },
 };
