@@ -25,8 +25,9 @@ export const GET = async () => {
     
     const username = user.username
     const university = user.university
+    const googleUser = user.googleUser
 
-    return new NextResponse(JSON.stringify({ username, university }), { status: 200 });
+    return new NextResponse(JSON.stringify({ username, university, googleUser }), { status: 200 });
   } catch (error) {
     console.error("Error updating user chat:", error);
     return new NextResponse("Internal server error", { status: 500 });

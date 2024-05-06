@@ -52,8 +52,8 @@ const Chat = () => {
 	  });
 
 	  const details = await response.json()
-
-	  setUserDetails(details)
+	  const {username, university} = details
+	  setUserDetails({username, university})
 	}
 
 	const fetchChatDetails = async () => {

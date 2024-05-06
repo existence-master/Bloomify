@@ -8,55 +8,56 @@ import SignoutButton from "@components/SignoutButton";
 const Settings = () => {
    const [userDetails, setUserDetails] = useState({
 		username: "",
-		university: ""
+	  	googleUser: null
 	});
 
    useEffect(() => {
-      const fetchUserDetails = async () => {
-        const response = await fetch("/api/get-user-details", {
-         method: "GET",
-         headers: {
-           "Content-Type": "application/json",
-         },
-        });
+	  const fetchUserDetails = async () => {
+		 const response = await fetch("/api/get-user-details", {
+			method: "GET",
+			headers: {
+			"Content-Type": "application/json",
+			},
+		 });
    
-        const details = await response.json()
-        setUserDetails(details)
-      }
-      fetchUserDetails()
-     }, [])
+		 const details = await response.json()
+		 const {username, googleUser} = details
+		  setUserDetails({username, googleUser})
+	  }
+	  fetchUserDetails()
+	 }, [])
 
    const [currentPassword, setCurrentPassword] = useState("");
    const [newPassword, setNewPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
 
    const handlePassFieldChange = (e) => {
-      const { name, value } = e.target;
-      if (name === "currentPassword") setCurrentPassword(value);
-      else if (name === "newPassword") setNewPassword(value);
+	  const { name, value } = e.target;
+	  if (name === "currentPassword") setCurrentPassword(value);
+	  else if (name === "newPassword") setNewPassword(value);
    };
 
    const handlePassFieldSubmit = async (e) => {
-      e.preventDefault();
-      try {
-         const response = await fetch("/api/change-password", {
-            method: "POST",
-            headers: {
-               "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ currentPassword, newPassword }),
-         });
-         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message);
-         }
-         // Password updated successfully
-         setCurrentPassword("");
-         setNewPassword("");
-         setErrorMessage("");
-      } catch (error) {
-         setErrorMessage(error.message);
-      }
+	  e.preventDefault();
+	  try {
+		 const response = await fetch("/api/change-password", {
+			method: "POST",
+			headers: {
+			   "Content-Type": "application/json",
+			},
+			body: JSON.stringify({ currentPassword, newPassword }),
+		 });
+		 if (!response.ok) {
+			const errorData = await response.json();
+			throw new Error(errorData.message);
+		 }
+		 // Password updated successfully
+		 setCurrentPassword("");
+		 setNewPassword("");
+		 setErrorMessage("");
+	  } catch (error) {
+		 setErrorMessage(error.message);
+	  }
    };
 
    const [newUsername, setNewUsername] = useState('');
@@ -64,41 +65,41 @@ const Settings = () => {
    const [userError, setUserError] = useState('');
    // Function to handle form submission
    const handleUsernameSubmit = async (event) => {
-      event.preventDefault(); // Prevent default form submission
+	  event.preventDefault(); // Prevent default form submission
 
-      try {
-      // Make API call to change username
-      const response = await fetch('/api/change-username', {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({ newUsername }),
-      });
+	  try {
+	  // Make API call to change username
+	  const response = await fetch('/api/change-username', {
+		 method: 'POST',
+		 headers: {
+			'Content-Type': 'application/json',
+		 },
+		 body: JSON.stringify({ newUsername }),
+	  });
 
-      // Check if API call was successful
-      if (response.ok) {
-         const data = await response.json();
-         setUserMessage(data.message); // Set success message
-      } else {
-         const errorData = await response.json();
-         setUserError(errorData.message); // Set error message
-      }
-      } catch (error) {
-      console.error('Error changing username:', error);
-      setUserError('Internal server error'); // Set generic error message
-      }
+	  // Check if API call was successful
+	  if (response.ok) {
+		 const data = await response.json();
+		 setUserMessage(data.message); // Set success message
+	  } else {
+		 const errorData = await response.json();
+		 setUserError(errorData.message); // Set error message
+	  }
+	  } catch (error) {
+	  console.error('Error changing username:', error);
+	  setUserError('Internal server error'); // Set generic error message
+	  }
    };
 
    const handleUsernameFormChange = (event) => {
-      setNewUsername(event.target.value); // Update new username state
+	  setNewUsername(event.target.value); // Update new username state
    };
 
    // Fetch user details useEffect remains the same
 
    return (
-      <div className="bg-[#FFFAE3] w-screen h-screen flex">
-         <aside
+	  <div className="bg-[#FFFAE3] w-screen h-screen flex">
+		 <aside
 				id="left-sidebar"
 				className="border-r-2 border-black flex w-1/5 h-full transition-transform -translate-x-full sm:translate-x-0"
 				aria-label="Sidebar"
@@ -179,19 +180,19 @@ const Settings = () => {
 						</ul>
 					</div>
 					<div id="left-bottom" className="gap-2 flex">
-                  <Link href="/settings" className="flex">
-                     <div>
-                        <Image 
-                           src = "/user.svg"
-                           width = {36}
-                           height={36}
-                           alt = "User Icon"
-                        />
-                     </div>
-                     <div className="text-xl font-bold">
-                        {userDetails.username}
-                     </div>
-                  </Link>
+				  <Link href="/settings" className="flex">
+					 <div>
+						<Image 
+						   src = "/user.svg"
+						   width = {36}
+						   height={36}
+						   alt = "User Icon"
+						/>
+					 </div>
+					 <div className="text-xl font-bold">
+						{userDetails.username}
+					 </div>
+				  </Link>
 						<div className="ml-4">
 							<SignoutButton />
 						</div>
@@ -218,64 +219,64 @@ const Settings = () => {
 					</div>
 				</div>
 			</aside> 
-         <div id="right-area" className="w-full h-full flex flex-col justify-center items-center">
-            <h1 className="mb-10 text-5xl font-bold font-poppins">
-               Settings
-            </h1>
-            <div className="w-1/2 mb-10 flex justify-center items-center">
-               <form onSubmit={handlePassFieldSubmit} className="text-2xl font-poppins gap-5 w-full h-full flex flex-col justify-center items-center">
-                  <div className="mb-4 w-full">
-                     <label htmlFor="currentPassword" className="font-semibold mb-2 flex">Current Password:</label>
-                     <input
-                        type="password"
-                        id="currentPassword"
-                        name="currentPassword"
-                        value={currentPassword}
-                        onChange={handlePassFieldChange}
-                        className="w-full bg-transparent rounded-xl border-2 border-black"
-                     />
-                  </div>
-                  <div className="mb-4 w-full">
-                     <label htmlFor="newPassword" className="font-semibold mb-2 flex">New Password:</label>
-                     <input
-                        type="password"
-                        id="newPassword"
-                        name="newPassword"
-                        value={newPassword}
-                        onChange={handlePassFieldChange}
-                        className="w-full bg-transparent rounded-xl border-2 border-black"
-                     />
-                     <span className="text-sm text-gray-400 mt-2 mb-2 flex">This field is only applicable for Non-Google Users</span>
-                  </div>
-                  <div>
-                     <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">
-                        Change Password
-                     </button>
-                  </div>
-                  {errorMessage && <div className="text-red-500 text-sm mb-4">{errorMessage}</div>}
-               </form>
-            </div>
-            <div className="w-1/2 flex justify-center items-center mt-8">
-               <form onSubmit={handleUsernameSubmit} className="text-2xl font-poppins w-full h-full flex flex-col justify-center items-center">
-                  <div className="mb-4 p-4 w-full">
-                     <label htmlFor="newUsername" className="font-semibold mb-2 flex">New Username:</label>
-                     <input
-                        type="text"
-                        id="newUsername"
-                        name="newUsername"
-                        value={newUsername}
-                        onChange={handleUsernameFormChange}
-                        required
-                        className="bg-transparent w-full rounded-xl border-2 border-black"
-                     />
-                  </div>
-                  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">Change Username</button>
-                  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
-                  {userError && <p className="text-sm text-black">{userError}</p>}
-               </form>
-            </div>
-         </div>
-      </div>
+		 <div id="right-area" className="w-full h-full flex flex-col justify-center items-center">
+			<h1 className="mb-10 text-5xl font-bold font-poppins">
+			   Settings
+			</h1>
+			<div className="w-1/2 mb-10 flex justify-center items-center">
+			   <form onSubmit={handlePassFieldSubmit} className="text-2xl font-poppins gap-5 w-full h-full flex flex-col justify-center items-center">
+				  <div className="mb-4 w-full">
+					 <label htmlFor="currentPassword" className="font-semibold mb-2 flex">Current Password:</label>
+					 <input
+						type="password"
+						id="currentPassword"
+						name="currentPassword"
+						value={currentPassword}
+						onChange={handlePassFieldChange}
+						className="w-full bg-transparent rounded-xl border-2 border-black"
+					 />
+				  </div>
+				  <div className="mb-4 w-full">
+					 <label htmlFor="newPassword" className="font-semibold mb-2 flex">New Password:</label>
+					 <input
+						type="password"
+						id="newPassword"
+						name="newPassword"
+						value={newPassword}
+						onChange={handlePassFieldChange}
+						className="w-full bg-transparent rounded-xl border-2 border-black"
+					 />
+					 <span className="text-sm text-gray-400 mt-2 mb-2 flex">This field is only applicable for Non-Google Users</span>
+				  </div>
+				  <div>
+					 <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">
+						Change Password
+					 </button>
+				  </div>
+				  {errorMessage && <div className="text-red-500 text-sm mb-4">{errorMessage}</div>}
+			   </form>
+			</div>
+			<div className="w-1/2 flex justify-center items-center mt-8">
+			   <form onSubmit={handleUsernameSubmit} className="text-2xl font-poppins w-full h-full flex flex-col justify-center items-center">
+				  <div className="mb-4 p-4 w-full">
+					 <label htmlFor="newUsername" className="font-semibold mb-2 flex">New Username:</label>
+					 <input
+						type="text"
+						id="newUsername"
+						name="newUsername"
+						value={newUsername}
+						onChange={handleUsernameFormChange}
+						required
+						className="bg-transparent w-full rounded-xl border-2 border-black"
+					 />
+				  </div>
+				  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">Change Username</button>
+				  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
+				  {userError && <p className="text-sm text-black">{userError}</p>}
+			   </form>
+			</div>
+		 </div>
+	  </div>
    );
 };
 

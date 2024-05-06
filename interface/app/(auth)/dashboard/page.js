@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
 import { useRouter } from "next/navigation";
@@ -9,10 +8,8 @@ import Image from "next/image";
 
 const Dashboard = () => {
 	const router = useRouter();
-	const { data: session, status } = useSession();
 	const [userDetails, setUserDetails] = useState({
 		username: "",
-		university: ""
 	})
 	const [filteredChats, setFilteredChats] = useState([]);
 	const [chatFilters, setChatFilters] = useState({
@@ -39,8 +36,8 @@ const Dashboard = () => {
 			});
 
 			const details = await response.json()
-
-			setUserDetails(details)
+			const {username} = details
+	  		setUserDetails({username})
 		}
 
 		fetchUserDetails();
