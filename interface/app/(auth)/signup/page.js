@@ -20,10 +20,10 @@ const Signup = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target[0].value;
+    const userEmail = e.target[0].value;
     const password = e.target[1].value;
 
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(userEmail)) {
       setError("Email is invalid");
       return;
     }
@@ -34,28 +34,27 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("/api/signup", {
+      const response = await fetch("/api/set-session", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "ContentType": "application/json"
         },
         body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      if (res.status == 400) {
-        setError("This email is already registered");
+          userEmail,
+          password
+        })
       }
-      if (res.status == 200) {
-        setError("");
-        router.push(`/details?userEmail=${email}`);
+      )
+       
+      if (response.ok) {
+        router.push(`/verify?userEmail=${userEmail}`)
       }
-    } catch (error) {
-      setError("Error, try again");
+    }
+    catch (error) {
       console.log(error);
     }
-  };
+  }
+
   return (
     <div className="h-screen w-screen bg-black flex">
       <div className="h-full w-6/12 bg-blue-300">

@@ -9,22 +9,22 @@ export const POST = async (request) => {
     await connect();
     faker.seed(Math.floor(Math.random() * 10000))
 
-    const { email, password } = await request.json();
+    const { userEmail, password } = await request.json();
 
-    if (!email || !password) {
+    if (!userEmail || !password) {
       return new NextResponse("Email and password are required", {
         status: 400,
       });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ userEmail });
     if (existingUser) {
       return new NextResponse("Email is already in use", { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const newUser = new User({
-      email,
+      email: userEmail,
       password: hashedPassword,
       username: faker.internet.userName(), // Temporary fake username to avoid null value conflicts
       googleUser: false // Signed up with email and password
