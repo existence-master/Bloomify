@@ -115,7 +115,14 @@ const Dashboard = () => {
 	};
 
 	if (status === "loading") {
-		return <p>Loading...</p>;
+		return (
+			<div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
+				<div className="text-center">
+					<h1 className="text-8xl font-bold mb-4 text-green-600">Loading...</h1>
+					<p className="text-lg">Please wait</p>
+				</div>
+			</div>
+		);
 	}
 
 	if (status !== "authenticated") {
@@ -402,7 +409,7 @@ const Dashboard = () => {
               <p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p>
               <p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p>
           </div>
-      </div>
+      	</div>
 	</>
 	);
 };
