@@ -129,8 +129,6 @@ const Dashboard = () => {
 	if (status !== "authenticated") {
 		router.push("/unauthenticated");
 	}
-  
-
 
 	return (
 		<div className="bg-[#FFFAE3] w-screen h-screen flex">
@@ -290,19 +288,19 @@ const Dashboard = () => {
 								width = {24}
 								height={24}
 								alt = "User Icon"
-								className="mr-1 rounded-full bg-gray-200 top"
+								className="mr-2 rounded-full bg-transparent top"
 								/>
 							</div>
 							<div className="text-xl font-bold">
 								{userDetails.username}
 							</div>
 						</Link>
-						<div className="ml-2">
+						<div className="absolute bottom-4 right-14">
 							<SignoutButton />
 						</div>
-						<div className="absolute right-10">
+						<div className="absolute bottom-4 right-5">
 							<Link href="/dashboard">
-								<div className="rounded-full p-2 bg-[#007991]">
+								<div className="rounded-full p-1 bg-[#007991]">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="h-6 w-6"
