@@ -98,7 +98,8 @@ const Settings = () => {
    // Fetch user details useEffect remains the same
 
    return (
-	  <div className="bg-[#FFFAE3] w-screen h-screen flex">
+	<>
+	  <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex">
 		 <aside
 				id="left-sidebar"
 				className="border-r-2 border-black flex w-1/5 h-full transition-transform -translate-x-full sm:translate-x-0"
@@ -184,22 +185,22 @@ const Settings = () => {
 							<div>
 								<Image 
 								src = "/user.svg"
-								width = {24}
-								height={24}
+								width = {40}
+								height={40}
 								alt = "User Icon"
-								className="mr-1 rounded-full bg-gray-200 top"
+								className="mr-2 translate-y-2 -translate-x-1 rounded-full bg-transparent"
 								/>
 							</div>
 							<div className="text-xl font-bold">
 								{userDetails.username}
 							</div>
 						</Link>
-						<div className="ml-2">
+						<div className="">
 							<SignoutButton />
 						</div>
-						<div className="absolute right-10">
+						<div className="">
 							<Link href="/dashboard">
-								<div className="rounded-full p-2 bg-[#007991]">
+								<div className="rounded-full p-1 bg-[#007991]">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										className="h-6 w-6"
@@ -278,6 +279,14 @@ const Settings = () => {
 			</div>
 		 </div>
 	  </div>
+	  <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+          <div className="text-center">
+              <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>
+              <p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p>
+              <p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p>
+          </div>
+      </div>
+	</>
    );
 };
 

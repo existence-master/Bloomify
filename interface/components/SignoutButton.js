@@ -15,7 +15,7 @@ const SignoutButton = () => {
 
   return (
   <div onClick={handleSignout}>
-    <Image src="/signout.svg" className="cursor-pointer" width={32} height={32}/>
+    <Image src="/signout.svg" className="cursor-pointer" width={40} height={40}/>
   </div>
   );
 };
