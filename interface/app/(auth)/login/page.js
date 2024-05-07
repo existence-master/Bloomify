@@ -11,8 +11,8 @@ const login = () => {
     const session = useSession();    
 
     useEffect(() => {
-        if(session?.status === "authenticated" ){
-            router.replace("/dashboard")
+        if(session.status === "authenticated" ){
+            router.push("/dashboard")
         }
     }, [session, router]);
     
@@ -41,13 +41,11 @@ const login = () => {
             password
         })
 
-        if(res?.error) {
-            setError("Invalid email or password");
-            if (res?.url) router.replace("/dashboard");
-        } else {
-            setError("");
+        if (res.ok) {
+            router.push("/dashboard");
         }
-
+        
+        setError("Invalid email or password")
 
     };
     return  (
