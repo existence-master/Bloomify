@@ -64,13 +64,16 @@ export const authOptions = {
         }
       }
     },
-    async redirect({url}) {
+    async redirect({ url, baseUrl }) {
       if (url.startsWith("/details")) {
         return url; // Redirect to the /details page
       }
-      
+      if (url === `${baseUrl}/`) {
+        return baseUrl
+      }
       return "/dashboard"; // Redirect to dashboard if user exists
     },
+    
   },
 };
 export const handler = NextAuth(authOptions);

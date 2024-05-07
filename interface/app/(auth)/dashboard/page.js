@@ -28,14 +28,6 @@ const Dashboard = () => {
 		subject: ""
 	})
 
-	if (status === "loading") {
-		return <p>Loading...</p>;
-	}
-
-	if (status !== "authenticated") {
-		router.push("/unauthenticated")
-	}
-
 	useEffect(() => {
 		const fetchUserDetails = async () => {
 			const response = await fetch("/api/get-user-details", {
