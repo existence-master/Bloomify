@@ -180,20 +180,21 @@ const Settings = () => {
 						</ul>
 					</div>
 					<div id="left-bottom" className="gap-2 flex">
-				  <Link href="/settings" className="flex">
-					 <div>
-						<Image 
-						   src = "/user.svg"
-						   width = {36}
-						   height={36}
-						   alt = "User Icon"
-						/>
-					 </div>
-					 <div className="text-xl font-bold">
-						{userDetails.username}
-					 </div>
-				  </Link>
-						<div className="ml-4">
+						<Link href="/settings" className="flex">
+							<div>
+								<Image 
+								src = "/user.svg"
+								width = {24}
+								height={24}
+								alt = "User Icon"
+								className="mr-1 rounded-full bg-gray-200 top"
+								/>
+							</div>
+							<div className="text-xl font-bold">
+								{userDetails.username}
+							</div>
+						</Link>
+						<div className="ml-2">
 							<SignoutButton />
 						</div>
 						<div className="absolute right-10">
@@ -249,7 +250,7 @@ const Settings = () => {
 					 <span className="text-sm text-gray-400 mt-2 mb-2 flex">This field is only applicable for Non-Google Users</span>
 				  </div>
 				  <div>
-					 <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">
+					 <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black">
 						Change Password
 					 </button>
 				  </div>
@@ -270,7 +271,7 @@ const Settings = () => {
 						className="bg-transparent w-full rounded-xl border-2 border-black"
 					 />
 				  </div>
-				  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">Change Username</button>
+				  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black">Change Username</button>
 				  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
 				  {userError && <p className="text-sm text-black">{userError}</p>}
 			   </form>

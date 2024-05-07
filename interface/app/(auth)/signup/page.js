@@ -2,6 +2,8 @@
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 const Signup = () => {
   const [error, setError] = useState("");
@@ -56,68 +58,70 @@ const Signup = () => {
   }
 
   return (
-    <div className="h-screen w-screen bg-black flex">
-      <div className="h-full w-6/12 bg-blue-300">
+    <div className="h-screen w-screen flex">
+      <div className="h-full w-1/2">
         <img
           className="h-full w-full object-cover"
           src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg"
           alt="books"
         />
       </div>
-      <div className="h-screen w-6/12 bg-amber-100">
-        <div className="h-full w-6/12 flex gap-4">
-          <img
-            className="h-16 w-16 ml-60 mt-20 "
-            src="\bloomify logo.png"
+      <div className="h-screen w-1/2 bg-[#FFFAE3]">
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          <Image
+            className="mb-10"
+            src="/navbarlogo.svg"
             alt="bloomify-logo"
+            width={200}
+            height={50}
           />
-          <h1 className="text-cyan-600 ml-70 mt-24 text-4xl font-medium">
-            Bloomify
-          </h1>
-          <div className="h-96 w-6/12 absolute mt-48 ">
-            <h1 className="text-3xl font-medium text-black ml-48 mt-4 ">
-              Signup
+          <div className="w-1/2 flex flex-col justify-center items-center">
+            <h1 className="text-3xl font-medium text-black mb-5">
+              Create Account
             </h1>
-            <form onSubmit={handleSubmit}>
-              <h1 className="text-black pl-48 pt-5 mb-2">Email</h1>
+            <form onSubmit={handleSubmit} className="w-full font-poppins">
+              <h1 className="text-black text-xl mt-5 mb-2">Email</h1>
               <input
                 type="text"
-                className="form-control ml-48 border-2 border-black rounded-lg pl-2 pt-2 pb-2 bg-amber-100 text-black w-6/12"
+                className="w-full form-control border-black border-2 rounded-lg bg-[#FFFAE3] text-black mb-5 h-10 p-2"
                 placeholder="abc@gmail.com"
                 required
               />
-              <h1 className="text-black pl-48 pt-5 mb-2">Password</h1>
+              <h1 className="text-black text-xl mt-5 mb-2">Password</h1>
               <input
                 type="password"
-                className="form-control ml-48 border-2 border-black rounded-lg pl-2 pt-2 pb-1 bg-amber-100 text-black w-6/12"
+                className="w-full form-control border-2 border-black rounded-lg bg-[#FFFAE3] text-black mb-5 h-10 p-2"
                 placeholder="********"
                 required
               />
-              <h1 className="text-black pl-48 pt-2 mb-5 ">
-                Already have an account?{" "}
-                <a
-                  className="text-blue-600 font-medium hover:underline "
-                  href="/login"
+              <div className="flex flex-col justify-center items-center mb-10">
+                <h1 className="text-black mb-4">
+                  Already have an account?{" "}
+                  <Link
+                    className="text-blue-600 font-medium hover:underline"
+                    href="/login"
+                  >
+                    Login here
+                  </Link>{" "}
+                  for free
+                </h1>
+                <button
+                  className="text-white w-40 hover:shadow-lg rounded-lg text-xl p-2 font-semibold bg-[#007991]"
+                  type="submit"
                 >
-                  Login here
-                </a>{" "}
-                for free
-              </h1>
-              <button
-                className="text-white  hover:shadow-lg rounded-lg ml-72 pt-2 pl-2 pb-2 pr-2 w-1/5 text-xl font-semibold bg-cyan-600 mb-1"
-                type="submit"
-              >
-                Signup
-              </button>
-              <p className="text-red-600 text-[16px] mb-4 ml-[300px]">
+                  Create Account
+                </button>
+              </div>
+              <p className="text-red-600 text-[16px] text-center mb-2">
                 {error && error}
               </p>
             </form>
+            <div className="text-center text-black mb-5">Or</div>
             <button
-              className="ml-60 w-1/3 bg-white text-black py-2 rounded-lg hover:bg-gray-100"
+              className="text-xl w-full bg-transparent text-black py-2 rounded-xl border-2 border-black flex flex-row justify-center items-center"
               onClick={() => signIn("google")}
             >
-              {" "}
+              <Image src="/googlelogo.webp" width={20} height={20} alt="Google Logo" className="mr-2"/>
               Sign up with Google
             </button>
           </div>

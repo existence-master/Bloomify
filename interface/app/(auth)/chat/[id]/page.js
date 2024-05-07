@@ -33,7 +33,22 @@ const Chat = () => {
 	//Send Message Dropdown Logic
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef(null);
-
+	useEffect(() => {
+	  document.addEventListener("mousedown", handleClickOutside);
+	  return () => {
+		  document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
+	const toggleMenu = () => {
+	  setIsOpen((prev) => !prev);
+	};
+  
+	const handleClickOutside = (event) => {
+	  if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+		setIsOpen(false);
+	  }
+	};
+	
 	if (status === "loading") {
 		return <p>Loading...</p>;
 	}
@@ -41,13 +56,6 @@ const Chat = () => {
 	if (status !== "authenticated") {
 		router.push("/unauthenticated");
 	}
-  
-	useEffect(() => {
-	  document.addEventListener("mousedown", handleClickOutside);
-	  return () => {
-		document.removeEventListener("mousedown", handleClickOutside);
-	  };
-	}, []);
 
   useEffect(() => {
 	const fetchUserDetails = async () => {
@@ -117,15 +125,6 @@ const Chat = () => {
 	  fetchFilteredChats();
   }, [chatFilters])
 
-  const toggleMenu = () => {
-	setIsOpen((prev) => !prev);
-  };
-
-  const handleClickOutside = (event) => {
-	if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-	  setIsOpen(false);
-	}
-  };
 
   const handleFilterChange = (e) => {
 	const { name, value } = e.target
@@ -275,7 +274,7 @@ const Chat = () => {
 			  </div>       
 			</div>
 		  </div>
-		  <div id="filtered-chats" className="h-full mt-10">
+		  <div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
 		  {filteredChats.map((chat, index) => (
 		  <div key={index} id="filtered-chat">
 			<button className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2" onClick={() => handleChatClick(chat._id)}>
@@ -285,21 +284,22 @@ const Chat = () => {
 		  ))}
 		  </div>
 		  <div id="left-bottom" className="gap-2 flex">
-			<Link href="/settings" className="flex">
+		  	<Link href="/settings" className="flex">
 				<div>
 					<Image 
-						src = "/user.svg"
-						width = {36}
-						height={36}
-						alt = "User Icon"
+					src = "/user.svg"
+					width = {24}
+					height={24}
+					alt = "User Icon"
+					className="mr-1 rounded-full bg-gray-200 top"
 					/>
 				</div>
 				<div className="text-xl font-bold">
 					{userDetails.username}
 				</div>
 			</Link>
-			<div className="ml-4">
-			  <SignoutButton />
+			<div className="ml-2">
+				<SignoutButton />
 			</div>
 			<div className="absolute right-10">
 			  <Link href="/dashboard">

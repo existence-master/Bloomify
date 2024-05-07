@@ -12,6 +12,7 @@
     "@faker-js/faker": "^8.4.1",
     "autoprefixer": "^10.4.19",
     "bcryptjs": "^2.4.3",
+    "iron-session": "^8.0.1",
     "mongoose": "^8.3.3",
     "next": "14.2.3",
     "next-auth": "^4.24.7",

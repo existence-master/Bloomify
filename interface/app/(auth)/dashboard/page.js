@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
@@ -122,6 +122,16 @@ const Dashboard = () => {
 		}
 	};
 
+	if (status === "loading") {
+		return <p>Loading...</p>;
+	}
+
+	if (status !== "authenticated") {
+		router.push("/unauthenticated");
+	}
+  
+
+
 	return (
 		<div className="bg-[#FFFAE3] w-screen h-screen flex">
 			<aside
@@ -178,7 +188,7 @@ const Dashboard = () => {
 									href="/settings"
 									className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
 								>
-									<Image src="/settingsicon.svg" width={20} height={20} alt="Settings Icon"/>
+									<Image src="/settingsicon.svg" width={20} height={20} alt="Settings Icon" className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"/>
 									<span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
 								</Link>
 							</li>
@@ -263,7 +273,7 @@ const Dashboard = () => {
 							</div>
 						</div>
 					</div>
-					<div id="filtered-chats" className="h-full mt-10">
+					<div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
 					{filteredChats.map((chat, index) => (
 					<div key={index} id="filtered-chat">
 						<button className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2" onClick={() => handleChatClick(chat._id)}>
@@ -277,16 +287,17 @@ const Dashboard = () => {
 							<div>
 								<Image 
 								src = "/user.svg"
-								width = {36}
-								height={36}
+								width = {24}
+								height={24}
 								alt = "User Icon"
+								className="mr-1 rounded-full bg-gray-200 top"
 								/>
 							</div>
 							<div className="text-xl font-bold">
 								{userDetails.username}
 							</div>
 						</Link>
-						<div className="ml-4">
+						<div className="ml-2">
 							<SignoutButton />
 						</div>
 						<div className="absolute right-10">
@@ -313,26 +324,25 @@ const Dashboard = () => {
 				</div>
 			</aside>
 			<div className="p-8 w-full bg-[#FFFAE3] min-h-screen flex justify-center items-center">
-			<form onSubmit={handleCreateNewChat} className="bg-[#FFFAE3] flex flex-col justify-between p-6 rounded-lg shadow-lg w-1/2 h-3/4">
-				<h2 className="text-4xl font-bold mb-4">Enter Chat Details</h2>
-
-				<div className="mb-4">
+			<form onSubmit={handleCreateNewChat} className="bg-[#FFFAE3] flex flex-col justify-between p-2 gap-y-4 w-1/2 h-3/4">
+				<h2 className="text-4xl font-bold mb-4 text-center">Enter Chat Details</h2>
+				<div className="font-Poppins font-medium">
 					<label className="block text-xl text-gray-700">Chat Title</label>
 					<input
 						type="text"
 						name="title"
 						value={newChatDetails.title}
 						onChange={handleInputChange}
-						className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl"
+						className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl p-2 mb-4"
 					/>
 					</div>
-					<div>
-						<label className="block text-xl text-gray-700">Degree</label>
+					<div className="mb-4 font-Poppins font-medium">
+						<label className="block text-xl mb-2 text-gray-700">Degree</label>
 						<select
 						name="degree"
 						value={newChatDetails.degree}
 						onChange={handleInputChange}
-						className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+						className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 						>
 							<option value="">Select</option>
 							<option value="BTech">BTech</option>
@@ -340,13 +350,13 @@ const Dashboard = () => {
 						</select>
 					</div>
 
-			<div className="mb-4">
+			<div className="mb-4 font-Poppins">
 				<label className="block text-xl text-gray-700">Branch</label>
 				<select
 					name="branch"
 					value={newChatDetails.branch}
 					onChange={handleInputChange}
-					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+					className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
 					<option value="">Select</option>
 					<option value="AI DS">AI DS</option>
@@ -356,13 +366,13 @@ const Dashboard = () => {
 				</select>
 			</div>
 
-			<div className="mb-4">
+			<div className="mb-4 font-Poppins">
 				<label className="block text-xl text-gray-700">Year</label>
 				<select
 					name="year"
 					value={newChatDetails.year}
 					onChange={handleInputChange}
-					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+					className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
 					<option value="">Select</option>					
 					<option value="SE">SE</option>
@@ -371,13 +381,13 @@ const Dashboard = () => {
 				</select>
 			</div>
 
-			<div className="mb-4">
+			<div className="mb-4 font-Poppins">
 				<label className="block text-xl text-gray-700">Subject</label>
 				<select
 					name="subject"
 					value={newChatDetails.subject}
 					onChange={handleInputChange}
-					className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+					className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 				>
 					<option value="">Select</option>				
 					<option value="ANN">ANN</option>
@@ -388,7 +398,7 @@ const Dashboard = () => {
 
 				<button
 					type="submit"
-					className="bg-[#007991] w-full text-white py-2 px-4 rounded hover:bg-blue-600"
+					className="bg-[#007991] w-full text-white py-2 px-4 rounded-xl border-2 border-black hover:bg-[#222E50]"
 				>
 					Create New Chat
 				</button>
