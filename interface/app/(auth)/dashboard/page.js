@@ -287,23 +287,14 @@ const Dashboard = () => {
 								))}
 							</div>
 							<div id="left-bottom" className="gap-2 flex">
+								<div className="">
+									<SignoutButton />
+								</div>
 								<Link href="/settings" className="flex">
-									<div>
-										<Image
-											src="/user.svg"
-											width={40}
-											height={40}
-											alt="User Icon"
-											className="mr-2 translate-y-2 -translate-x-1 rounded-full bg-transparent"
-										/>
-									</div>
 									<div className="text-xl font-bold">
 										{userDetails.username}
 									</div>
 								</Link>
-								<div className="">
-									<SignoutButton />
-								</div>
 								<div className="">
 									<Link href="/dashboard">
 										<div className="rounded-full p-1 bg-[#007991]">
