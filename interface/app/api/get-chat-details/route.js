@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Chat from "@models/Chat";
 import connect from "@utils/db";
 import { NextResponse } from "next/server";
@@ -8,7 +9,11 @@ export const POST = async (request) => {
 
     await connect();
 
-    const {chatId} = await request.json()  
+    const { chatId } = await request.json()  
+    
+    if (!mongoose.Types.ObjectId.isValid(chatId)) {
+      throw new Error("Chat not found");
+      }
 
     // Populate the chat history from the `Chat` model
     const chat = await Chat.findById(chatId)

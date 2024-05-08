@@ -69,14 +69,18 @@ export const authOptions = {
         return url; // Redirect to the /details page
       }
 
-      if (url.startsWith("/unauth")) {
+      if (url === "/unauthenticated") {
         return url
       }
 
       if (url === `${baseUrl}/`) {
         return baseUrl
       }
-      
+
+      if (url === "/dashboard") {
+        return "/unauthenticated"
+      }
+
       return "/dashboard"; // Redirect to dashboard if user exists
     },
     

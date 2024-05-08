@@ -1,4 +1,4 @@
-const unauthenticated = () => {
+const Unauthenticated = () => {
   return (
     <div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
         <div className="text-center">
@@ -9,4 +9,4 @@ const unauthenticated = () => {
   )
 }
 
-export default unauthenticated
+export default Unauthenticated

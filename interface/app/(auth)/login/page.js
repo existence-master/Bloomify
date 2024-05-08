@@ -72,7 +72,7 @@ const login = () => {
                             <h1 className="text-black mt-5 mb-2 text-xl">Password</h1>
                             <input type="password" className="focus:border-blue-500 w-full border-2 border-black rounded-lg bg-transparent text-black h-10 p-2" placeholder="********" required/>
                             <div className="flex flex-col justify-center items-center">
-                                <h1 className="text-black mt-5 mb-5">New here? <Link className = "text-[#007991] font-medium hover:underline "href="/signup">Sign up</Link> for free</h1>
+                                <h1 className="text-black mt-5 mb-5">New here? <Link className = "text-[#007991] font-medium hover:underline " href="/signup">Sign up</Link> for free</h1>
                                 <button className="text-white  hover:shadow-lg rounded-lg w-1/5 text-xl font-semibold bg-[#007991] p-2 mb-1" type="submit">Login</button>
                                 <p className="text-red-600 text-[16px]">{error && error}</p>
                                 <div className="text-center text-black mt-5 mb-5">Or</div>
