@@ -90,7 +90,8 @@ const Verify = () => {
   };
 
   return (
-	<div className="h-screen w-screen flex">
+	<>
+	<div className="xs:max-md:hidden h-screen w-screen flex">
 	  	<div id="left" className="h-full w-1/2">
             <img className="h-full w-full object-cover" src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg" alt="books" />
     	</div>
@@ -132,6 +133,14 @@ const Verify = () => {
 			</div>
 		</div>
 	</div>
+	<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+          <div className="text-center">
+              <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>
+              <p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p>
+              <p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p>
+          </div>
+      </div>
+	</>
   );
 };
 

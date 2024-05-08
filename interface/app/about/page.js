@@ -1,8 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 
 
 const About = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+    console.log("Clicked");
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    setIsOpen(false);
+    }
+  };
   return (
   <>
   <div className="bg-[#fffbe6]">
@@ -11,12 +32,39 @@ const About = () => {
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <Image src="navbarlogo.svg" className="h-8" alt="Bloomify Logo" width={183.37} height={45.91}/>
         </Link>
-        <button data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400  dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-            <span className="sr-only">Open main menu</span>
-            <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
-        </button>
+        {/* Mobile Navbar */}
+        <div ref={dropdownRef}>
+          <button onClick={toggleMenu} type="button" className="inline-flex mr-2 items-center bg-transparent p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none" aria-controls="navbar-default" aria-expanded="false">
+              <span className="sr-only">Open main menu</span>
+              <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+              </svg>
+          </button>
+          {isOpen && (
+              <div className="bg-white absolute right-4 top-10 rounded-xl border-2 border-black">
+                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
+                  <li>
+                    <Link href="/" className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0 dark:text-[#007991] " aria-current="page">Home</Link>
+                  </li>
+                  <li>
+                    <Link href="/about" className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]">About</Link>
+                  </li>
+                  <li>
+                    <Link href="/contactus" className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]">Contact Us</Link>
+                  </li>
+                  <li>
+                    <Link href="/login" className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]">Login</Link>
+                  </li>
+                  <li>
+                    <Link href="/signup" className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]">Signup</Link>
+                  </li>
+                  <li>
+                    <Link href="https://github.com/existence-master/Bloomify/"><button type="button" className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none">GitHub</button></Link>
+                  </li>
+                </ul>
+              </div>
+          )}
+        </div>
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
             <li>
@@ -41,11 +89,23 @@ const About = () => {
         </div>
       </div>
     </nav>
-    <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
+    {/* Desktop Content */}
+    <div className="xs:max-md:hidden">
+      <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0">
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
+            <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                <h2 className="text-xl self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
+                <p className="font-Poppins self-center content-center text-3xl text-gray-600 leading-relaxed mb-8">There are three main problems we address here. The first one is the case where universities work on Bloom's taxonomy basis for the syllabus but not for the question papers. The prevalent issue in many educational institutions, particularly in India and elsewhere, lies in the tendency to predominantly set exam questions at the lower levels of Bloom's Taxonomy. This practice restricts students to rote memorization and recall, discouraging deeper understanding, practical application, and critical thinking. The emphasis on low-level cognitive skills in exams fosters a culture where students prioritize memorization over grasping the practical utility of concepts. As a consequence, the educational system often falls short in nurturing holistic learning experiences that encourage analytical thinking, problem-solving, and the application of acquired knowledge in real-world scenarios.</p>
+            </div>
+        </div>
+      </section>
+    </div>
+    {/* Mobile Content */}
+    <section className="w-full bg-transparent z-0">
+      <div className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-4">
           <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <h2 className="text-xl self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
-              <p className="font-Poppins self-center content-center text-3xl text-gray-600 leading-relaxed mb-8">There are three main problems we address here. The first one is the case where universities work on Bloom's taxonomy basis for the syllabus but not for the question papers. The prevalent issue in many educational institutions, particularly in India and elsewhere, lies in the tendency to predominantly set exam questions at the lower levels of Bloom's Taxonomy. This practice restricts students to rote memorization and recall, discouraging deeper understanding, practical application, and critical thinking. The emphasis on low-level cognitive skills in exams fosters a culture where students prioritize memorization over grasping the practical utility of concepts. As a consequence, the educational system often falls short in nurturing holistic learning experiences that encourage analytical thinking, problem-solving, and the application of acquired knowledge in real-world scenarios.</p>
+              <h2 className="text-2xl text-center self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
+              <p className="font-Poppins self-center content-center text-xl text-center text-gray-600 leading-relaxed mb-8">There are three main problems we address here. The first one is the case where universities work on Bloom's taxonomy basis for the syllabus but not for the question papers. The prevalent issue in many educational institutions, particularly in India and elsewhere, lies in the tendency to predominantly set exam questions at the lower levels of Bloom's Taxonomy. This practice restricts students to rote memorization and recall, discouraging deeper understanding, practical application, and critical thinking. The emphasis on low-level cognitive skills in exams fosters a culture where students prioritize memorization over grasping the practical utility of concepts. As a consequence, the educational system often falls short in nurturing holistic learning experiences that encourage analytical thinking, problem-solving, and the application of acquired knowledge in real-world scenarios.</p>
           </div>
       </div>
     </section>
@@ -98,7 +158,7 @@ const About = () => {
           <div className="sm:flex sm:items-center sm:justify-between">
               <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="#" className="hover:underline">Bloomify™</a>. All Rights Reserved.
               </span>
-              <div className="flex mt-2 sm:justify-center sm:mt-0">
+              <div className="flex mt-4 sm:justify-center sm:mt-4">
                   <span className="text-white translate-y-5">Powered by</span>
                   <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
                       <Image src="existence.svg" width={217} height={62} className = "rounded-xl"/>
