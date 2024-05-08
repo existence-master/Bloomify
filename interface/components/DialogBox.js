@@ -189,71 +189,77 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 	// Can declare like this instead of return
 	const classificationForm = (
 		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-			<h3 className="text-lg leading-6 font-medium text-gray-900">
-				Enter your question
+			<h3 className="text-2xl text-[#007991] flex leading-6 font-medium font-Quicksand mb-2">
+				<Image src="/classifyicon.svg" width={25} height={25} alt="Classify Icon" className="mr-2"/>
+				Classify
 			</h3>
 			<input
 				type="text"
 				name = "question"
+				placeholder="Enter your question"
 				value={query.question}
 				onChange={handleInput}
-				className="mt-2 w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+				className="p-2 shadow-lg mt-2 w-full border-2 border-[#007991] rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 			/>
 		</div>
 	);
 
 	const suggestionForm = (
 		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-			<h3 className="text-lg leading-6 font-medium text-gray-900">
-				Question:
+			<h3 className="text-2xl text-[#007991] mb-4 font-Quicksand leading-6 font-medium flex">
+				<Image src="/suggesticon.svg" width={25} height={25} alt="Classify Icon" className="mr-2"/>
+				Suggest
 			</h3>
 			<input
 				type="text"
 				name="question"
+				placeholder="Enter question"
 				value={query.question}
 				onChange={handleInput}
-				className="mb-3 w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+				className="mb-3 p-2 w-full border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 			/>
-			<h3 className="text-lg leading-6 font-medium text-gray-900">
-				Desired Level:
-			</h3>
-				<input
-					type="text"
-					name="desired_level"
-					value={query.desired_level}
-					onChange={handleInput}
-					className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-				/>
+			<input
+				type="text"
+				name="desired_level"
+				placeholder="Enter desired level"
+				value={query.desired_level}
+				onChange={handleInput}
+				className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+			/>
 		</div>
 	);
 
 	// Varad, create separate forms for syllabus and marking scheme input in generationForm
 	const generationForm = (
 		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-			<form name="syllabus" onSubmit={handleFormInput}>
-			<h3>Syllabus</h3>
-			{units.map((unit, index) => (
-				<div key={index} className="syllabus-unit">
-					<label>{`Unit ${unit.unit}`}</label>
-					<input
-						type="text"
-						name={unit.unit}
-						value={unit.content}
-						onChange={(e) => handleUnitChange(index, e)}
-						className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-					/>
-				</div>
-			))}
-			<button type="button" onClick={addUnit} className="mt-3 px-4 py-2 bg-blue-500 text-white rounded-md">
-				Add Unit
-			</button>
-			{/* Submit button to submit the form */}
-			<button type="submit" className="mt-3 px-4 py-2 bg-green-500 text-white rounded-md">
-				Submit Syllabus
-			</button>
+			<h3 className="text-2xl text-[#007991] mb-4 font-Quicksand leading-6 font-medium flex">
+				<Image src="/generateicon.svg" width={25} height={25} alt="Classify Icon" className="mr-2"/>
+				Generate
+			</h3>
+			<form name="syllabus" onSubmit={handleFormInput} className="w-full mb-4">
+				<h3 className="text-xl font-semibold">Enter Syllabus</h3>
+				{units.map((unit, index) => (
+					<div key={index} className="syllabus-unit">
+						<label>{`Unit ${unit.unit}`}</label>
+						<input
+							type="text"
+							name={unit.unit}
+							value={unit.content}
+							onChange={(e) => handleUnitChange(index, e)}
+							className="w-full border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+						/>
+					</div>
+				))}
+				<button type="button" onClick={addUnit} className="mt-3 mr-2 px-4 py-2 bg-[#007991] text-white rounded-md">
+					Add Unit
+				</button>
+				{/* Submit button to submit the form */}
+				<button type="submit" className="mt-3 px-4 py-2 bg-[#7AB6A1] text-white rounded-md">
+					Submit Syllabus
+				</button>
 			</form>
-			<form name="marking_scheme" onSubmit={handleFormInput}>
-			<h3>Marking Scheme</h3>
+			<form name="marking_scheme" onSubmit={handleFormInput} className="w-full">
+			<h3 className="text-xl font-semibold">Marking Scheme</h3>
 			<div className="flex flex-col gap-2">
 				<label>
 						Marks Per Unit
@@ -261,20 +267,20 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 					<input
 						type="number"
 						name="marks_per_unit"
+						placeholder="Enter Marks per Unit"
 						value={markingScheme.marks_per_unit}
 						onChange={handleMarkingSchemeChange}
-						className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+						className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 					/>
 				<label>
 					Main Questions Per Unit
 				</label>
-
 				<input
 					type="number"
 					name="main_questions_per_unit"
 					value={markingScheme.main_questions_per_unit}
 					onChange={handleMarkingSchemeChange}
-					className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+					className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 				/>
 				<label>
 						Sub-Questions Per Main Question
@@ -284,7 +290,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 						name="sub_questions_per_main_question"
 						value={markingScheme.sub_questions_per_main_question}
 						onChange={handleMarkingSchemeChange}
-						className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+						className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 					/>
 				<label>
 						Marks Per Main Question
@@ -294,10 +300,10 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 						name="marks_per_main_question"
 						value={markingScheme.marks_per_main_question}
 						onChange={handleMarkingSchemeChange}
-						className="w-full border-gray-300 border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+						className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 					/>
 				</div>
-				<button type="submit" className="mt-3 px-4 py-2 bg-green-500 text-white rounded-md">
+				<button type="submit" className="mt-3 px-4 py-2 bg-[#7AB6A1] text-white rounded-md">
 					Submit Marking Scheme
 				</button>
 		</form>
@@ -353,7 +359,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 						>
 							&#8203;
 						</span>
-						<div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+						<div className="inline-block align-bottom bg-white border-[#007991] border-2 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
 							{mode === "classification"  // Conditional rendering according to mode
 								? classificationForm
 								: mode === "suggestion"
@@ -367,11 +373,11 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 							<button
 									onClick={sendMessage}
 									disabled={isLoading}
-									className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm ${
+									className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#007991] text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm ${
 										isLoading ? "cursor-not-allowed opacity-50" : ""
 									}`}
 								>
-									{isLoading ? "Processing..." : "Send"}
+									{isLoading ? "Processing..." : "Send Message"}
 								</button>
 								<button
 									onClick={closeDialog}

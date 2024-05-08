@@ -100,6 +100,10 @@ const Dashboard = () => {
 			}));
 		};
 
+		const handleChatClick = (chatId) => {
+			router.push(`/chat/${chatId}`);
+		};
+
 		const handleCreateNewChat = async (e) => {
 			e.preventDefault();
 
@@ -121,6 +125,14 @@ const Dashboard = () => {
 			} catch (error) {
 				console.error("Error creating chat:", error);
 			}
+		}
+
+		const handleInputChange = (e) => {
+			const { name, value } = e.target;
+			setNewChatDetails((prev) => ({
+				...prev,
+				[name]: value,
+			}));
 		}
 
 		return (
@@ -315,86 +327,88 @@ const Dashboard = () => {
 							</div>
 						</div>
 					</aside>
-					<div className="p-8 w-full bg-[#FFFAE3] min-h-screen flex justify-center items-center">
-						<form onSubmit={handleCreateNewChat} className="bg-[#FFFAE3] flex flex-col justify-between p-2 gap-y-4 w-1/2 h-3/4">
-							<h2 className="text-4xl font-bold mb-4 text-center">Enter Chat Details</h2>
-							<div className="font-Poppins font-medium">
-								<label className="block text-xl text-gray-700">Chat Title</label>
-								<input
-									type="text"
-									name="title"
-									value={newChatDetails.title}
-									onChange={handleInputChange}
-									className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl p-2 mb-4"
-								/>
-							</div>
-							<div className="mb-4 font-Poppins font-medium">
-								<label className="block text-xl mb-2 text-gray-700">Degree</label>
-								<select
-									name="degree"
-									value={newChatDetails.degree}
-									onChange={handleInputChange}
-									className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-								>
-									<option value="">Select</option>
-									<option value="BTech">BTech</option>
-									<option value="MTech">MTech</option>
-								</select>
-							</div>
+					<div className="w-full bg-[#FFFAE3] h-full flex justify-center items-center">
+						<div className="w-full flex justify-center items-center">
+							<form onSubmit={handleCreateNewChat} className="bg-[#FFFAE3] flex flex-col justify-between p-2 gap-y-4 w-1/2 h-3/4">
+								<h2 className="text-4xl font-bold mb-4 text-center">Enter Chat Details</h2>
+								<div className="font-Poppins font-medium">
+									<label className="block text-xl text-gray-700">Chat Title</label>
+									<input
+										type="text"
+										name="title"
+										value={newChatDetails.title}
+										onChange={handleInputChange}
+										className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl p-2 mb-4"
+									/>
+								</div>
+								<div className="mb-4 font-Poppins font-medium">
+									<label className="block text-xl mb-2 text-gray-700">Degree</label>
+									<select
+										name="degree"
+										value={newChatDetails.degree}
+										onChange={handleInputChange}
+										className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+									>
+										<option value="">Select</option>
+										<option value="BTech">BTech</option>
+										<option value="MTech">MTech</option>
+									</select>
+								</div>
 
-							<div className="mb-4 font-Poppins">
-								<label className="block text-xl text-gray-700">Branch</label>
-								<select
-									name="branch"
-									value={newChatDetails.branch}
-									onChange={handleInputChange}
-									className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-								>
-									<option value="">Select</option>
-									<option value="AI DS">AI DS</option>
-									<option value="CS">CS</option>
-									<option value="IT">IT</option>
-									<option value="EnTC">EnTC</option>
-								</select>
-							</div>
+								<div className="mb-4 font-Poppins">
+									<label className="block text-xl text-gray-700">Branch</label>
+									<select
+										name="branch"
+										value={newChatDetails.branch}
+										onChange={handleInputChange}
+										className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+									>
+										<option value="">Select</option>
+										<option value="AI DS">AI DS</option>
+										<option value="CS">CS</option>
+										<option value="IT">IT</option>
+										<option value="EnTC">EnTC</option>
+									</select>
+								</div>
 
-							<div className="mb-4 font-Poppins">
-								<label className="block text-xl text-gray-700">Year</label>
-								<select
-									name="year"
-									value={newChatDetails.year}
-									onChange={handleInputChange}
-									className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-								>
-									<option value="">Select</option>
-									<option value="SE">SE</option>
-									<option value="TE">TE</option>
-									<option value="BE">BE</option>
-								</select>
-							</div>
+								<div className="mb-4 font-Poppins">
+									<label className="block text-xl text-gray-700">Year</label>
+									<select
+										name="year"
+										value={newChatDetails.year}
+										onChange={handleInputChange}
+										className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+									>
+										<option value="">Select</option>
+										<option value="SE">SE</option>
+										<option value="TE">TE</option>
+										<option value="BE">BE</option>
+									</select>
+								</div>
 
-							<div className="mb-4 font-Poppins">
-								<label className="block text-xl text-gray-700">Subject</label>
-								<select
-									name="subject"
-									value={newChatDetails.subject}
-									onChange={handleInputChange}
-									className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-								>
-									<option value="">Select</option>
-									<option value="ANN">ANN</option>
-									<option value="CS">CS</option>
-									<option value="DS">DS</option>
-								</select>
-							</div>
+								<div className="mb-4 font-Poppins">
+									<label className="block text-xl text-gray-700">Subject</label>
+									<select
+										name="subject"
+										value={newChatDetails.subject}
+										onChange={handleInputChange}
+										className="block w-full p-2 text-gray-900 bg-transparent border-black border-2 rounded-xl shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
+									>
+										<option value="">Select</option>
+										<option value="ANN">ANN</option>
+										<option value="CS">CS</option>
+										<option value="DS">DS</option>
+									</select>
+								</div>
 
-							<button
-								type="submit"
-								className="bg-[#007991] w-full text-white py-2 px-4 rounded-xl border-2 border-black hover:bg-[#222E50]"
-							>
-								Create New Chat
-							</button>
-						</form>
+								<button
+									type="submit"
+									className="bg-[#007991] w-full text-white py-2 px-4 rounded-xl border-2 border-black hover:bg-[#222E50]"
+								>
+									Create New Chat
+								</button>
+							</form>
+						</div>
 					</div>
 				</div>
 				<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
