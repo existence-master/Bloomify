@@ -145,6 +145,7 @@ const Dashboard = () => {
 					>
 						<div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
 							<div>
+								<Image src="/navbarlogo.svg" width={200} height={50} alt="Bloomify Logo" className="mb-5"/>
 								<ul className="space-y-2 font-medium">
 									<li>
 										<a
@@ -295,7 +296,7 @@ const Dashboard = () => {
 										{userDetails.username}
 									</div>
 								</Link>
-								<div className="">
+								<div className="absolute right-4 bottom-4">
 									<Link href="/dashboard">
 										<div className="rounded-full p-1 bg-[#007991]">
 											<svg
