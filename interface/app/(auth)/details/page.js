@@ -1,13 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { getCookie } from "cookies-next"; // Import the required functions
+import { useSession } from "next-auth/react";
 
 const Details = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams()
+  const { status } = useSession()
+  const [isAuthorized, setIsAuthorized] = useState(false); // State to track authorization
+
+
+  if (status === "authenticated") {
+    router.push("/dashboard")
+  }
+
+  useEffect(() => {
+    // Check the cookie to determine if the "signup-flow" is set to `true`
+    const signupFlowCookie = getCookie("signup-flow");
+    if (signupFlowCookie === "true") {
+      setIsAuthorized(true); // Mark as authorized
+    } else {
+      router.push("/signup"); // Redirect if not authorized
+    }
+  }, [router]); // Ensure this runs once when the component mounts
+
+  if (!isAuthorized) {
+		// Don't render the component if not authorized
+		return null; // This prevents the flash of the component
+	  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +56,21 @@ const Details = () => {
         setError("This username already exists");
       } else if (res.status === 200) {
         setError("");
-        router.push("/login");
+        const response = await fetch('/api/set-cookie', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: "signup-flow",
+            value: "true",
+            maxAge: 0
+          })
+        });
+
+        if (response.ok) {
+          router.push("/login");
+        }
       }
     } catch (error) {
       setError("Error, try again");

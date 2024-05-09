@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { getCookie } from "cookies-next"; // Import the required functions
+import { useSession } from "next-auth/react";
 
 const Verify = () => {
   const router = useRouter();
@@ -10,8 +12,32 @@ const Verify = () => {
   const [hash, setHash] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
-  const [cooldown, setCooldown] = useState(false);
-  const searchParams = useSearchParams();
+	const [cooldown, setCooldown] = useState(false);
+	const [isAuthorized, setIsAuthorized] = useState(false); // State to track authorization
+
+	const searchParams = useSearchParams();
+	const {status} = useSession()
+
+  if (status === "authenticated") {
+    router.push("/dashboard")
+  }
+	
+  useEffect(() => {
+    // Check the cookie to determine if the "signup-flow" is set to `true`
+	  const signupFlowCookie = getCookie("signup-flow");
+	  console.log(signupFlowCookie)
+    if (signupFlowCookie === "true") {
+      setIsAuthorized(true); // Mark as authorized
+    } else {
+      router.push("/signup"); // Redirect if not authorized
+    }
+  }, [router]); // Ensure this runs once when the component mounts
+
+	
+	if (!isAuthorized) {
+		// Don't render the component if not authorized
+		return null; // This prevents the flash of the component
+	  }
 
   const userEmail = searchParams.get("userEmail");
 

@@ -19,20 +19,6 @@ const Chat = () => {
 		}
 	}, [status, router]); // Ensure this effect runs when the status changes
 
-	// Return a loading state while the session status is loading
-	if (status === "loading") {
-		return (
-			<div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
-				<div className="text-center">
-					<h1 className="text-8xl font-bold mb-4 text-green-600">Loading...</h1>
-					<p className="text-lg">Please wait</p>
-				</div>
-			</div>
-		);
-	}
-
-	// If the user is authenticated, render the dashboard content
-	if (status === "authenticated") {
 		const { id: chatId } = useParams()
 		const [userDetails, setUserDetails] = useState({
 			username: "",
@@ -175,6 +161,18 @@ const Chat = () => {
 			toggleMenu()
 		}
 
+		// Return a loading state while the session status is loading
+	if (status === "loading") {
+		return (
+			<div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
+				<div className="text-center">
+					<h1 className="text-8xl font-bold mb-4 text-green-600">Loading...</h1>
+					<p className="text-lg">Please wait</p>
+				</div>
+			</div>
+		);
+	}
+
   
 		if (status === "loading") {
 			return (
@@ -187,11 +185,7 @@ const Chat = () => {
 			);
 		}
   
-		if (status !== "authenticated") {
-			return <p>Access Denied</p>
-		}
-  
-
+		if (status === "authenticated") {
 		return (
 			<>
 				<div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex">

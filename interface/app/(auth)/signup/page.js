@@ -2,6 +2,7 @@
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { setCookie } from "cookies-next"; 
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,6 +21,7 @@ const Signup = () => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(email);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userEmail = e.target[0].value;
@@ -36,26 +38,37 @@ const Signup = () => {
     }
 
     try {
-      const response = await fetch("/api/set-session", {
+      // Set the "signup-flow" cookie to indicate the user has started the signup process
+      let response = await fetch('/api/set-cookie', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: "signup-flow",
+          value: "true"
+        })
+      });
+
+      response = await fetch("/api/set-session", {
         method: "POST",
         headers: {
-          "ContentType": "application/json"
+          "Content-Type": "application/json", 
         },
         body: JSON.stringify({
           userEmail,
-          password
-        })
-      }
-      )
-       
+          password,
+        }),
+      });
+
       if (response.ok) {
-        router.push(`/verify?userEmail=${userEmail}`)
+        router.push(`/verify?userEmail=${userEmail}`);
       }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setError("An error occurred. Please try again.");
     }
-    catch (error) {
-      console.log(error);
-    }
-  }
+  };
 
   return (
     <>
@@ -64,7 +77,7 @@ const Signup = () => {
           <img
             className="h-full w-full object-cover"
             src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg"
-            alt="books"
+            alt="Books"
           />
         </div>
         <div className="h-screen w-1/2 bg-[#FFFAE3]">
@@ -72,7 +85,7 @@ const Signup = () => {
             <Image
               className="mb-10"
               src="/navbarlogo.svg"
-              alt="bloomify-logo"
+              alt="Bloomify logo"
               width={200}
               height={50}
             />
@@ -103,8 +116,7 @@ const Signup = () => {
                       href="/login"
                     >
                       Login here
-                    </Link>{" "}
-                    for free
+                    </Link>
                   </h1>
                   <button
                     className="text-white w-40 hover:shadow-lg rounded-lg text-xl p-2 font-semibold bg-[#007991]"
@@ -122,7 +134,7 @@ const Signup = () => {
                 className="text-xl w-full bg-transparent text-black py-2 rounded-xl border-2 border-black flex flex-row justify-center items-center"
                 onClick={() => signIn("google")}
               >
-                <Image src="/googlelogo.webp" width={20} height={20} alt="Google Logo" className="mr-2"/>
+                <Image src="/googlelogo.webp" width={20} height={20} alt="Google logo" className="mr-2" />
                 Sign up with Google
               </button>
             </div>
@@ -131,7 +143,7 @@ const Signup = () => {
       </div>
       <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
           <div className="text-center">
-              <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>
+              <h1 className="text-3xl font-bold mb-4">Unsupported device</h1>
               <p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p>
               <p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p>
           </div>

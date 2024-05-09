@@ -41,44 +41,56 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
-      if (account.provider == "credentials") {
-        return true;
-      }
-      if (account?.provider == "google") {
+      if (account.provider === 'google') {
         await connect();
         try {
           const existingUser = await User.findOne({ email: user.email });
+
           if (!existingUser) {
             const newUser = new User({
               email: user.email,
-              googleUser: true // Signed up with Google
+              googleUser: true, // Signed up with Google
             });
 
             await newUser.save();
+
+            // Call the endpoint to set the 'signup-flow' cookie
+            const response = await fetch('/api/set-cookie', {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                name: "signup-flow",
+                value: "true"
+              })
+            });
+
+            if (!response.ok) {
+              console.error("Failed to set the signup-flow cookie");
+              return false; // Return false if setting the cookie fails
+            }
+
+            // Redirect new users to the /details page
             return `/details?userEmail=${user.email}`;
           }
-          return true;
+
+          return true; // User exists, no need to set the cookie
         } catch (err) {
-          console.log("Error saving user", err);
-          return false;
+          console.error("Error in signIn callback:", err);
+          return false; // Return false if an error occurs
         }
       }
+
+      return true
     },
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/details")) {
         return url; // Redirect to the /details page
       }
 
-      if (url === "/unauthenticated") {
-        return url
-      }
-
       if (url === `${baseUrl}/`) {
         return baseUrl
-      }
-
-      if (url === "/dashboard") {
-        return "/unauthenticated"
       }
 
       return "/dashboard"; // Redirect to dashboard if user exists
