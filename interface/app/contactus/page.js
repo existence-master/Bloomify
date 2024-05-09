@@ -26,7 +26,7 @@ const ContactUs = () => {
     };
     return (
     <>
-        <div className="bg-[#fffbe6]">
+        <div className="bg-[#fffbe6] w-screen h-screen">
             <nav className="bg-transparent">
             <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -89,24 +89,11 @@ const ContactUs = () => {
                 </div>
             </div>
             </nav>
-            <section className="bg-transparent">
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                    <div className="w-full bg-[#007991] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
-                        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Leave your feedback here!
-                            </h1>
-                            <form className="space-y-4 md:space-y-6" method="post" action="{{ url_for('submit_feedback') }}">
-                                <div>
-                                    <label for="email" className="block mb-2 text-sm font-medium text-white">Your email</label>
-                                    <input type="email" name="email" id="email" className="bg-[#fffbe6] border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="name@company.com" required="" />
-                                </div>
-                                <label for="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-                                <textarea id="message" name="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-[#fffbe6] rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Leave a comment..." required=""></textarea>                
-                                <button type="button" className="w-full text-white bg-[#222E50] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none">Submit</button>
-                            </form>                
-                        </div>
-                    </div>
+            <section className="bg-transparent flex h-2/3 justify-center">
+                <div className="flex flex-col items-center justify-center w-1/2 md:h-2/3 lg:py-0">
+                    <p className="font-Poppins self-center content-center text-3xl text-gray-600 leading-relaxed mb-8">
+                    Feel free to reach out to us with any questions, feedback, or inquiries you may have. Our team is here to assist you. You can contact us via email at <a href="mailto:existence.bloomify@gmail.com" className="text-blue-500 underline">existence.bloomify@gmail.com</a>. We value your input and strive to provide the best possible experience for our users. Don't hesitate to get in touch — we're eager to hear from you!
+                    </p>
                 </div>
             </section>
             <footer className="footer-linear-bg">
