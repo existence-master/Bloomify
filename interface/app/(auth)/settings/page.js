@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SignoutButton from "@components/SignoutButton";
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Settings = () => {
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [error, setError] = useState(null);
+	const [newUsername, setNewUsername] = useState ("");
+	const [userMessage, setUserMessage] = useState ("");
    const [userDetails, setUserDetails] = useState({
 		username: "",
 	  	googleUser: null
