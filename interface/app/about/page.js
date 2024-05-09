@@ -91,7 +91,7 @@ const About = () => {
     </nav>
     {/* Desktop Content */}
     <div className="xs:max-md:hidden">
-      <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0">
+      <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0 text-justify">
         <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
             <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
                 <h2 className="text-xl self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
@@ -101,14 +101,16 @@ const About = () => {
       </section>
     </div>
     {/* Mobile Content */}
-    <section className="w-full bg-transparent z-0">
-      <div className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-4">
-          <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-              <h2 className="text-2xl text-center self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
-              <p className="font-Poppins self-center content-center text-xl text-center text-gray-600 leading-relaxed mb-8">There are three main problems we address here. The first one is the case where universities work on Bloom's taxonomy basis for the syllabus but not for the question papers. The prevalent issue in many educational institutions, particularly in India and elsewhere, lies in the tendency to predominantly set exam questions at the lower levels of Bloom's Taxonomy. This practice restricts students to rote memorization and recall, discouraging deeper understanding, practical application, and critical thinking. The emphasis on low-level cognitive skills in exams fosters a culture where students prioritize memorization over grasping the practical utility of concepts. As a consequence, the educational system often falls short in nurturing holistic learning experiences that encourage analytical thinking, problem-solving, and the application of acquired knowledge in real-world scenarios.</p>
-          </div>
-      </div>
-    </section>
+    <div className="md:hidden">
+      <section className="w-full bg-transparent z-0">
+        <div className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-4">
+            <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                <h2 className="text-2xl text-center self-center font-bold text-red-800 mb-4">Educational Assessment Redefined</h2>
+                <p className="font-Poppins self-center content-center text-xl text-center text-gray-600 leading-relaxed mb-8">There are three main problems we address here. The first one is the case where universities work on Bloom's taxonomy basis for the syllabus but not for the question papers. The prevalent issue in many educational institutions, particularly in India and elsewhere, lies in the tendency to predominantly set exam questions at the lower levels of Bloom's Taxonomy. This practice restricts students to rote memorization and recall, discouraging deeper understanding, practical application, and critical thinking. The emphasis on low-level cognitive skills in exams fosters a culture where students prioritize memorization over grasping the practical utility of concepts. As a consequence, the educational system often falls short in nurturing holistic learning experiences that encourage analytical thinking, problem-solving, and the application of acquired knowledge in real-world scenarios.</p>
+            </div>
+        </div>
+      </section>
+    </div>
     <footer className="footer-linear-bg">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div className="md:flex md:justify-between">
