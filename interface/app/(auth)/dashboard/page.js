@@ -91,6 +91,8 @@ const Dashboard = () => {
 			router.push(`/chat/${chatId}`);
 		};
 
+		const [createChatError, setCreateChatError] = useState(null);
+
 		const handleCreateNewChat = async (e) => {
 			e.preventDefault();
 
@@ -108,9 +110,11 @@ const Dashboard = () => {
 					router.push(`/chat/${chatId}`);
 				} else {
 					console.error("Failed to create chat.");
+					setCreateChatError("Failed to create chat.");
 				}
 			} catch (error) {
 				console.error("Error creating chat:", error);
+				setCreateChatError ("Error creating chat. Please try again later.")
 			}
 		}
 
@@ -144,7 +148,12 @@ const Dashboard = () => {
 					>
 						<div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
 							<div>
-								<Image src="/navbarlogo.svg" width={200} height={50} alt="Bloomify Logo" className="mb-5"/>
+								<Link
+									href="/"
+									className="flex items-center p-2 text-gray-900 rounded-lg group"
+								>
+									<Image src="/navbarlogo.svg" width={200} height={50} alt="Bloomify Logo" className="mb-5"/>
+								</Link>
 								<ul className="space-y-2 font-medium">
 									<li>
 										<a
@@ -166,54 +175,11 @@ const Dashboard = () => {
 									</li>
 									<li>
 										<Link
-											href="/"
-											className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
-										>
-											<svg
-												className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-												aria-hidden="true"
-												xmlns="http://www.w3.org/2000/svg"
-												fill="none"
-												viewBox="0 0 18 16"
-											>
-												<path
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth="2"
-													d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-												/>
-											</svg>
-											<span className="flex-1 ms-3 whitespace-nowrap">Home</span>
-										</Link>
-									</li>
-									<li>
-										<Link
 											href="/settings"
 											className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
 										>
 											<Image src="/settingsicon.svg" width={20} height={20} alt="Settings Icon" className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
 											<span className="flex-1 ms-3 whitespace-nowrap">Settings</span>
-										</Link>
-									</li>
-									<li>
-										<Link
-											href="/contactus"
-											className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
-										>
-											<svg
-												className="w-4 h-4 text-gray-500 dark:text-gray-400"
-												aria-hidden="true"
-												xmlns="http://www.w3.org/2000/svg"
-												fill="currentColor"
-												viewBox="0 0 20 16"
-											>
-												<path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-												<path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-											</svg>
-											<span className="flex-1 ms-3 whitespace-nowrap">
-												Contact Us
-											</span>
 										</Link>
 									</li>
 								</ul>
@@ -398,6 +364,7 @@ const Dashboard = () => {
 								>
 									Create New Chat
 								</button>
+								{createChatError && <div className="text-red-500">{createChatError}</div>}
 							</form>
 						</div>
 					</div>

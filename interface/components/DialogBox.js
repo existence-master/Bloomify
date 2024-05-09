@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { convertToMessage } from "@utils/helpers";
+//import ErrorDisplay from "@components/ErrorDisplay";
 
 const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, university}) => {
 	
@@ -178,6 +179,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 
 		catch (error) {
 			console.log(error);
+			//return <ErrorDisplay errorMessage="An error occurred while sending the message. Please try again later." />;
 		}
 
 		finally {
@@ -370,14 +372,14 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 							} 
 							
 							<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-							<button
-									onClick={sendMessage}
-									disabled={isLoading}
-									className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#007991] text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm ${
-										isLoading ? "cursor-not-allowed opacity-50" : ""
-									}`}
-								>
-									{isLoading ? "Processing..." : "Send Message"}
+								<button
+										onClick={sendMessage}
+										disabled={isLoading}
+										className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#007991] text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm ${
+											isLoading ? "cursor-not-allowed opacity-50" : ""
+										}`}
+									>
+										{isLoading ? "Processing..." : "Send Message"}
 								</button>
 								<button
 									onClick={closeDialog}
