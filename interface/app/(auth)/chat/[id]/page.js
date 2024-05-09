@@ -43,7 +43,8 @@ const Chat = () => {
 			chatId: chatId
 		});
 		//Send Message Dropdown Logic
-		const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [error, setError] = useState(null)
 		const dropdownRef = useRef(null);
 		useEffect(() => {
 			document.addEventListener("mousedown", handleClickOutside);
@@ -63,108 +64,135 @@ const Chat = () => {
 	
 		useEffect(() => {
 			const fetchUserDetails = async () => {
-				const response = await fetch("/api/get-user-details", {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
+			  try {
+				const response = await fetch('/api/get-user-details', {
+				  method: 'GET',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
 				});
-
-				const details = await response.json()
-				const { username, university } = details
-				setUserDetails({ username, university })
-			}
-
-			const fetchChatDetails = async () => {
-				const response = await fetch("/api/get-chat-details", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						chatId: chatId
-					}),
-				});
-				if (response.ok) {
-					const { chatTitle, chatFilters, chatHistory } = await response.json()
-					setChatDetails((prevState) => ({
-						...prevState,
-						chatTitle,
-						chatFilters,
-						chatHistory,
-					}));
-	  
-					setChatFilters(chatFilters)
-				}
-
-				if (response.status === 404) {
-					router.push("/not-found")
+		
+				if (!response.ok) {
+				  throw new Error(`Failed to fetch user details: ${response.statusText}`);
 				}
 		
-			}
-
-			fetchUserDetails()
-			fetchChatDetails()
-		}, [])
-
-		useEffect(() => {
-			const fetchFilteredChats = async () => {
-				const response = await fetch("/api/get-filtered-chats", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						degree: chatFilters.degree,
-						branch: chatFilters.branch,
-						year: chatFilters.year,
-						subject: chatFilters.subject,
-					}),
+				const details = await response.json();
+				const { username, university } = details;
+				setUserDetails({ username, university });
+			  } catch (err) {
+				setError(`Error fetching user details: ${err.message}`);
+			  }
+			};
+		
+			const fetchChatDetails = async () => {
+			  try {
+				const response = await fetch('/api/get-chat-details', {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify({
+					chatId: chatId,
+				  }),
 				});
-
-				const chats = await response.json()
-				setFilteredChats(chats)
-			}
-			// Initial fetch for filtered chats
-			fetchFilteredChats();
-		}, [chatFilters])
-
-
-		const handleFilterChange = (e) => {
-			const { name, value } = e.target
-	
-			setChatFilters((prev) => (
-				{
-					...prev,
-					[name]: value
+		
+				if (response.status === 404) {
+				  router.push('/not-found');
+				  return;
 				}
-			));
-		};
-
-		const handleChatClick = (chatId) => {
-			router.push(`/chat/${chatId}`)
-		}
-
-		const reloadChat = async () => {
-			const response = await fetch("/api/get-chat-details", {
-				method: "POST",
+		
+				if (!response.ok) {
+				  throw new Error(`Failed to fetch chat details: ${response.statusText}`);
+				}
+		
+				const { chatTitle, chatFilters, chatHistory } = await response.json();
+				setChatDetails({
+				  chatTitle,
+				  chatFilters,
+				  chatHistory,
+				});
+				setChatFilters(chatFilters);
+			  } catch (err) {
+				setError(`Error fetching chat details: ${err.message}`);
+			  }
+			};
+		
+			fetchUserDetails();
+			fetchChatDetails();
+		  }, [chatId, router]);
+		
+		  useEffect(() => {
+			const fetchFilteredChats = async () => {
+			  try {
+				const response = await fetch('/api/get-filtered-chats', {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify({
+					degree: chatFilters.degree,
+					branch: chatFilters.branch,
+					year: chatFilters.year,
+					subject: chatFilters.subject,
+				  }),
+				});
+		
+				if (!response.ok) {
+				  throw new Error(`Failed to fetch filtered chats: ${response.statusText}`);
+				}
+		
+				const chats = await response.json();
+				setFilteredChats(chats);
+			  } catch (err) {
+				setError(`Error fetching filtered chats: ${err.message}`);
+			  }
+			};
+		
+			fetchFilteredChats();
+		  }, [chatFilters]);
+		
+		  const handleFilterChange = (e) => {
+			const { name, value } = e.target;
+			setChatFilters((prev) => ({
+			  ...prev,
+			  [name]: value,
+			}));
+		  };
+		
+		  const handleChatClick = (chatId) => {
+			router.push(`/chat/${chatId}`);
+		  };
+		
+		  const reloadChat = async () => {
+			try {
+			  const response = await fetch('/api/get-chat-details', {
+				method: 'POST',
 				headers: {
-					"Content-Type": "application/json",
+				  'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					chatId: chatId
-				})
-			});
-
-			const { chatHistory } = await response.json()
-	
-
-			setChatDetails((prevState) => ({
+				  chatId: chatId,
+				}),
+			  });
+		
+			  if (!response.ok) {
+				throw new Error(`Failed to reload chat: ${response.statusText}`);
+			  }
+		
+			  const { chatHistory } = await response.json();
+			  setChatDetails((prevState) => ({
 				...prevState,
-				chatHistory
-			}));
-			toggleMenu()
-		}
+				chatHistory,
+			  }));
+				toggleMenu()
+			} catch (err) {
+			  setError(`Error reloading chat: ${err.message}`);
+			}
+	};
+	
+	const handleError = () => {
+		setError(null)
+	}
 
 	// Return a loading state while the session status is loading
 	if (status === "loading") {
@@ -354,6 +382,12 @@ const Chat = () => {
 							))}
 						</div>
 					</div>
+					{error && (
+								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+									<ErrorDisplay errorMessage={error} handleError={handleError} />
+								</div>
+								)
+						   }
 				</div>
 				<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
 					<div className="text-center">

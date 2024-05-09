@@ -14,21 +14,30 @@ const Settings = () => {
 	  	googleUser: null
 	});
 
-   useEffect(() => {
-	  const fetchUserDetails = async () => {
-		 const response = await fetch("/api/get-user-details", {
-			method: "GET",
-			headers: {
-			"Content-Type": "application/json",
-			},
-		 });
-   
-		 const details = await response.json()
-		 const {username, googleUser} = details
-		  setUserDetails({username, googleUser})
-	  }
-	  fetchUserDetails()
-	 }, [])
+	useEffect(() => {
+		const fetchUserDetails = async () => {
+		  try {
+			const response = await fetch('/api/get-user-details', {
+			  method: 'GET',
+			  headers: {
+				'Content-Type': 'application/json',
+			  },
+			});
+	
+			if (!response.ok) {
+			  throw new Error(`Failed to fetch user details: ${response.statusText}`);
+			}
+	
+			const details = await response.json();
+			const { username, googleUser } = details;
+			setUserDetails({ username, googleUser });
+		  } catch (err) {
+			setError(`Error fetching user details: ${err.message}`);
+		  }
+		};
+	
+		fetchUserDetails();
+	  }, []);
 
 
    const handlePassFieldChange = (e) => {
@@ -208,12 +217,7 @@ const Settings = () => {
 						Change Password
 					 </button>
 				  </div>
-				  {error && (
-								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-									<ErrorDisplay errorMessage={error} handleError={handleError} />
-								</div>
-								)
-								}			   </form>
+			</form>
 			</div>
 			<div className="w-1/2 flex justify-center items-center mt-8">
 			   <form onSubmit={handleUsernameSubmit} className="text-2xl font-poppins w-full h-full flex flex-col justify-center items-center">
@@ -231,13 +235,13 @@ const Settings = () => {
 				  </div>
 				  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black">Change Username</button>
 				  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
-				  {error && (
+					   </form>
+					   {error && (
 								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-								   <ErrorDisplay errorMessage={error} handleError={handleError} />
+									<ErrorDisplay errorMessage={error} handleError={handleError} />
 								</div>
 								)
 						   }
-					   </form>
 			</div>
 		 </div>
 	  </div>

@@ -41,45 +41,60 @@ const Dashboard = () => {
 			subject: "",
 		});
 
-		// Fetch user details and filtered chats on component mount
 		useEffect(() => {
 			const fetchUserDetails = async () => {
-				const response = await fetch("/api/get-user-details", {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
+			  try {
+				const response = await fetch('/api/get-user-details', {
+				  method: 'GET',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
 				});
-
+		
+				if (!response.ok) {
+				  throw new Error(`Failed to fetch user details: ${response.statusText}`);
+				}
+		
 				const details = await response.json();
 				const { username } = details;
 				setUserDetails({ username });
+			  } catch (err) {
+				setError(`Error fetching user details: ${err.message}`);
+			  }
 			};
-
+		
 			fetchUserDetails();
-		}, []);
-
-		useEffect(() => {
+		  }, []); // No dependencies, runs only on component mount
+		
+		  useEffect(() => {
 			const fetchFilteredChats = async () => {
-				const response = await fetch("/api/get-filtered-chats", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						degree: chatFilters.degree,
-						branch: chatFilters.branch,
-						year: chatFilters.year,
-						subject: chatFilters.subject,
-					}),
+			  try {
+				const response = await fetch('/api/get-filtered-chats', {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json',
+				  },
+				  body: JSON.stringify({
+					degree: chatFilters.degree,
+					branch: chatFilters.branch,
+					year: chatFilters.year,
+					subject: chatFilters.subject,
+				  }),
 				});
-
+		
+				if (!response.ok) {
+				  throw new Error(`Failed to fetch filtered chats: ${response.statusText}`);
+				}
+		
 				const chats = await response.json();
 				setFilteredChats(chats);
+			  } catch (err) {
+				setError(`Error fetching filtered chats: ${err.message}`);
+			  }
 			};
-
-			fetchFilteredChats(); // Fetch initial chats
-		}, [chatFilters]);
+		
+			fetchFilteredChats(); // Fetch initial filtered chats
+		  }, [chatFilters]);
 
 		const handleFilterChange = (e) => {
 			const { name, value } = e.target;
@@ -368,16 +383,15 @@ const Dashboard = () => {
 								>
 									Create New Chat
 								</button>
-								{error && (
+							</form>
+						</div>
+					</div>
+					{error && (
 								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
 									<ErrorDisplay errorMessage={error} handleError={handleError}/>
 								</div>
 								)
 								}
-
-							</form>
-						</div>
-					</div>
 				</div>
 				<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
 					<div className="text-center">
