@@ -161,7 +161,7 @@ const Chat = () => {
 			toggleMenu()
 		}
 
-		// Return a loading state while the session status is loading
+	// Return a loading state while the session status is loading
 	if (status === "loading") {
 		return (
 			<div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
@@ -173,17 +173,6 @@ const Chat = () => {
 		);
 	}
 
-  
-		if (status === "loading") {
-			return (
-				<div className="bg-[#FFFAE3] flex justify-center items-center h-screen">
-					<div className="text-center">
-						<h1 className="text-8xl font-bold mb-4 text-green-600">Loading...</h1>
-						<p className="text-lg">Please wait</p>
-					</div>
-				</div>
-			);
-		}
   
 		if (status === "authenticated") {
 		return (
@@ -228,7 +217,7 @@ const Chat = () => {
 										<div className="w-1/2 gap-2">
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatDetails.chatFilters.degree}
+												value={chatFilters.degree}
 												onChange={handleFilterChange}
 											>
 												<option value="Degree">Degree</option>
@@ -239,7 +228,7 @@ const Chat = () => {
 										<div className="w-1/2">
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatDetails.chatFilters.branch}
+												value={chatFilters.branch}
 												onChange={handleFilterChange}
 											>
 												<option value="Branch">Branch</option>
@@ -254,7 +243,7 @@ const Chat = () => {
 										<div className="w-1/2">
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatDetails.chatFilters.year}
+												value={chatFilters.year}
 												onChange={handleFilterChange}
 											>
 												<option value="Year">Year</option>
@@ -266,7 +255,7 @@ const Chat = () => {
 										<div className="w-1/2">
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatDetails.chatFilters.subject}
+												value={chatFilters.subject}
 												onChange={handleFilterChange}
 											>
 												<option value="Subject">Subject</option>
