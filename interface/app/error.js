@@ -20,6 +20,15 @@ export default function Error({ error, reset }) {
       >
         Try again
       </button>
+    <button
+        onClick={() => {
+            window.history.back();
+        }}
+        className='rounded-xl border-2 border-black bg-[#007991] p-2'
+        >
+        Go back
+    </button>
+
     </div>
   )
 }
