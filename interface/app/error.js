@@ -9,25 +9,25 @@ export default function Error({ error, reset }) {
   }, [error])
  
   return (
-    <div className='bg-[#FFFAE3] w-full h-full flex justify-center items-center'>
-      <h2 className='text-4xl text-red-500 font-semibold'>Something went wrong!</h2>
+    <div className='bg-[#FFFAE3] w-screen h-screen flex flex-col justify-center items-center'>
+      <h2 className='text-4xl text-red-500 font-semibold mb-4'>Something went wrong!</h2>
       <button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
-        className='rounded-xl border-2 border-black bg-[#007991] p-2'
+        className='rounded-xl border-2 border-black bg-[#007991] p-2 mb-2 text-white'
       >
         Try again
       </button>
-    <button
-        onClick={() => {
-            window.history.back();
-        }}
-        className='rounded-xl border-2 border-black bg-[#007991] p-2'
-        >
-        Go back
-    </button>
+      <button
+          onClick={() => {
+              window.history.back();
+          }}
+          className='rounded-xl border-2 border-black bg-[#007991] p-2 mb-2 text-white'
+          >
+          Go back
+      </button>
 
     </div>
   )
