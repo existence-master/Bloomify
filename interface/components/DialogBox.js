@@ -126,8 +126,6 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 		}));
 	}
 
-	console.log(query)
-
 	const closeDialog = () => {
 		setIsOpen(false);
 	};
@@ -175,16 +173,16 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			}
 
 			reloadChat()
+			closeDialog()
 		}
 
 		catch (error) {
 			console.log(error);
-			//return <ErrorDisplay errorMessage="An error occurred while sending the message. Please try again later." />;
+			return <ErrorDisplay errorMessage="An error occurred while sending the message. Please try again later." />;
 		}
 
 		finally {
 			setIsLoading(false);
-			closeDialog();
 		}
 	};
 
