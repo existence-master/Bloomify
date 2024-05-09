@@ -24,7 +24,12 @@ const Chat = () => {
 			username: "",
 			university: ""
 		})
-		const [chatFilters, setChatFilters] = useState({})
+		const [chatFilters, setChatFilters] = useState({
+			degree: "",
+			branch: "",
+			year: "",
+			subject: "",
+		});
 		const [filteredChats, setFilteredChats] = useState([])
 		const [chatDetails, setChatDetails] = useState({
 			chatFilters: {
@@ -218,6 +223,7 @@ const Chat = () => {
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 												value={chatFilters.degree}
+												name="degree"
 												onChange={handleFilterChange}
 											>
 												<option value="Degree">Degree</option>
@@ -229,6 +235,7 @@ const Chat = () => {
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 												value={chatFilters.branch}
+												name="branch"
 												onChange={handleFilterChange}
 											>
 												<option value="Branch">Branch</option>
@@ -244,6 +251,7 @@ const Chat = () => {
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 												value={chatFilters.year}
+												name="year"
 												onChange={handleFilterChange}
 											>
 												<option value="Year">Year</option>
@@ -256,6 +264,7 @@ const Chat = () => {
 											<select
 												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
 												value={chatFilters.subject}
+												name="subject"
 												onChange={handleFilterChange}
 											>
 												<option value="Subject">Subject</option>
