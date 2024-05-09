@@ -8,7 +8,7 @@ import SignoutButton from "@components/SignoutButton";
 const Settings = () => {
 	const [currentPassword, setCurrentPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
-	const [error, setError] = useState("");
+	const [error, setError] = useState(null);
    const [userDetails, setUserDetails] = useState({
 		username: "",
 	  	googleUser: null
@@ -89,9 +89,12 @@ const Settings = () => {
 
    const handleUsernameFormChange = (event) => {
 	  setNewUsername(event.target.value); // Update new username state
-   };
+	};
+	
+	const handleError = () => {
+		setError(null)
+	}
 
-   // Fetch user details useEffect remains the same
 
    return (
 	<>
@@ -207,7 +210,7 @@ const Settings = () => {
 				  </div>
 				  {error && (
 								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-									<ErrorDisplay errorMessage={error} />
+									<ErrorDisplay errorMessage={error} handleError={handleError} />
 								</div>
 								)
 								}			   </form>
@@ -230,7 +233,7 @@ const Settings = () => {
 				  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
 				  {error && (
 								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-									<ErrorDisplay errorMessage={error} />
+								   <ErrorDisplay errorMessage={error} handleError={handleError} />
 								</div>
 								)
 						   }

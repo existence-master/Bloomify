@@ -1,11 +1,12 @@
 "use client";
 import { useState } from 'react';
 
-const ErrorDisplay = ({ errorMessage }) => {
+const ErrorDisplay = ({ errorMessage, handleError}) => {
   const [visible, setVisible] = useState(true);
 
   const handleDismiss = () => {
     setVisible(false);
+    handleError()
   };
 
   return (

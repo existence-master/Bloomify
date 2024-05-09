@@ -125,6 +125,10 @@ const Dashboard = () => {
 				[name]: value,
 			}));
 	}
+
+	const handleError = () => {
+		setError(null)
+	}
 	// Return a loading state while the session status is loading
 	if (status === "loading") {
 		return (
@@ -366,7 +370,7 @@ const Dashboard = () => {
 								</button>
 								{error && (
 								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-									<ErrorDisplay errorMessage={error} />
+									<ErrorDisplay errorMessage={error} handleError={handleError}/>
 								</div>
 								)
 								}

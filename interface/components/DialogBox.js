@@ -49,7 +49,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 
 	const [query, setQuery] = useState(initialQueryState[mode] || {});
 	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState("");
+	const [error, setError] = useState(null);
 
 	// Conditional url
 	const url = mode === "classification"
@@ -186,6 +186,10 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 		}
 	};
 
+	const handleError = () => {
+		setError(null)
+	}
+
 	// Can declare like this instead of return
 	const classificationForm = (
 		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
@@ -203,7 +207,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			/>
 {error && (
 				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay errorMessage={error} />
+					<ErrorDisplay errorMessage={error} handleError={handleError}/>
 				</div>
 			)}		</div>
 	);
@@ -232,7 +236,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			/>
 {error && (
 				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay errorMessage={error} />
+					<ErrorDisplay errorMessage={error} handleError={handleError}/>
 				</div>
 			)}		</div>
 	);
@@ -317,7 +321,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			</form>
 			{error && (
 				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay errorMessage={error} />
+					<ErrorDisplay errorMessage={error} handleError={handleError}/>
 				</div>
 			)}
 		</div>
