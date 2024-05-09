@@ -6,6 +6,9 @@ import Image from "next/image";
 import SignoutButton from "@components/SignoutButton";
 
 const Settings = () => {
+	const [currentPassword, setCurrentPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [error, setError] = useState("");
    const [userDetails, setUserDetails] = useState({
 		username: "",
 	  	googleUser: null
@@ -27,9 +30,6 @@ const Settings = () => {
 	  fetchUserDetails()
 	 }, [])
 
-   const [currentPassword, setCurrentPassword] = useState("");
-   const [newPassword, setNewPassword] = useState("");
-   const [errorMessage, setErrorMessage] = useState("");
 
    const handlePassFieldChange = (e) => {
 	  const { name, value } = e.target;
@@ -54,17 +54,12 @@ const Settings = () => {
 		 // Password updated successfully
 		 setCurrentPassword("");
 		 setNewPassword("");
-		 setErrorMessage("");
+		 setError("");
 	  } catch (error) {
-		 //setErrorMessage(error.message); - showing JSON error
-		 setErrorMessage("Error changing password.")
+		 setError("Error changing password.")
 	  }
    };
 
-   const [newUsername, setNewUsername] = useState('');
-   const [userMessage, setUserMessage] = useState('');
-   const [userError, setUserError] = useState('');
-   // Function to handle form submission
    const handleUsernameSubmit = async (event) => {
 	  event.preventDefault(); // Prevent default form submission
 
@@ -84,12 +79,11 @@ const Settings = () => {
 		 setUserMessage(data.message); // Set success message
 	  } else {
 		 const errorData = await response.json();
-		 //setUserError(errorData.message); // Set error message - commented out because this is showing JSON error to user - not intended behaviour
-		 setUserError("Error changing username.")
+		 setError("Error changing username.")
 	  }
 	  } catch (error) {
 	  console.error('Error changing username:', error);
-	  setUserError('Internal server error'); // Set generic error message
+	  setError('Internal server error'); // Set generic error message
 	  }
    };
 
@@ -211,8 +205,12 @@ const Settings = () => {
 						Change Password
 					 </button>
 				  </div>
-				  {errorMessage && <div className="text-red-500 text-sm mb-4">{errorMessage}</div>}
-			   </form>
+				  {error && (
+								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+									<ErrorDisplay errorMessage={error} />
+								</div>
+								)
+								}			   </form>
 			</div>
 			<div className="w-1/2 flex justify-center items-center mt-8">
 			   <form onSubmit={handleUsernameSubmit} className="text-2xl font-poppins w-full h-full flex flex-col justify-center items-center">
@@ -230,8 +228,13 @@ const Settings = () => {
 				  </div>
 				  <button type="submit" className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black">Change Username</button>
 				  {userMessage && <p className="text-sm text-black">{userMessage}</p>}
-				  {userError && <p className="text-sm text-black">{userError}</p>}
-			   </form>
+				  {error && (
+								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+									<ErrorDisplay errorMessage={error} />
+								</div>
+								)
+						   }
+					   </form>
 			</div>
 		 </div>
 	  </div>

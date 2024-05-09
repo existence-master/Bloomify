@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { convertToMessage } from "@utils/helpers";
-//import ErrorDisplay from "@components/ErrorDisplay";
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, university}) => {
 	
@@ -178,7 +178,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 
 		catch (error) {
 			console.log(error);
-			return <ErrorDisplay errorMessage="An error occurred while sending the message. Please try again later." />;
+			setError("An error occurred while sending the message. Please try again later.")
 		}
 
 		finally {
@@ -201,7 +201,11 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				onChange={handleInput}
 				className="p-2 shadow-lg mt-2 w-full border-2 border-[#007991] rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 			/>
-		</div>
+{error && (
+				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+					<ErrorDisplay errorMessage={error} />
+				</div>
+			)}		</div>
 	);
 
 	const suggestionForm = (
@@ -226,7 +230,11 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				onChange={handleInput}
 				className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
 			/>
-		</div>
+{error && (
+				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+					<ErrorDisplay errorMessage={error} />
+				</div>
+			)}		</div>
 	);
 
 	// Varad, create separate forms for syllabus and marking scheme input in generationForm
@@ -306,7 +314,12 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				<button type="submit" className="mt-3 px-4 py-2 bg-[#7AB6A1] text-white rounded-md">
 					Submit Marking Scheme
 				</button>
-		</form>
+			</form>
+			{error && (
+				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+					<ErrorDisplay errorMessage={error} />
+				</div>
+			)}
 		</div>
 	);
 

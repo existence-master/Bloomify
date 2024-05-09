@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SignoutButton from "@components/SignoutButton";
 import Image from "next/image";
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Dashboard = () => {
 	const router = useRouter();
@@ -22,6 +23,7 @@ const Dashboard = () => {
 		const [userDetails, setUserDetails] = useState({
 			username: "",
 		});
+		const [error, setError] = useState(null);
 
 		const [filteredChats, setFilteredChats] = useState([]);
 		const [chatFilters, setChatFilters] = useState({
@@ -91,8 +93,6 @@ const Dashboard = () => {
 			router.push(`/chat/${chatId}`);
 		};
 
-		const [createChatError, setCreateChatError] = useState(null);
-
 		const handleCreateNewChat = async (e) => {
 			e.preventDefault();
 
@@ -110,11 +110,11 @@ const Dashboard = () => {
 					router.push(`/chat/${chatId}`);
 				} else {
 					console.error("Failed to create chat.");
-					setCreateChatError("Failed to create chat.");
+					setError("Failed to create chat.");
 				}
 			} catch (error) {
 				console.error("Error creating chat:", error);
-				setCreateChatError ("Error creating chat. Please try again later.")
+				setError ("Error creating chat. Please try again later.")
 			}
 		}
 
@@ -364,7 +364,13 @@ const Dashboard = () => {
 								>
 									Create New Chat
 								</button>
-								{createChatError && <div className="text-red-500">{createChatError}</div>}
+								{error && (
+								<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+									<ErrorDisplay errorMessage={error} />
+								</div>
+								)
+								}
+
 							</form>
 						</div>
 					</div>
