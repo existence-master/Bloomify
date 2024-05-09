@@ -25,7 +25,7 @@ const Verify = () => {
   useEffect(() => {
     // Check the cookie to determine if the "signup-flow" is set to `true`
 	  const signupFlowCookie = getCookie("signup-flow");
-	  console.log(signupFlowCookie)
+	  //console.log(signupFlowCookie)
     if (signupFlowCookie === "true") {
       setIsAuthorized(true); // Mark as authorized
     } else {
