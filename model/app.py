@@ -1,4 +1,5 @@
 import os
+import uvicorn
 from prompts import *
 from fastapi import FastAPI
 from typing import List
@@ -204,6 +205,4 @@ async def generate_questions(input: GenerationInput):
     generated_question = response.text
     return generated_question
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+uvicorn.run(app, host="0.0.0.0", port=5000)
