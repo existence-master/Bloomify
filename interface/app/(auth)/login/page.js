@@ -49,7 +49,7 @@ const Login = () => {
 		});
 
 		// Check if the sign-in was successful
-		if (res.ok) {
+		if (res.url) {
 			router.push("/dashboard"); // Redirect to the dashboard on success
 		}
 		
