@@ -62,7 +62,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 	baseUrl = "https://bloomify-gd0v.onrender.com";
 	}
 
-	url =
+	let url =
 	mode === "classification"
 		? `${baseUrl}/classify`
 		: mode === "suggestion"
