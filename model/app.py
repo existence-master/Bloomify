@@ -205,4 +205,4 @@ async def generate_questions(input: GenerationInput):
     generated_question = response.text
     return generated_question
 
-uvicorn.run(app, host="0.0.0.0", port=5000)
+uvicorn.run(app, host="0.0.0.0", port=10000)
