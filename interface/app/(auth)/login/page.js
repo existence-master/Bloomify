@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"; // Navigation hook for routing
 import { useEffect, useState } from "react"; // React hooks for component logic
 import Image from "next/image"; // Next.js optimized image component
 import Link from "next/link"; // Link component for client-side navigation
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Login = () => {
 	const [error, setError] = useState(null); // State to hold error messages
@@ -50,10 +51,11 @@ const Login = () => {
 
 		// Check if the sign-in was successful
 		if (res.url) {
-			router.replace("/dashboard"); // Redirect to the dashboard on success
+			router.push("/dashboard"); // Redirect to the dashboard on success
 		}
-
-		setError("Invalid email or password"); // Display error message for failed sign-in
+		else {
+			setError("Invalid email or password"); // Display error message for failed sign-in
+		}
 	};
 
 	// Function to clear the error state
