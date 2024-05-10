@@ -1,5 +1,4 @@
 import { withAuth } from 'next-auth/middleware'; // Importing middleware for NextAuth authentication
-import { NextResponse } from 'next/server'; // Importing Next.js server response utilities
 
 // Exporting the authentication middleware with specific configuration
 export default withAuth({

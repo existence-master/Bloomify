@@ -102,16 +102,16 @@ const Details = () => {
 							className="mb-10" // Extra margin-bottom class
 						/>
 						<div className="w-full flex flex-col justify-center items-center">
-							<h1 className="text-3xl font-medium text-[#007991] mb-2">Enter your details</h1> // Section heading
-							<form onSubmit={handleSubmit} className="w-full flex flex-col"> // Form to submit details
-								<h1 className="text-black text-xl mt-5 mb-2">Username</h1> // Label for username input
+							<h1 className="text-3xl font-medium text-[#007991] mb-2">Enter your details</h1> {/* Section heading */}
+							<form onSubmit={handleSubmit} className="w-full flex flex-col"> {/*Form to submit details*/}
+								<h1 className="text-black text-xl mt-5 mb-2">Username</h1> {/* Label for username input*/}
 								<input
 									type="text" // Input type
 									className="form-control border-2 h-10 p-2 border-black rounded-lg bg-amber-100 text-black mb-5" // Input styling
 									placeholder="abc123" // Placeholder text
 									required // Required field
 								/>
-								<h1 className="text-black text-xl mb-2">University</h1> // Label for university select
+								<h1 className="text-black text-xl mb-2">University</h1> {/* Label for university select */}
 								<select
 									name="university" // Name attribute for the select input
 									className="text-black h-10 rounded-lg p-2 bg-amber-100 border-2 border-black" // Styling
@@ -121,15 +121,15 @@ const Details = () => {
 									<option value="COEP Technological University">COEP Technological University</option>
 									<option value="MIT WPU University">MIT WPU University</option>
 								</select> // Dropdown select input for university choice
-								<div className="flex flex-col justify-center items-center mt-10"> // Container for submit button
+								<div className="flex flex-col justify-center items-center mt-10"> {/* Container for submit button*/}
 									<button
 										className="p-2 text-white w-1/2 shadow-lg rounded-xl border-2 border-black text-2xl font-sans bg-[#007991]" // Styling for submit button
 										type="submit" // Button is for form submission
 									>
 										Finish
-									</button> // Text for submit button
+									</button> {/*Text for submit button*/}
 								</div>
-							</form> // End of form
+							</form> {/* End of form */}
 						</div>
 					</div>
 				</div>

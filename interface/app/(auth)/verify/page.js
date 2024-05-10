@@ -159,14 +159,14 @@ const Verify = () => {
                 onClick={otpSent ? handleOTPSubmit : handleSendOtp} // Submit or send OTP based on state
                 className={`w-full p-2 bg-${otpSent ? "green" : "blue"}-500 text-white rounded-xl hover:bg-${otpSent ? "green" : "blue"}-600 focus:outline-none focus:ring focus:ring-${otpSent ? "green" : "blue"}-400 mt-4`} // Button styling based on OTP sent status
               >
-                {otpSent ? "Submit OTP" : "Send OTP"} // Button text based on OTP sent status
+                {otpSent ? "Submit OTP" : "Send OTP"} 
               </button>
               <button
                 onClick={handleSendOtp} // Handler to resend OTP
                 disabled={cooldown} // Disable if in cooldown
                 className={`mt-4 w-full px-4 py-2 bg-${cooldown ? "gray" : "blue"}-500 text-white rounded-xl hover:bg-${cooldown ? "gray" : "blue"}-600 focus:outline-none focus:ring focus:ring-${cooldown ? "gray" : "blue"}-400`} // Styling based on cooldown status
               >
-                {cooldown ? "Resend OTP (wait)" : "Resend OTP"} // Button text based on cooldown status
+                {cooldown ? "Resend OTP (wait)" : "Resend OTP"} 
               </button>
               <div className="text-center text-black mt-5 mb-5">Or</div> {/* Separator text */}
               <button 

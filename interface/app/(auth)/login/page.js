@@ -43,7 +43,7 @@ const Login = () => {
 
 		// Sign in using credentials and handle redirect
 		const res = await signIn("credentials", {
-			redirect: true, // Redirect upon successful sign-in
+			redirect: false, // Redirect upon successful sign-in
 			email,
 			password
 		});
@@ -99,9 +99,8 @@ const Login = () => {
 											className="text-[#007991] font-medium hover:underline" // Link styling with hover effect
 											href="/signup" // Link to the signup page
 										>
-											Sign up
+											Sign up for free
 										</Link> 
-										for free
 									</h1>
 									<button 
 										className="text-white hover:shadow-lg rounded-lg w-1/5 text-xl font-semibold bg-[#007991] p-2 mb-1" // Submit button styling
