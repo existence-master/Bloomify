@@ -52,13 +52,30 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 	const [error, setError] = useState(null);
 
 	// Conditional url
-	const url = mode === "classification"
-		? "http://localhost:5000/classify"
+	let baseUrl;
+
+	if (process.env.NODE_ENV === "development") {
+	// Development environment: Use localhost URLs
+	baseUrl = "http://localhost:5000";
+	} else if (process.env.NODE_ENV === "production") {
+	// Production environment: Use Render deployment URLs
+	baseUrl = "https://bloomify-gd0v.onrender.com";
+	}
+
+	const url =
+	mode === "classification"
+		? `${baseUrl}/classify`
 		: mode === "suggestion"
-			? "http://localhost:5000/suggest"
-			: mode === "generation"
-				? "http://localhost:5000/generate"
-				: "" 
+		? `${baseUrl}/suggest`
+		: mode === "generation"
+		? `${baseUrl}/generate`
+		: "";
+
+	// Append port if in development (only if needed)
+	if (process.env.NODE_ENV === "development") {
+		url = `${url}:5000`;
+	}	
+
 
 	// Function to add a new unit to the syllabus
 	const addUnit = () => {
