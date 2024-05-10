@@ -1,102 +1,121 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import User from "@models/User";
-import connect from "@utils/db";
+import NextAuth from "next-auth"; // Import the NextAuth library for authentication
+import GoogleProvider from "next-auth/providers/google"; // Google authentication provider
+import CredentialsProvider from "next-auth/providers/credentials"; // Credentials authentication provider
+import bcrypt from "bcryptjs"; // Library for hashing and comparing passwords
+import User from "@models/User"; // User model
+import connect from "@utils/db"; // Utility to connect to the database
 
 export const authOptions = {
-  // Configure one or more authentication providers
+  // Configuration for authentication providers
   providers: [
+    // Credentials provider for email-password authentication
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
+      id: "credentials", // Unique identifier for the credentials provider
+      name: "Credentials", // Display name for the provider
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "text" }, // Credential for email
+        password: { label: "Password", type: "password" }, // Credential for password
       },
       async authorize(credentials) {
+        // Connect to the database
         await connect();
         try {
+          // Find the user with the provided email
           const user = await User.findOne({ email: credentials.email });
           if (user) {
+            // Compare the provided password with the hashed password in the database
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
               user.password
             );
             if (isPasswordCorrect) {
-              return user;
+              return user; // If the password matches, return the user
             }
           }
         } catch (err) {
-          throw new Error(err);
+          throw new Error(err); // Throw an error if something goes wrong
         }
       },
     }),
+
+    // Google provider for authentication via Google accounts
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID, // Google client ID from environment variables
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Google client secret from environment variables
     }),
-    // add more providers here
+
+    // Additional providers can be added here
   ],
+
+  // Callbacks for additional behavior
   callbacks: {
     async signIn({ user, account }) {
+      // Check if the sign-in provider is Google
       if (account.provider === 'google') {
-        await connect();
+        await connect(); // Connect to the database
         try {
+          // Check if the user already exists in the database
           const existingUser = await User.findOne({ email: user.email });
 
           if (!existingUser) {
+            // If the user doesn't exist, create a new user
             const newUser = new User({
-              email: user.email,
-              googleUser: true, // Signed up with Google
+              email: user.email, // Set the email for the new user
+              googleUser: true, // Indicate that the user signed up with Google
             });
 
-            await newUser.save();
+            await newUser.save(); // Save the new user to the database
 
-            // Call the endpoint to set the 'signup-flow' cookie
+            // Set the 'signup-flow' cookie to indicate that the user has started the signup process
             const response = await fetch('/api/set-cookie', {
               method: 'POST',
               headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                name: "signup-flow",
-                value: "true"
-              })
+                name: "signup-flow", // Name of the cookie
+                value: "true", // Value of the cookie
+              }),
             });
 
             if (!response.ok) {
-              console.error("Failed to set the signup-flow cookie");
-              return false; // Return false if setting the cookie fails
+              console.error("Failed to set the signup-flow cookie"); // Log an error if setting the cookie fails
+              return false; // Return false to indicate a failure
             }
 
-            // Redirect new users to the /details page
+            // If the user is new, redirect to the /details page
             return `/details?userEmail=${user.email}`;
           }
 
-          return true; // User exists, no need to set the cookie
+          return true; // If the user exists, no need to set the cookie
         } catch (err) {
-          console.error("Error in signIn callback:", err);
-          return false; // Return false if an error occurs
+          console.error("Error in signIn callback:", err); // Log errors that occur during sign-in
+          return false; // Return false to indicate a failure
         }
       }
 
-      return true
+      return true; // Return true if the sign-in is successful
     },
+
     async redirect({ url, baseUrl }) {
+      // If the URL starts with "/details", redirect to that page
       if (url.startsWith("/details")) {
-        return url; // Redirect to the /details page
+        return url; // Return the specific URL
       }
 
+      // If the URL is the base URL, return the base URL
       if (url === `${baseUrl}/`) {
-        return baseUrl
+        return baseUrl;
       }
 
-      return "/dashboard"; // Redirect to dashboard if user exists
+      // Otherwise, redirect to the dashboard
+      return "/dashboard";
     },
-    
   },
 };
+
+// Define the handler for NextAuth using the specified options
 export const handler = NextAuth(authOptions);
+
+// Export the handler for GET and POST methods
 export { handler as GET, handler as POST };

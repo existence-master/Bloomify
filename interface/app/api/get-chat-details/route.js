@@ -1,68 +1,78 @@
-import mongoose from "mongoose";
-import Chat from "@models/Chat";
-import connect from "@utils/db";
-import { NextResponse } from "next/server";
-import PairedMessage from "@models/PairedMessage";
+import mongoose from "mongoose"; // Library for working with MongoDB in Node.js
+import Chat from "@models/Chat"; // Import the Chat model
+import PairedMessage from "@models/PairedMessage"; // Import the PairedMessage model
+import connect from "@utils/db"; // Utility to connect to the database
+import { NextResponse } from "next/server"; // Import Next.js server response handling
 
 export const POST = async (request) => {
   try {
+	// Connect to the database
+	await connect();
 
-    await connect();
+	// Extract the chatId from the request body
+	const { chatId } = await request.json();  
+	
+	// Check if the provided chatId is a valid MongoDB ObjectId
+	if (!mongoose.Types.ObjectId.isValid(chatId)) {
+	  throw new Error("Chat not found"); // Throw an error if the ID is invalid
+	}
 
-    const { chatId } = await request.json()  
-    
-    if (!mongoose.Types.ObjectId.isValid(chatId)) {
-      throw new Error("Chat not found");
-      }
+	// Find the chat by its ID
+	const chat = await Chat.findById(chatId);
 
-    // Populate the chat history from the `Chat` model
-    const chat = await Chat.findById(chatId)
+	if (!chat) {
+	  throw new Error("Chat not found"); // Throw an error if the chat doesn't exist
+	}
 
-    if (!chat) {
-      throw new Error("Chat not found");
-      }
-      
-    const chatTitle = chat.title
-    const chatFilters = {
-        degree: chat.degree,
-        branch: chat.branch,
-        year: chat.year,
-        subject: chat.subject,
-      };
-      
-    // Create an array to store input-output pairs
-    const chatHistory = [];
+	// Retrieve the title and filters from the chat
+	const chatTitle = chat.title; // Get the chat title
+	const chatFilters = {
+	  degree: chat.degree,
+	  branch: chat.branch,
+	  year: chat.year,
+	  subject: chat.subject,
+	};
 
-    // Populate the array with input-output pairs
-    for (const pairedChatID of chat.chatHistory) {
-    const message = await PairedMessage.findById(pairedChatID);
+	// Array to store the chat history with input-output pairs
+	const chatHistory = [];
 
-    if (!message) {
-        throw new Error(`PairedMessage with ID ${pairedChatID} not found`);
-    }
+	// Populate the array with input-output pairs from the chat history
+	for (const pairedChatID of chat.chatHistory) {
+	  // Find the PairedMessage by its ID
+	  const message = await PairedMessage.findById(pairedChatID);
 
-    // Append an object with the input and response to the array
-    chatHistory.push({
-      input: message.input, 
-      response: message.response,
-      mode: message.mode
-    });
-    }
+	  if (!message) {
+		throw new Error(`PairedMessage with ID ${pairedChatID} not found`); // Error if message not found
+	  }
 
-    return new NextResponse(JSON.stringify({ chatTitle, chatFilters, chatHistory}), {
-    status: 200,
-    });
+	  // Add the input and response to the chat history
+	  chatHistory.push({
+		input: message.input, // Input message
+		response: message.response, // Response message
+		mode: message.mode, // Mode (e.g., text or code)
+	  });
+	}
+
+	// Return the chat title, filters, and history
+	return new NextResponse(
+	  JSON.stringify({ chatTitle, chatFilters, chatHistory }), // Return the data as JSON
+	  { status: 200 } // HTTP status 200 OK
+	);
   } catch (error) {
-    console.error("Error during GET request:", error);
-    if (error.message === "Chat not found") {
-      return new NextResponse(
-        JSON.stringify({ message: error.message, error: error }),
-        { status: 404 }
-      );
-    }
-    return new NextResponse(
-      JSON.stringify({ message: error.message, error: error }),
-      { status: 500 }
-    );
+	console.error("Error during POST request:", error); // Log the error for debugging
+	
+	// Handle specific error cases
+	if (error.message === "Chat not found") {
+	  return new NextResponse(
+		JSON.stringify({ message: error.message, error: error }),
+		{ status: 404 } // HTTP status 404 Not Found
+	  );
+	}
+
+	// Return a general error response for other exceptions
+	return new NextResponse(
+	  JSON.stringify({ message: "Internal server error", error: error }),
+	  { status: 500 } // HTTP status 500 Internal Server Error
+	);
   }
 };

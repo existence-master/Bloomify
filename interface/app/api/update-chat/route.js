@@ -1,37 +1,44 @@
-import Chat from "@models/Chat"; // Chat model
-import PairedMessage from "@models/PairedMessage"; // PairedMessage model
-import connect from "@utils/db";
-import { NextResponse } from "next/server";
-import { capitalizeFirstLetter } from "@utils/helpers";
-
+import Chat from "@models/Chat"; // Import the Chat model
+import PairedMessage from "@models/PairedMessage"; // Import the PairedMessage model
+import connect from "@utils/db"; // Utility to connect to the database
+import { NextResponse } from "next/server"; // Import Next.js server response handling
+import { capitalizeFirstLetter } from "@utils/helpers"; // Utility to capitalize the first letter of a string
 
 export const POST = async (request) => {
-  const { chatId, requestData, responseData, mode } = await request.json();
-  await connect();
+	try {
+		// Extract chatId, requestData, responseData, and mode from the request body
+		const { chatId, requestData, responseData, mode } = await request.json();
 
-  try {
+		await connect(); // Connect to the database
 
-    const chat = await Chat.findById(chatId);
-    console.log(chat)
-    console.log(requestData)
+		// Find the chat by its ID
+		const chat = await Chat.findById(chatId);
 
-    // Create the new PairedMessage and save it
-    const pairedMessage = new PairedMessage({
-      input: requestData,
-      response: responseData,
-      mode: capitalizeFirstLetter(mode)
-    });
+		if (!chat) {
+			return new NextResponse("Chat not found", { status: 404 }); // Return 404 if the chat doesn't exist
+		}
 
-    const savedPairedMessage = await pairedMessage.save();
+		// Create a new PairedMessage with the provided input, response, and mode
+		const pairedMessage = new PairedMessage({
+			input: requestData, // Store the request data
+			response: responseData, // Store the response data
+			mode: capitalizeFirstLetter(mode), // Capitalize the mode
+		});
 
-    // Add the PairedMessage to the chat's history and update the chat
-    chat.chatHistory.push(savedPairedMessage._id);
-    await chat.save();
+		// Save the new PairedMessage to the database
+		const savedPairedMessage = await pairedMessage.save();
 
-    console.log("Updated Chat:", chat);
-    return new NextResponse("Chat updated", { status: 200 });
-  } catch (error) {
-    console.error("Error updating user chat:", error);
-    return new NextResponse("Internal server error", { status: 500 });
-  }
+		// Add the new PairedMessage to the chat's history
+		chat.chatHistory.push(savedPairedMessage._id);
+
+		// Save the updated chat to the database
+		await chat.save();
+
+		console.log("Updated Chat:", chat); // Log the updated chat for debugging
+
+		return new NextResponse("Chat updated", { status: 200 }); // Return a success message with HTTP status 200
+	} catch (error) {
+		console.error("Error updating user chat:", error); // Log the error for debugging
+		return new NextResponse("Internal server error", { status: 500 }); // HTTP status 500 Internal Server Error
+	}
 };

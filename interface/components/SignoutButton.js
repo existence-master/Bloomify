@@ -1,23 +1,32 @@
 // SignoutButton.js
 
-import { signOut } from "next-auth/react";
-import Image from "next/image";
+import { signOut } from "next-auth/react"; // Importing signOut function from NextAuth
+import Image from "next/image"; // Importing Image component from Next.js
 
+// The SignoutButton component provides a clickable icon to sign out the user
 const SignoutButton = () => {
-  const handleSignout = async () => {
-    try {
-      await signOut({ callbackUrl: 'http://localhost:3000/' }); // Set redirect to false to prevent automatic redirect after signout
-    } catch (error) {
-      console.error("Error signing out:", error);
-      // Handle error, such as displaying an error message to the user
-    }
-  };
+	// Function to handle the sign-out process
+	const handleSignout = async () => {
+		try {
+			await signOut({ callbackUrl: 'http://localhost:3000/' }); // Sign out and redirect to the specified callback URL
+		} catch (error) {
+			console.error("Error signing out:", error); // Log any errors encountered during sign-out
+			// You could add additional error handling here, like displaying a message to the user
+		}
+	};
 
-  return (
-  <div onClick={handleSignout} className="relative w-[30px] h-[30px]">
-    <Image src="/signout.svg" className="cursor-pointer" width={40} height={40}/>
-  </div>
-  );
+	// Returning a div containing the sign-out icon
+	return (
+		<div onClick={handleSignout} className="relative w-[30px] h-[30px]"> {/* Container for the sign-out icon */}
+			<Image 
+				src="/signout.svg" // Path to the sign-out icon
+				className="cursor-pointer" // Changes cursor style to indicate interactivity
+				width={40} // Width of the icon
+				height={40} // Height of the icon
+				alt="Sign out" // Alternative text for accessibility
+			/>
+		</div>
+	);
 };
 
-export default SignoutButton;
+export default SignoutButton; // Exporting the SignoutButton component
