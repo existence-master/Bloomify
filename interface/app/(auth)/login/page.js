@@ -43,7 +43,7 @@ const Login = () => {
 
 		// Sign in using credentials and handle redirect
 		const res = await signIn("credentials", {
-			redirect: false, // Redirect upon successful sign-in
+			redirect: true, // Redirect upon successful sign-in
 			email,
 			password
 		});
