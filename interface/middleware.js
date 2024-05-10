@@ -1,12 +1,7 @@
-import { withAuth } from 'next-auth/middleware'; // Importing middleware for NextAuth authentication
+// Exporting the default authentication middleware with specific configuration
+export { default } from "next-auth/middleware"
 
-// Exporting the authentication middleware with specific configuration
-export default withAuth({
-  pages: {
-	signIn: '/unauthenticated', // Redirect to this page if the user is not authenticated
-	error: '/error', // Redirect to this page in case of an authentication error
-  },
-});
+
 
 // Configure the middleware to apply to specific routes
 export const config = {
