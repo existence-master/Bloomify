@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.footer-linear-bg {
+  background: linear-gradient(0deg, #222E50 11.04%, #007991 98.55%, #439A86 115.83%);
+  /*transform: matrix(1, 0, 0, -1, 0, 0);*/
+}
+
+.vertical-line {
+  position: relative;
+  width: 450px;
+  height: 0px;
+  border: 4px solid #000000;
+  transform: rotate(90deg); /* Default transform */
+
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    transform: rotate(-90deg); /* Override transform for mobile devices */
+    width: auto; /* Adjust width as needed for mobile */
+    height: 450px; /* Adjust height as needed for mobile */
+  }
+}
+
+.rect-65 {
+  position: absolute;
+  width: 1160px;
+  height: 480px;
+  left: 190px;
+  top: -275px;
+}
