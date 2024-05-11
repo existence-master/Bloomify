@@ -108,11 +108,12 @@ const Chat = () => {
 				}
 		
 				const { chatTitle, chatFilters, chatHistory } = await response.json();
-				setChatDetails({
-				  chatTitle,
-				  chatFilters,
-				  chatHistory,
-				});
+				  setChatDetails(prevState => ({
+					...prevState,
+					chatTitle,
+					chatFilters,
+					chatHistory,
+				}));
 				setChatFilters(chatFilters);
 			  } catch (err) {
 				setError(`Error fetching chat details: ${err.message}`);
