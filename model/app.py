@@ -204,3 +204,5 @@ async def generate_questions(input: GenerationInput):
     response = generate_convo.send_message(prompt)
     generated_question = response.text
     return generated_question
+
+uvicorn.run(app, host = "0.0.0.0", port = 10000)
