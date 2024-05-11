@@ -1,310 +1,321 @@
-"use client"; // This component will be used on the client-side
+"use client";
 
-import Link from "next/link"; // Client-side routing with Next.js
-import Image from "next/image"; // Optimized image component
-import { useState, useEffect, useRef } from "react"; // React hooks for state management and side effects
+import Link from "next/link"; /* Link library for Next-Optimised Links */
+import Image from "next/image"; /* Image library for Next-Optimised Images */
+import {
+  useState,
+  useEffect,
+  useRef,
+} from "react"; /* React Hooks that are used for dynamic content rendering*/
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(false); // State to track if the dropdown is open
-  const dropdownRef = useRef(null); // Reference for the dropdown element
-
-  // Effect to handle clicks outside the dropdown to close it
+  /* Home function that is exported as the default */
+  const [isOpen, setIsOpen] =
+    useState(false); /* useState used for the dropdown menu on mobile navbar */
+  const dropdownRef = useRef(null); /* useRef hook for the mobile dropdown*/
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false); // Close the dropdown if click is outside
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside); // Attach event listener for clicks
+    /* useEffect hook used to handle clicks outside the menu to close it */
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    ); /* event listener for clicks outside the menu */
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // Clean up event listener on component unmount
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      ); /* event listener for clicks outside the menu */
     };
-  }, []); // Empty dependency array ensures this effect runs once on mount
-
-  // Function to toggle the dropdown menu
+  }, []); /* end of useEffect - with empty dependency array */
   const toggleMenu = () => {
-    setIsOpen((prev) => !prev); // Toggle the isOpen state
+    /* function used for toggling the dropdown menu*/
+    setIsOpen((prev) => !prev); //sets the isOpen state to opposite of previous value
+    //console.log("Clicked");
+  };
+
+  const handleClickOutside = (event) => {
+    //handler function for clicks outside the dropdown menu
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      //set isOpen to false if the menu is open
+      setIsOpen(false);
+    }
   };
 
   return (
     <>
       <div className="bg-[#fffbe6]">
-        {" "}
-        {/* Main container with background color */}
+        {/* Main div - contains whole page */}
         <nav className="bg-transparent mb-20">
-          {" "}
-          {/* Navigation bar with transparent background */}
+          {/* Start of navbar div */}
           <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-            {" "}
-            {/* Container with flex layout */}
-            {/* Logo and Home link */}
+            {/* Navbar container div */}
+            {/* Link for bloomify logo to reroute to Home. */}
             <Link
               href="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
+              {/* Bloomify logo in the navbar*/}
               <Image
                 src="navbarlogo.svg"
+                className="h-8"
                 alt="Bloomify Logo"
                 width={183.37}
                 height={45.91}
-                className="h-8"
               />
             </Link>
-            {/* Mobile Navbar with dropdown menu */}
+            {/* End of Home link*/}
+            {/* Mobile Navbar */}
             <div ref={dropdownRef}>
-              {" "}
-              {/* Reference for dropdown */}
+              {/* start of mobile navbar div - dropdown menu */}
+              {/* hamburger button for mobile dropdown*/}
               <button
-                onClick={toggleMenu} // Toggle the menu on click
+                onClick={toggleMenu}
                 type="button"
                 className="inline-flex mr-2 items-center bg-transparent p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none"
-                aria-controls="navbar-default" // Accessibility attribute
-                aria-expanded={isOpen ? "true" : "false"} // Indicate if menu is open
+                aria-controls="navbar-default"
+                aria-expanded="false"
               >
-                <span className="sr-only">Open main menu</span>{" "}
-                {/* Screen reader text */}
+                <span className="sr-only">Open main menu</span>
                 <svg
-                  className="w-5 h-5" // Icon size
-                  aria-hidden="true" // Accessibility attribute
-                  xmlns="http://www.w3.org/2000/svg" // SVG namespace
-                  fill="none" // No fill color
-                  viewBox="0 0 17 14" // SVG viewbox
+                  className="w-5 h-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 17 14"
                 >
                   <path
-                    stroke="currentColor" // Stroke color using current text color
-                    strokeLinecap="round" // Rounded line caps
-                    strokeLinejoin="round" // Rounded line joins
-                    strokeWidth="2" // Line thickness
-                    d="M1 1h15M1 7h15M1 13h15" // Path data for hamburger icon
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1h15M1 7h15M1 13h15"
                   />
                 </svg>
               </button>
-              {/* Dropdown menu when open */}
+              {/* End of hamburger dropdown */}
+              {/* Mobile navbar contents */}
               {isOpen && (
                 <div className="bg-white absolute right-4 top-10 rounded-xl border-2 border-black">
-                  {" "}
-                  {/* Dropdown styling */}
                   <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                    {" "}
-                    {/* List of links */}
                     <li>
+                      {/* Home */}
                       <Link
                         href="/"
-                        className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0"
+                        className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0 dark:text-[#007991] "
                         aria-current="page"
                       >
+                        {/* Home button */}
                         Home
-                      </Link>{" "}
-                      {/* Home link */}
+                      </Link>
                     </li>
                     <li>
+                      {/* About */}
                       <Link
                         href="/about"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]"
                       >
+                        {/* About button */}
                         About
-                      </Link>{" "}
-                      {/* About link */}
+                      </Link>
                     </li>
                     <li>
+                      {/* Contact Us */}
                       <Link
                         href="/contactus"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]"
                       >
+                        {/* Contact us Button */}
                         Contact Us
-                      </Link>{" "}
-                      {/* Contact Us link */}
+                      </Link>
                     </li>
                     <li>
+                      {/* Login */}
                       <Link
                         href="/login"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]"
                       >
+                        {/* Login Button */}
                         Login
-                      </Link>{" "}
-                      {/* Login link */}
+                      </Link>
                     </li>
                     <li>
+                      {/* Signup */}
                       <Link
                         href="/signup"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]"
                       >
+                        {/* Signup button */}
                         Signup
-                      </Link>{" "}
-                      {/* Signup link */}
+                      </Link>
                     </li>
                     <li>
+                      {/* GitHub */}
                       <Link href="https://github.com/existence-master/Bloomify/">
                         <button
                           type="button"
-                          className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                          className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none"
                         >
+                          {/* GitHub Button */}
                           GitHub
                         </button>
-                      </Link>{" "}
-                      {/* GitHub button */}
+                        {/* End of GitHub button */}
+                      </Link>
                     </li>
-                  </ul>{" "}
-                  {/* End of dropdown menu */}
+                  </ul>
                 </div>
               )}
-            </div>{" "}
-            {/* End of mobile navbar */}
+            </div>
             {/* Desktop Navbar */}
             <div
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              {" "}
-              {/* Navbar for desktop */}
+              {/* Start of Desktop navbar */}
               <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                {" "}
-                {/* List of links */}
                 <li>
+                  {/* Home */}
                   <Link
                     href="/"
-                    className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0"
+                    className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0 dark:text-[#007991] "
                     aria-current="page"
                   >
+                    {/* Home link */}
                     Home
-                  </Link>{" "}
-                  {/* Home link */}
+                  </Link>
                 </li>
                 <li>
+                  {/* About */}
                   <Link
                     href="/about"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
+                    {/* About Link */}
                     About
-                  </Link>{" "}
-                  {/* About link */}
+                  </Link>
                 </li>
                 <li>
+                  {/* Contact Us*/}
                   <Link
                     href="/contactus"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
+                    {/* Contact us Link */}
                     Contact Us
-                  </Link>{" "}
-                  {/* Contact Us link */}
+                  </Link>
                 </li>
                 <li>
+                  {/* Login */}
                   <Link
                     href="/login"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
+                    {/* Login Link*/}
                     Login
-                  </Link>{" "}
-                  {/* Login link */}
+                  </Link>
                 </li>
                 <li>
+                  {/* Signup */}
                   <Link
                     href="/signup"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0"
+                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991] dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   >
+                    {/* Signup Link*/}
                     Signup
-                  </Link>{" "}
-                  {/* Signup link */}
+                  </Link>
                 </li>
                 <li>
+                  {/* GitHub */}
                   <Link href="https://github.com/existence-master/Bloomify/">
-                    {" "}
-                    {/* GitHub link */}
                     <button
                       type="button"
-                      className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                      className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none"
                     >
+                      {/* GitHub repo Link*/}
                       GitHub
-                    </button>{" "}
-                    {/* GitHub button */}
-                  </Link>{" "}
-                  {/* End of GitHub link */}
+                    </button>
+                  </Link>
                 </li>
-              </ul>{" "}
-              {/* End of desktop navbar */}
-            </div>{" "}
-            {/* End of desktop navigation */}
-          </div>{" "}
-          {/* End of navigation container */}
-        </nav>{" "}
-        {/* End of navigation bar */}
-        {/* Main content sections */}
+              </ul>
+              {/* End of button list*/}
+            </div>
+            {/* End of desktop navbar */}
+          </div>
+          {/* End of navbar main container */}
+        </nav>
+        {/* End of navbar */}
+        {/* Desktop Content*/}
         <div className="xs:max-md:hidden">
-          {" "}
-          {/* Content visible on larger screens */}
+          {/* Desktop content container - hidden on mobile devices */}
           <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0 overflow-hidden">
-            {" "}
-            {/* Main landing section */}
+            {/* Hero Section */}
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
-              {" "}
-              {/* Container with flex layout */}
+              {/* Hero Section Container start*/}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* First section with heading and text */}
+                {/* Nested container div */}
+                {/* Hero Section Headings */}
                 <h2 className="text-xl font-bold text-red-800 mb-4">
                   Educational Assessment Redefined
-                </h2>{" "}
-                {/* Heading */}
+                </h2>
                 <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8">
-                  An Open-Source{" "}
-                  <span className="font-bold text-[#007991]">Chatbot</span>{" "}
-                  Designed To{" "}
+                  An Open-Source
+                  <span className="font-bold text-[#007991]">Chatbot</span>
+                  Designed
+                </p>
+                <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8">
+                  To
                   <span className="font-bold text-[#007991]">
                     Revolutionize
-                  </span>{" "}
-                  The Assessment Process In Educational Institutes
-                </p>{" "}
-                {/* Main message */}
+                  </span>
+                  The Assessment
+                </p>
+                <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-20">
+                  Process In
+                  <span className="font-bold text-[#007991]">Educational</span>
+                  Institutes
+                </p>
+                {/* Join Us button*/}
                 <Link href="/signup">
-                  {" "}
-                  {/* Link to signup page */}
                   <button
                     type="button"
                     className="w-50 text-2xl ml-40 text-white font-semibold bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 rounded-lg px-5 py-2.5 text-center me-2 mb-2"
                   >
                     Join Us
-                  </button>{" "}
-                  {/* Signup button */}
+                  </button>
                 </Link>
-              </div>{" "}
-              {/* End of first section */}
+                {/* End of Join Us*/}
+              </div>
+              {/* End of Nested container*/}
               <div className="w-full md:w-1/2 relative">
-                {" "}
-                {/* Section with the Bloom's Taxonomy image */}
+                {/* Nested container - for holding bloom's triangle */}
                 <Image
-                  src="bloomTriangle.svg" // Image source
-                  alt="Bloom's Taxonomy" // Alt text
-                  className="max-w-full mx-auto relative translate-x-1/4 top-1/2 z-10" // Styling for the image
-                  width={478.55} // Image width
-                  height={469.26} // Image height
+                  src="bloomTriangle.svg"
+                  alt="Bloom's Taxonomy"
+                  className="max-w-full mx-auto relative translate-x-1/4  top-1/2 z-10"
+                  width={478.55}
+                  height={469.26}
                 />
-              </div>{" "}
-              {/* End of Bloom's Taxonomy section */}
-            </div>{" "}
-            {/* End of container for flex layout */}
-          </section>{" "}
-          {/* End of first main section */}
-          {/* Section about the product features */}
+                {/*<Image src="curvyrect.svg" alt="Curvy Rectangle" className="rect-65 z-0" width={1160} height={970}/>*/}
+              </div>
+              {/* End of Nested Container */}
+            </div>
+            {/* End of Container div */}
+          </section>
+          {/* End of Hero Section */}
           <section className="bg-transparent dark:bg-transparent py-12 h-1/12">
-            {" "}
-            {/* Feature section */}
+            {/* About us and features section */}
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
-              {" "}
-              {/* Container with flex layout */}
+              {/* Start of Container div*/}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Information about Bloomify */}
+                {/* Left container */}
+                {/* Left Container Contents - About Us */}
                 <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2">
                   About Us
-                </h2>{" "}
-                {/* About heading */}
+                </h2>
                 <p className="footer-linear-bg rounded-xl p-8 leading-relaxed text-xl text-white justify-normal">
                   Bloomify is an innovative educational tool designed to
                   revolutionize the assessment process in academic institutions.
                   It addresses the prevalent challenges of exam paper creation
                   by leveraging Bloom's Taxonomy, a well-established framework
-                  for classifying cognitive skills. Bloomify aims to promote
+                  for classNameifying cognitive skills. Bloomify aims to promote
                   deeper understanding, critical thinking, and practical
                   application of knowledge among students by ensuring that exam
                   questions align with Bloom's Taxonomy levels. It was designed
@@ -312,87 +323,76 @@ const Home = () => {
                   encourage holistic learning experiences, and foster the
                   development of essential skills necessary for success in the
                   real world.
-                </p>{" "}
-                {/* About Bloomify */}
-              </div>{" "}
-              {/* End of About Us section */}
-              <div className="vertical-line"></div> {/* Vertical divider */}
+                </p>
+              </div>
+              <div className="vertical-line"></div>
+              {/* Vertical line to split about us and features */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Features section */}
+                {/* right container for features */}
+                {/* Features div contents */}
                 <h2 className="text-xl font-bold text-red-800 mb-4">
                   FEATURES
-                </h2>{" "}
-                {/* Features heading */}
+                </h2>
                 <p className="text-xl mb-2">
                   <span className="font-bold">
-                    AI-Powered Question Classification:
-                  </span>{" "}
+                    AI-Powered Question classification:
+                  </span>
                   Instantly categorize questions into Bloom's Taxonomy levels.
-                </p>{" "}
-                {/* Feature 1 */}
+                </p>
                 <p className="text-xl mb-2">
-                  <span className="font-bold">Suggestive Transformation:</span>{" "}
+                  <span className="font-bold">Suggestive Transformation:</span>
                   Elevate question complexity with AI-driven suggestions for
                   higher-order thinking.
-                </p>{" "}
-                {/* Feature 2 */}
+                </p>
                 <p className="text-xl mb-2">
-                  <span className="font-bold">Paper Generation Wizardry:</span>{" "}
+                  <span className="font-bold">Paper Generation Wizardry:</span>
                   Generate balanced question papers effortlessly based on
                   customizable parameters.
-                </p>{" "}
-                {/* Feature 3 */}
+                </p>
                 <p className="text-xl mb-2">
-                  <span className="font-bold">Intuitive User Interface:</span>{" "}
+                  <span className="font-bold">Intuitive User Interface:</span>
                   Seamlessly navigate and utilize Bloomify's powerful features
                   with ease.
-                </p>{" "}
-                {/* Feature 4 */}
+                </p>
                 <p className="text-xl">
                   <span className="font-bold">
                     Customizable Syllabus Integration:
-                  </span>{" "}
+                  </span>
                   Easily adapt Bloomify to align with your institution's unique
                   syllabus requirements.
-                </p>{" "}
-                {/* Feature 5 */}
-              </div>{" "}
-              {/* End of Features section */}
-            </div>{" "}
-            {/* End of flex container */}
-          </section>{" "}
-          {/* End of Features section */}
-          {/* Section about the product versus research */}
+                </p>
+              </div>
+              {/* End of right container */}
+            </div>
+            {/* End of Main container */}
+          </section>
+          {/* End of about us and features section */}
           <section className="bg-transparent dark:bg-transparent py-12 overflow-hidden">
-            {" "}
-            {/* Product vs Research section */}
+            {/* Product vs Research Section */}
             <div className="container max-w-full mx-auto flex flex-col md:flex-row items-center justify-center sm:px-6 lg:px-4 gap-10 relative">
-              {" "}
-              {/* Flex container */}
+              {/* Main Container div */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Information about Bloomify's research */}
+                {/* Left Sphere Container */}
                 <div className="absolute -top-24 bg-[#007991] rounded-full p-24 leading-relaxed text-sm text-white justify-normal -left-16 w-96 h-96">
-                  {" "}
-                  {/* Research information */}
+                  {/* Left Sphere */}
                   <p className="text-justify">
+                    {/* Left Sphere contents*/}
                     From accurate question classification to dynamic suggestion
                     and generation features driven by cutting-edge AI, Bloomify
                     streamlines the assessment process, saving you time and
-                    promoting higher-order thinking among students.
+                    promoting higher order thinking among students.
                   </p>
-                </div>{" "}
-                {/* End of research information */}
-              </div>{" "}
-              {/* End of first research information section */}
+                  {/* End of left sphere contents */}
+                </div>
+                {/* End of left sphere */}
+              </div>
+              {/* End of left sphere container */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Product vs Research content */}
+                {/* Central content - rectangular */}
+                {/* Central container contents */}
                 <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2 self-center">
                   Product VS Research
-                </h2>{" "}
-                {/* Heading */}
+                </h2>
                 <p className="bg-[#222E50] rounded-xl p-8 leading-relaxed text-xl text-white justify-normal">
                   The development of Bloomify was driven by extensive research
                   efforts aimed at addressing prevalent challenges in
@@ -409,167 +409,121 @@ const Home = () => {
                   represents the culmination of our research efforts, offering
                   educators a powerful tool to create balanced question papers
                   aligned with Bloom's Taxonomy effortlessly.
-                </p>{" "}
-                {/* Product vs Research description */}
-              </div>{" "}
-              {/* End of Product vs Research section */}
-            </div>
-          </section>
-          <hr className="my-6 border-[#222E50] border-8 sm:mx-auto lg:my-8 mb-2" />
-          <hr className="my-6 border-[#007991] border-8 sm:mx-auto lg:my-8 mt-2" />
-          <section className="bg-transparent dark:bg-transparent py-12">
-            <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
-              <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb--0">
-                {" "}
-                {/* Additional research information */}
+                </p>
+              </div>
+              {/* End of central container */}
+              <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                {/* Right sphere container */}
                 <div className="absolute bg-[#007991] rounded-full p-24 leading-relaxed text-sm text-white justify-normal -bottom-40 -right-16 w-96 h-96">
-                  {" "}
-                  {/* Additional research section */}
+                  {/* Right sphere */}
                   <p className="text-justify">
+                    {/* Right sphere contents */}
                     Revolutionize your assessment practices with Bloomify – the
                     all-in-one platform empowering educators to effortlessly
                     create balanced exam papers aligned with Bloom's Taxonomy.
-                  </p>{" "}
-                  {/* Bloomify value proposition */}
-                </div>{" "}
-                {/* End of additional research section */}
-              </div>{" "}
-              {/* End of additional research information */}
-            </div>{" "}
-            {/* End of Product vs Research section */}
-          </section>{" "}
-          {/* End of Product vs Research section */}
-          {/* Footer and additional content */}
-          <hr className="my-6 border-[#222E50] border-8 sm:mx-auto lg:my-8 mb-2" />{" "}
-          {/* Horizontal separator */}
-          <hr className="my-6 border-[#007991] border-8 sm:mx-auto lg:my-8 mt-2" />{" "}
-          {/* Additional horizontal separator */}
-          {/* Open-source information section */}
-          <section className="bg-transparent py-12 overflow-hidden">
-            {" "}
-            {/* Open-source information section */}
+                  </p>
+                  {/* End of right sphere contents */}
+                </div>
+                {/* end of right sphere */}
+              </div>
+              {/* end of right sphere container */}
+            </div>
+            {/* End of main container */}
+          </section>
+          {/* End of Product vs research container */}
+          <hr className="my-6 border-[#222E50] border-8 sm:mx-auto lg:my-8 mb-2" />
+          {/* Dark blue line */}
+          <hr className="my-6 border-[#007991] border-8 sm:mx-auto lg:my-8 mt-2" />
+          {/* light blue line */}
+          <section className="bg-transparent dark:bg-transparent py-12">
+            {/* Open source - github repo section */}
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
-              {" "}
-              {/* Container for content */}
+              {/* Main section container */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Open-source information */}
-                <h2 className="w-full text-3xl font-bold text-[#222E50] mb-10 ml-2 text-center font-sans">
+                {/* link container */}
+                <h2 className="text-4xl font-bold text-[#222E50] mb-20 ml-2 self-center font-sans">
                   We are open-source!
-                </h2>{" "}
-                {/* Heading */}
+                </h2>
                 <Link
-                  href="https://github.com/existence-master/Bloomify/" // Link to GitHub repository
-                  className="rounded-xl border-2 border-black bg-gray-200 p-4 text-l font-normal text-black self-center mt-10 mb-10"
+                  href="https://github.com/existence-master/Bloomify/"
+                  className="rounded-xl bg-gray-200 border-2 border-black p-4 text-2xl font-normal text-black mb-8 ml-2 self-center mt-15"
                 >
                   https://github.com/existence-master/Bloomify/
-                </Link>{" "}
-                {/* GitHub repository link */}
+                </Link>
                 <h2 className="text-2xl text-[#222E50] mb-20 ml-2 self-center font-sans">
                   Explore the GitHub Repository
-                </h2>{" "}
-                {/* Call to explore the repository */}
-              </div>{" "}
-              {/* End of open-source information */}
-              <div className="w-full md:w-1/2 flex flex-col items-center">
-                {" "}
-                {/* Additional footer content */}
-                <div className="bg-[#007991] rounded-full p-24 leading-relaxed text-sm text-white justify-normal w-80 h-80">
-                  {" "}
-                  {/* Content inside a rounded container */}
-                  <p className="text-justify mt-6">
-                    From accurate question classification to dynamic suggestion
-                    and generation features driven by cutting-edge AI, Bloomify
-                    streamlines the assessment process, saving you time and
-                    promoting higher-order thinking among students.
-                  </p>{" "}
-                  {/* Product description */}
-                </div>{" "}
-                {/* End of rounded container */}
-              </div>{" "}
-              {/* End of additional footer content */}
-            </div>{" "}
-            {/* End of content container */}
-          </section>{" "}
-          {/* End of open-source section */}
-        </div>{" "}
-        {/* End of desktop content */}
-        {/* Mobile content section */}
+                </h2>
+              </div>
+              {/* end of link container*/}
+            </div>
+            {/* end of main section container */}
+          </section>
+          {/* end of open source section */}
+        </div>
+        {/* end of desktop content */}
+        {/* Mobile Content */}
         <div className="md:hidden">
-          {" "}
-          {/* Mobile-only section */}
+          {/* Mobile content container */}
           <section className="max-w-full bg-transparent overflow-hidden">
-            {" "}
-            {/* Mobile section */}
+            {/* Hero Section */}
             <div className="w-full flex flex-col justify-center items-center">
-              {" "}
-              {/* Flex container */}
+              {/* Hero section main container */}
+              {/* Hero section text content*/}
               <h2 className="font-bold text-xl text-red-800 mb-4">
                 Educational Assessment Redefined
-              </h2>{" "}
-              {/* Mobile heading */}
+              </h2>
+              {/* Bloom's triangle */}
               <div className="w-full flex flex-col justify-center items-center relative">
-                {" "}
-                {/* Mobile image section */}
                 <Image
-                  src="bloomTriangle.svg" // Image source
-                  alt="Bloom's Taxonomy" // Alt text
-                  width={200} // Image width
-                  height={200} // Image height
+                  src="bloomTriangle.svg"
+                  alt="Bloom's Taxonomy"
+                  className=""
+                  width={200}
+                  height={200}
                 />
-              </div>{" "}
-              {/* End of mobile image section */}
+              </div>
+              {/* End of bloom's triangle */}
               <div className="w-full flex flex-col items-center justify-center">
-                {" "}
-                {/* Mobile text section */}
+                {/* Text content - hero section */}
                 <p className="text-center w-full font-Poppins text-2xl text-gray-600 mt-4 mb-4 p-4">
-                  An Open-Source{" "}
-                  <span className="font-bold text-[#007991]">Chatbot</span>{" "}
-                  Designed To{" "}
+                  An Open-Source
+                  <span className="font-bold text-[#007991]">Chatbot</span>
+                  Designed To
                   <span className="font-bold text-[#007991]">
                     Revolutionize
-                  </span>{" "}
-                  The Assessment Process In Educational Institutes
-                </p>{" "}
-                {/* Mobile text */}
+                  </span>
+                  The Assessment Process In
+                  <span className="font-bold text-[#007991]">Educational</span>
+                  Institutes
+                </p>
                 <div className="w-full flex justify-center">
-                  {" "}
-                  {/* Mobile call-to-action */}
+                  {/* Join us Button */}
                   <Link href="/signup">
-                    {" "}
-                    {/* Link to signup page */}
                     <button
                       type="button"
                       className="text-2xl text-white font-semibold bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 rounded-xl border-2 border-black px-5 py-2.5 text-center me-2 mb-2"
                     >
                       Join Us
-                    </button>{" "}
-                    {/* Mobile signup button */}
-                  </Link>{" "}
-                  {/* End of Link */}
-                </div>{" "}
-                {/* End of call-to-action */}
-              </div>{" "}
-              {/* End of mobile text section */}
-            </div>{" "}
-            {/* End of flex container */}
-          </section>{" "}
-          {/* End of mobile section */}
-          {/* About Us section for mobile */}
+                    </button>
+                  </Link>
+                </div>
+                {/* End of join us button div */}
+              </div>
+              {/* End of Hero section div*/}
+            </div>
+            {/* end of hero section container div */}
+          </section>
+          {/* end of hero section */}
           <section className="bg-transparent mt-10">
-            {" "}
-            {/* Mobile About Us section */}
+            {/* about us and features div */}
             <div className="p-2">
-              {" "}
-              {/* Container */}
+              {/* main about us div */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Mobile About Us content */}
+                {/* About us content div */}
                 <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2">
                   About Us
-                </h2>{" "}
-                {/* Mobile About Us heading */}
-                <p className="footer-linear-bg rounded-xl p-8 leading-relaxed text-l text-justify text-white">
+                </h2>
+                <p className="footer-linear-bg rounded-xl p-8 leading-relaxed text-l text-justify text-white justify-normal">
                   Bloomify is an innovative educational tool designed to
                   revolutionize the assessment process in academic institutions.
                   It addresses the prevalent challenges of exam paper creation
@@ -582,235 +536,260 @@ const Home = () => {
                   encourage holistic learning experiences, and foster the
                   development of essential skills necessary for success in the
                   real world.
-                </p>{" "}
-                {/* Mobile About Us description */}
-              </div>{" "}
-              {/* End of mobile About Us content */}
-              <hr className="border-2 border-black mt-4 mb-8" />{" "}
-              {/* Horizontal divider */}
+                </p>
+              </div>
+              {/* end of about us content */}
+              <hr className="border-2 border-black mt-4 mb-8" />
+              {/* horizontal line to split about us and features */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
-                {/* Mobile features section */}
+                {/* Features div */}
                 <h2 className="text-xl font-bold text-red-800 mb-4">
                   FEATURES
-                </h2>{" "}
-                {/* Features heading */}
+                </h2>
                 <div className="text-center">
-                  {" "}
-                  {/* Feature list */}
+                  {/* Feature list div */}
                   <p className="text-xl mb-3">
                     <span className="font-bold">
                       AI-Powered Question Classification:
-                    </span>{" "}
+                    </span>
                     Instantly categorize questions into Bloom's Taxonomy levels.
-                  </p>{" "}
-                  {/* Feature 1 */}
+                  </p>
                   <p className="text-xl mb-3">
                     <span className="font-bold">
                       Suggestive Transformation:
-                    </span>{" "}
+                    </span>
                     Elevate question complexity with AI-driven suggestions for
                     higher-order thinking.
-                  </p>{" "}
-                  {/* Feature 2 */}
+                  </p>
                   <p className="text-xl mb-3">
                     <span className="font-bold">
                       Paper Generation Wizardry:
-                    </span>{" "}
+                    </span>
                     Generate balanced question papers effortlessly based on
                     customizable parameters.
-                  </p>{" "}
-                  {/* Feature 3 */}
+                  </p>
                   <p className="text-xl mb-3">
-                    <span className="font-bold">Intuitive User Interface:</span>{" "}
+                    <span className="font-bold">Intuitive User Interface:</span>
                     Seamlessly navigate and utilize Bloomify's powerful features
                     with ease.
-                  </p>{" "}
-                  {/* Feature 4 */}
+                  </p>
                   <p className="text-xl">
                     <span className="font-bold">
                       Customizable Syllabus Integration:
-                    </span>{" "}
+                    </span>
                     Easily adapt Bloomify to align with your institution's
                     unique syllabus requirements.
-                  </p>{" "}
-                  {/* Feature 5 */}
-                </div>{" "}
-                {/* End of feature list */}
-              </div>{" "}
-              {/* End of mobile features section */}
-            </div>{" "}
-            {/* End of container */}
-          </section>{" "}
-          {/* End of mobile About Us section */}
-        </div>{" "}
-        {/* End of mobile-only content */}
-        {/* Footer section */}
+                  </p>
+                </div>
+                {/* end of feature list div */}
+              </div>
+              {/* End of features div */}
+            </div>
+            {/* end of main about us and features div */}
+          </section>
+          {/* end of about us and features section */}
+          <section className="bg-transparent mt-12 mb-12 overflow-hidden">
+            {/* Product vs Research section */}
+            <div className="flex flex-col justify-center items-center">
+              {/* Container */}
+              <div className="container max-w-full mx-auto flex flex-col md:flex-row items-center justify-center sm:px-6 lg:px-4 gap-10 relative">
+                {/* Inner container */}
+                <div className="w-full flex flex-col items-center mb-8 p-2">
+                  {/* Central product vs research div */}
+                  <h2 className="text-3xl font-bold text-[#007991] mb-8 ml-2 self-center">
+                    Product VS Research
+                  </h2>
+                  <p className="bg-[#222E50] text-justify rounded-xl p-8 leading-relaxed text-l text-white justify-normal">
+                    The development of Bloomify was driven by extensive research
+                    efforts aimed at addressing prevalent challenges in
+                    educational assessment. Leveraging insights from Bloom's
+                    Taxonomy, our research team embarked on a journey to
+                    revolutionize assessment practices through the integration
+                    of artificial intelligence. Through meticulous data
+                    collection, analysis, and experimentation with cutting-edge
+                    natural language processing techniques, we laid the
+                    foundation for Bloomify's advanced features. Our research
+                    endeavors were guided by a commitment to enhancing cognitive
+                    assessment, fostering critical thinking skills, and
+                    promoting practical application of knowledge. The resulting
+                    product, Bloomify, represents the culmination of our
+                    research efforts, offering educators a powerful tool to
+                    create balanced question papers aligned with Bloom's
+                    Taxonomy effortlessly.
+                  </p>
+                </div>
+                {/* End of central div */}
+              </div>
+              {/* end of inner container */}
+              <div className="w-full flex justify-center">
+                {/* Sphere container */}
+                <div className="bg-[#007991] rounded-full p-12 leading-relaxed text-sm text-white justify-normal w-80 h-80">
+                  {/* sphere */}
+                  <p className="text-justify mt-6">
+                    From accurate question classification to dynamic suggestion
+                    and generation features driven by cutting-edge AI, Bloomify
+                    streamlines the assessment process, saving you time and
+                    promoting higher order thinking among students.
+                  </p>
+                </div>
+                {/* end of sphere */}
+              </div>
+              {/* end of sphere container */}
+            </div>
+            {/* end of main container */}
+          </section>
+          {/* End of product vs research section */}
+          <hr className="my-6 border-[#222E50] border-8 sm:mx-auto lg:my-8 mb-2" />
+          {/* horizontal rule - dark blue */}
+          <hr className="my-6 border-[#007991] border-8 sm:mx-auto lg:my-8 mt-2" />
+          {/* horizontal rule - light blue */}
+          <section className="bg-transparent py-12 overflow-hidden">
+            {/* we are open source section */}
+            <div className="w-full flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
+              {/* container */}
+              <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+                {/* inner container */}
+                <h2 className="w-full text-3xl font-bold text-[#222E50] mb-10 ml-2 text-center font-sans">
+                  We are open-source!
+                </h2>
+                <Link
+                  href="https://github.com/existence-master/Bloomify/"
+                  className="rounded-xl border-2 border-black bg-gray-200 p-4 text-l font-normal text-black self-center mt-10 mb-10"
+                >
+                  https://github.com/existence-master/Bloomify/
+                </Link>
+                <h2 className="text-2xl text-[#222E50] mb-20 ml-2 self-center font-sans">
+                  Explore the GitHub Repository
+                </h2>
+              </div>
+              {/* end of inner container */}
+            </div>
+            {/* end of outer container */}
+          </section>
+          {/* end of open source section */}
+        </div>
+        {/* end of mobile contents */}
         <footer className="footer-linear-bg">
-          {" "}
-          {/* Footer with linear background */}
+          {/* start of footer */}
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-            {" "}
-            {/* Container for footer */}
+            {/* footer main container */}
             <div className="md:flex md:justify-between">
-              {" "}
-              {/* Flex container */}
+              {/* footer inner container */}
               <div className="mb-6 md:mb-0">
-                {" "}
-                {/* Logo section */}
+                {/* bloomify logo container */}
                 <Image
-                  src="navbarlogo.svg" // Source for the Bloomify logo
-                  alt="Bloomify Logo" // Alt text
-                  className="bg-white border-8 border-white rounded-xl" // Styling
-                  width={183.37} // Width of the logo
-                  height={66.24} // Height of the logo
+                  src="navbarlogo.svg"
+                  className="bg-white border-8 border-white rounded-xl"
+                  alt="Bloomify Logo"
+                  width={183.37}
+                  height={66.24}
                 />
-              </div>{" "}
-              {/* End of logo section */}
+              </div>
+              {/* end of bloomify logo */}
               <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                {" "}
-                {/* Footer content */}
+                {/* main grid - contains all footer contents */}
                 <div>
-                  {" "}
-                  {/* Resource section */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Resources
-                  </h2>{" "}
-                  {/* Resource heading */}
+                  </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
-                    {/* Resource list */}
                     <li className="mb-4">
                       <Link href="/" className="hover:underline">
                         Bloomify
-                      </Link>{" "}
-                      {/* Link to Home */}
+                      </Link>
                     </li>
                     <li>
                       <a href="#" className="hover:underline">
                         Existence Website
-                      </a>{" "}
-                      {/* Link to an external website */}
+                      </a>
                     </li>
-                  </ul>{" "}
-                  {/* End of resource list */}
-                </div>{" "}
-                {/* End of resource section */}
+                  </ul>
+                </div>
                 <div>
-                  {" "}
-                  {/* Follow Us section */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Follow us
-                  </h2>{" "}
-                  {/* Follow Us heading */}
+                  </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
-                    {/* Follow Us list */}
                     <li className="mb-4">
                       <Link
                         href="https://github.com/existence-master/Bloomify"
-                        className="hover:underline"
+                        className="hover:underline "
                       >
                         Github
-                      </Link>{" "}
-                      {/* GitHub link */}
+                      </Link>
                     </li>
                     <li>
                       <Link
                         href="https://www.linkedin.com/company/existence-3/"
-                        className="hover:underline"
+                        className="hover:underline "
                       >
                         LinkedIn
-                      </Link>{" "}
-                      {/* LinkedIn link */}
+                      </Link>
                     </li>
-                  </ul>{" "}
-                  {/* End of Follow Us list */}
-                </div>{" "}
-                {/* End of Follow Us section */}
+                  </ul>
+                </div>
                 <div>
-                  {" "}
-                  {/* Legal section */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Legal
-                  </h2>{" "}
-                  {/* Legal heading */}
+                  </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
-                    {/* Legal list */}
                     <li className="mb-4">
                       <a href="#" className="hover:underline">
                         Privacy Policy
-                      </a>{" "}
-                      {/* Link to Privacy Policy */}
+                      </a>
                     </li>
                     <li className="mb-4">
                       <a href="#" className="hover:underline">
                         White Paper Link
-                      </a>{" "}
-                      {/* Link to a White Paper */}
+                      </a>
                     </li>
                     <li>
                       <a href="#" className="hover:underline">
-                        Open Core License
-                      </a>{" "}
-                      {/* Link to Open Core License information */}
+                        License
+                      </a>
                     </li>
-                  </ul>{" "}
-                  {/* End of Legal list */}
-                </div>{" "}
-                {/* End of Legal section */}
-              </div>{" "}
-              {/* End of footer content grid */}
-            </div>{" "}
-            {/* End of flex container */}
-            <hr className="my-6 border-white sm:mx-auto lg:my-8" />{" "}
-            {/* Footer separator */}
+                  </ul>
+                </div>
+              </div>
+              {/* end of footer grid */}
+            </div>
+            {/* end of main div */}
+            <hr className="my-6 border-white sm:mx-auto lg:my-8" />
+            {/* white horizontal rule */}
             <div className="sm:flex sm:items-center sm:justify-between">
-              {" "}
-              {/* Final footer content */}
+              {/* footer bottom content container */}
               <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                © 2024{" "}
+                2024
                 <a href="#" className="hover:underline">
-                  Bloomify™
+                  Bloomify
                 </a>
                 . All Rights Reserved.
-              </span>{" "}
-              {/* Footer copyright text */}
+              </span>
               <div className="flex mt-5 sm:justify-center sm:mt-0">
-                {" "}
-                {/* Footer content */}
-                <span className="text-white translate-y-5">
-                  Powered by
-                </span>{" "}
-                {/* Footer "Powered by" text */}
+                <span className="text-white translate-y-5">Powered by</span>
                 <a
                   href="#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
                 >
-                  {" "}
-                  {/* Footer external link */}
                   <Image
-                    src="existence.svg" // Source for Existence logo
-                    alt="Existence Logo" // Alt text
-                    width={217} // Width
-                    height={62} // Height
-                    className="rounded-xl" // Styling
+                    src="existence.svg"
+                    alt="Existence Logo"
+                    width={217}
+                    height={62}
+                    className="rounded-xl"
                   />
-                </a>{" "}
-                {/* End of footer external link */}
-              </div>{" "}
-              {/* End of final footer content */}
-            </div>{" "}
-            {/* End of final footer content */}
-          </div>{" "}
-          {/* End of footer container */}
-        </footer>{" "}
-        {/* End of footer */}
-      </div>{" "}
-      {/* End of main container */}
+                </a>
+              </div>
+            </div>
+            {/* end of footer bottom content */}
+          </div>
+          {/* end of main footer container */}
+        </footer>
+        {/* end of footer */}
+      </div>
+      {/* end of MAIN div */}
     </>
-  ); // End of component return
+  );
 };
 
-export default Home; // Export the Home component
+export default Home;
