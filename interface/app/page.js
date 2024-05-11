@@ -253,25 +253,10 @@ const Home = () => {
                 {/* Nested container div */}
                 {/* Hero Section Headings */}
                 <h2 className="text-xl font-bold text-red-800 mb-4">
-                  Educational Assessment Redefined
+                  Educational Assessment Redefined 
                 </h2>
                 <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8">
-                  An Open-Source
-                  <span className="font-bold text-[#007991]">Chatbot</span>
-                  Designed
-                </p>
-                <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8">
-                  To
-                  <span className="font-bold text-[#007991]">
-                    Revolutionize
-                  </span>
-                  The Assessment
-                </p>
-                <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-20">
-                  Process In
-                  <span className="font-bold text-[#007991]">Educational</span>
-                  Institutes
-                </p>
+                  An Open-Source <span className="font-bold text-[#007991]"> Chatbot </span> Designed </p> <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8"> To <span className="font-bold text-[#007991]"> Revolutionize </span> The Assessment </p> <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-20"> Process In <span className="font-bold text-[#007991]"> Educational </span> Institutes </p>
                 {/* Join Us button*/}
                 <Link href="/signup">
                   <button
@@ -734,12 +719,15 @@ const Home = () => {
                   </h2>
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
                     <li className="mb-4">
-                      <a href="#" className="hover:underline">
+                      <Link href="/privacypolicy" className="hover:underline">
                         Privacy Policy
-                      </a>
+                      </Link>
                     </li>
                     <li className="mb-4">
-                      <a href="#" className="hover:underline">
+                      <a
+                        href="https://docs.google.com/document/d/12LOQu7OB10FRWwSIYJlkZQ-5xHi_rO59qkJyVKg5Oj4/edit?usp=sharing"
+                        className="hover:underline"
+                      >
                         White Paper Link
                       </a>
                     </li>

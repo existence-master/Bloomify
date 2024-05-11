@@ -32,20 +32,16 @@ const About = () => {
   return (
     <>
       <div className="bg-[#fffbe6]">
-        {" "}
         {/* Background color for the main container */}
         {/* Navigation bar */}
         <nav className="bg-transparent mb-20">
-          {" "}
           {/* Transparent background and margin-bottom */}
           <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-            {" "}
             {/* Flex layout for navigation */}
             <Link
               href="/"
               className="flex items-center space-x-3 rtl:space-x-reverse"
             >
-              {" "}
               {/* Link to the home page */}
               <Image
                 src="navbarlogo.svg"
@@ -53,12 +49,11 @@ const About = () => {
                 alt="Bloomify Logo"
                 width={183.37}
                 height={45.91}
-              />{" "}
+              />
               {/* Logo image */}
             </Link>
             {/* Mobile navbar section */}
             <div ref={dropdownRef}>
-              {" "}
               {/* Reference for the dropdown */}
               <button
                 onClick={toggleMenu} // Toggle the menu on click
@@ -67,7 +62,7 @@ const About = () => {
                 aria-controls="navbar-default"
                 aria-expanded={isOpen ? "true" : "false"} // Accessibility attributes
               >
-                <span className="sr-only">Open main menu</span>{" "}
+                <span className="sr-only">Open main menu</span>
                 {/* Accessibility text */}
                 <svg
                   className="w-5 h-5" // SVG size
@@ -88,10 +83,8 @@ const About = () => {
               {/* Dropdown menu when open */}
               {isOpen && ( // Only render if the menu is open
                 <div className="bg-white absolute right-4 top-10 rounded-xl border-2 border-black">
-                  {" "}
                   {/* Styling for the dropdown */}
                   <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                    {" "}
                     {/* Menu items */}
                     <li>
                       <Link
@@ -146,21 +139,19 @@ const About = () => {
                         </button>
                       </Link>
                     </li>
-                  </ul>{" "}
+                  </ul>
                   {/* End of dropdown menu items */}
                 </div>
               )}
-            </div>{" "}
+            </div>
             {/* End of dropdown section */}
             {/* Default desktop navbar */}
             <div
               className="hidden w-full md:block md:w-auto"
               id="navbar-default"
             >
-              {" "}
               {/* Navbar for larger screens */}
               <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                {" "}
                 {/* Menu items */}
                 <li>
                   <Link
@@ -212,37 +203,31 @@ const About = () => {
                       className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none" // Styling for the GitHub button
                     >
                       GitHub
-                    </button>{" "}
-                    // Button to navigate to GitHub
+                    </button>
                   </Link>
                 </li>
-              </ul>{" "}
+              </ul>
               {/* End of desktop navbar menu items */}
-            </div>{" "}
+            </div>
             {/* End of default desktop navbar */}
-          </div>{" "}
+          </div>
           {/* End of navigation bar container */}
-        </nav>{" "}
+        </nav>
         {/* End of navigation bar */}
         {/* Content for larger screens */}
         <div className="xs:max-md:hidden">
-          {" "}
           {/* Hide on smaller screens */}
           <section className="max-w-full bg-transparent dark:bg-transparent py-12 z-0 text-justify">
-            {" "}
             {/* Section styling */}
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
-              {" "}
               {/* Flex layout */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
                 {/* Content for larger screens */}
                 <h2 className="text-xl self-center font-bold text-red-800 mb-4">
                   Educational Assessment Redefined
-                </h2>{" "}
+                </h2>
                 {/* Section heading */}
                 <p className="font-Poppins self-center content-center text-3xl text-gray-600 leading-relaxed mb-8">
-                  {" "}
                   {/* Content description */}
                   There are three main problems we address here. The first one
                   is the case where universities work on Bloom's taxonomy basis
@@ -259,35 +244,30 @@ const About = () => {
                   short in nurturing holistic learning experiences that
                   encourage analytical thinking, problem-solving, and the
                   application of acquired knowledge in real-world scenarios.
-                </p>{" "}
+                </p>
                 {/* End of content description */}
-              </div>{" "}
+              </div>
               {/* End of larger screens content */}
-            </div>{" "}
+            </div>
             {/* End of container */}
-          </section>{" "}
+          </section>
           {/* End of section */}
-        </div>{" "}
+        </div>
         {/* End of content for larger screens */}
         {/* Content for smaller screens */}
         <div className="md:hidden">
-          {" "}
           {/* Show on smaller screens */}
           <section className="w-full bg-transparent z-0">
-            {" "}
             {/* Section styling */}
             <div className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-4">
-              {" "}
               {/* Flex layout */}
               <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
-                {" "}
                 {/* Content for smaller screens */}
                 <h2 className="text-2xl text-center self-center font-bold text-red-800 mb-4">
                   Educational Assessment Redefined
-                </h2>{" "}
+                </h2>
                 {/* Section heading */}
                 <p className="font-Poppins self-center content-center text-xl text-center text-gray-600 leading-relaxed mb-8">
-                  {" "}
                   {/* Content description */}
                   There are three main problems we address here. The first one
                   is the case where universities work on Bloom's taxonomy basis
@@ -304,28 +284,24 @@ const About = () => {
                   short in nurturing holistic learning experiences that
                   encourage analytical thinking, problem-solving, and the
                   application of acquired knowledge in real-world scenarios.
-                </p>{" "}
+                </p>
                 {/* End of content description */}
-              </div>{" "}
+              </div>
               {/* End of smaller screens content */}
-            </div>{" "}
+            </div>
             {/* End of container */}
-          </section>{" "}
+          </section>
           {/* End of section */}
-        </div>{" "}
+        </div>
         {/* End of content for smaller screens */}
         {/* Footer section */}
         <footer className="footer-linear-bg">
-          {" "}
           {/* Footer styling */}
           <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-            {" "}
             {/* Footer container */}
             <div className="md:flex md:justify-between">
-              {" "}
               {/* Flex layout for footer */}
               <div className="mb-6 md:mb-0">
-                {" "}
                 {/* Logo section */}
                 <Image
                   src="navbarlogo.svg" // Logo source
@@ -334,46 +310,41 @@ const About = () => {
                   width={183.37} // Width of the logo
                   height={66.24} // Height of the logo
                 />
-              </div>{" "}
+              </div>
               {/* End of logo section */}
               <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                {" "}
                 {/* Grid layout for footer links */}
                 <div>
-                  {" "}
                   {/* Section for resources */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Resources
-                  </h2>{" "}
+                  </h2>
                   {/* Heading */}
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
                     {/* List of resource links */}
                     <li className="mb-4">
                       <Link href="/" className="hover:underline">
                         Bloomify
-                      </Link>{" "}
+                      </Link>
                       {/* Link to Bloomify */}
                     </li>
                     <li>
                       <a href="#" className="hover:underline">
                         Existence Website
-                      </a>{" "}
+                      </a>
                       {/* Link to Existence Website */}
                     </li>
-                  </ul>{" "}
+                  </ul>
                   {/* End of resource links */}
-                </div>{" "}
+                </div>
                 {/* End of resources section */}
                 <div>
-                  {" "}
                   {/* Section for social media links */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Follow us
-                  </h2>{" "}
+                  </h2>
                   {/* Heading */}
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
                     {/* List of social media links */}
                     <li className="mb-4">
                       <Link
@@ -381,7 +352,7 @@ const About = () => {
                         className="hover:underline"
                       >
                         GitHub
-                      </Link>{" "}
+                      </Link>
                       {/* Link to GitHub */}
                     </li>
                     <li>
@@ -390,74 +361,70 @@ const About = () => {
                         className="hover:underline"
                       >
                         LinkedIn
-                      </Link>{" "}
+                      </Link>
                       {/* Link to LinkedIn */}
                     </li>
-                  </ul>{" "}
+                  </ul>
                   {/* End of social media links */}
-                </div>{" "}
+                </div>
                 {/* End of social media section */}
                 <div>
-                  {" "}
                   {/* Section for legal links */}
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Legal
-                  </h2>{" "}
+                  </h2>
                   {/* Heading */}
                   <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                    {" "}
                     {/* List of legal links */}
                     <li className="mb-4">
-                      <a href="#" className="hover:underline">
+                      <Link href="/privacypolicy" className="hover:underline">
                         Privacy Policy
-                      </a>{" "}
+                      </Link>
                       {/* Link to privacy policy */}
                     </li>
                     <li>
-                      <a href="#" className="hover:underline">
+                      <a
+                        href="https://docs.google.com/document/d/12LOQu7OB10FRWwSIYJlkZQ-5xHi_rO59qkJyVKg5Oj4/edit?usp=sharing"
+                        className="hover:underline"
+                      >
                         White Paper Link
-                      </a>{" "}
+                      </a>
                       {/* Link to white paper */}
                     </li>
                     <li>
                       <a href="#" className="hover:underline">
-                        Open Core Open Core License
-                      </a>{" "}
+                        Open Core License
+                      </a>
                       {/* Link to Open Core License information */}
                     </li>
-                  </ul>{" "}
+                  </ul>
                   {/* End of legal links */}
-                </div>{" "}
+                </div>
                 {/* End of legal section */}
-              </div>{" "}
+              </div>
               {/* End of grid layout for footer links */}
-            </div>{" "}
+            </div>
             {/* End of flex layout */}
-            <hr className="my-6 border-white sm:mx-auto lg:my-8" />{" "}
+            <hr className="my-6 border-white sm:mx-auto lg:my-8" />
             {/* Horizontal rule */}
             <div className="sm:flex sm:items-center sm:justify-between">
-              {" "}
               {/* Footer bottom section */}
               <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                © 2024{" "}
+                2024
                 <a href="#" className="hover:underline">
-                  Bloomify™
+                  Bloomify
                 </a>
                 . All Rights Reserved.
-              </span>{" "}
+              </span>
               {/* Copyright information */}
               <div className="flex mt-4 sm:justify-center sm:mt-4">
-                {" "}
                 {/* Additional branding */}
-                <span className="text-white translate-y-5">
-                  Powered by
-                </span>{" "}
+                <span className="text-white translate-y-5">Powered by</span>
                 {/* Label for power source */}
                 <a
                   href="#"
                   className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
                 >
-                  {" "}
                   {/* Link with hover effects */}
                   <Image
                     src="existence.svg" // Source for the power source logo
@@ -466,15 +433,15 @@ const About = () => {
                     className="rounded-xl" // Styling for the image
                   />
                 </a>
-              </div>{" "}
+              </div>
               {/* End of additional branding */}
-            </div>{" "}
+            </div>
             {/* End of footer bottom section */}
-          </div>{" "}
+          </div>
           {/* End of footer container */}
-        </footer>{" "}
+        </footer>
         {/* End of footer section */}
-      </div>{" "}
+      </div>
       {/* End of main container */}
     </>
   ); // End of component JSX structure

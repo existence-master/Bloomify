@@ -127,7 +127,6 @@ const Settings = () => {
   return (
     <>
       <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex">
-        {" "}
         {/* Container for the settings page */}
         <aside
           id="left-sidebar" // Sidebar for navigation and user information
@@ -135,10 +134,8 @@ const Settings = () => {
           aria-label="Sidebar" // Accessibility label
         >
           <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
-            {" "}
             {/* Sidebar content */}
             <div>
-              {" "}
               {/* Top section for navigation links */}
               <Link
                 href="/" // Link to the home page
@@ -150,11 +147,10 @@ const Settings = () => {
                   height={50}
                   alt="Bloomify Logo"
                   className="mb-5"
-                />{" "}
+                />
                 {/* Logo image */}
               </Link>
               <ul className="space-y-2 font-medium">
-                {" "}
                 {/* List of navigation links */}
                 <li>
                   <Link
@@ -168,13 +164,13 @@ const Settings = () => {
                       fill="currentColor" // Icon color
                       viewBox="0 0 22 21" // Icon viewbox
                     >
-                      <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />{" "}
+                      <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                       {/* Icon path data */}
-                      <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />{" "}
+                      <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                       {/* Second path data */}
-                    </svg>{" "}
+                    </svg>
                     {/* Icon for the dashboard */}
-                    <span className="ms-3">Dashboard</span>{" "}
+                    <span className="ms-3">Dashboard</span>
                     {/* Text for the link */}
                   </Link>
                 </li>
@@ -188,40 +184,34 @@ const Settings = () => {
                       width={20}
                       height={20}
                       alt="Settings Icon"
-                    />{" "}
+                    />
                     {/* Icon for settings */}
                     <span className="flex-1 ms-3 whitespace-nowrap">
                       Settings
-                    </span>{" "}
+                    </span>
                     {/* Text for the link */}
                   </Link>
                 </li>
               </ul>
-            </div>{" "}
+            </div>
             {/* End of top section */}
             <div id="left-bottom" className="gap-2 flex">
-              {" "}
               {/* Bottom section for user information and sign-out */}
               <div>
                 <SignoutButton /> {/* Sign-out button component */}
               </div>
               <Link href="/settings" className="flex">
-                {" "}
                 {/* Link to the settings page */}
                 <div className="text-xl font-bold">
-                  {" "}
                   {/* User's current username */}
                   {userDetails.username}
                 </div>
               </Link>
               <div className="absolute right-4 bottom-4">
-                {" "}
                 {/* Positioned link for dashboard */}
                 <Link href="/dashboard">
-                  {" "}
                   {/* Link to the dashboard */}
                   <div className="rounded-full p-1 bg-[#007991]">
-                    {" "}
                     {/* Circle button */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg" // XML namespace for SVG
@@ -235,28 +225,25 @@ const Settings = () => {
                         strokeLinejoin="round" // Rounded line joins
                         strokeWidth="3" // Stroke width
                         d="M12 6v6m0 0v6m0-6h6m-6 0H6" // Plus sign path data
-                      />{" "}
+                      />
                       {/* Icon representing "Add" or "Plus" */}
                     </svg>
-                  </div>{" "}
+                  </div>
                   {/* End of circle button */}
-                </Link>{" "}
+                </Link>
                 {/* Link end */}
               </div>
-            </div>{" "}
+            </div>
             {/* End of bottom section */}
           </div>
-        </aside>{" "}
+        </aside>
         {/* End of sidebar */}
         <div
           id="right-area"
           className="w-full h-full flex flex-col justify-center items-center"
         >
-          {" "}
           {/* Main content area */}
-          <h1 className="mb-10 text-5xl font-bold font-poppins">
-            Settings
-          </h1>{" "}
+          <h1 className="mb-10 text-5xl font-bold font-poppins">Settings</h1>
           {/* Heading for the settings page */}
           {/* Section for changing password */}
           <div className="w-1/2 mb-10 flex justify-center items-center">
@@ -265,14 +252,13 @@ const Settings = () => {
               className="text-2xl font-poppins gap-5 w-full h-full flex flex-col justify-center items-center"
             >
               <div className="mb-4 w-full">
-                {" "}
                 {/* Field for current password */}
                 <label
                   htmlFor="currentPassword"
                   className="font-semibold mb-2 flex"
                 >
                   Current Password:
-                </label>{" "}
+                </label>
                 {/* Label */}
                 <input
                   type="password" // Input type for password
@@ -285,14 +271,13 @@ const Settings = () => {
               </div>
 
               <div className="mb-4 w-full">
-                {" "}
                 {/* Field for new password */}
                 <label
                   htmlFor="newPassword"
                   className="font-semibold mb-2 flex"
                 >
                   New Password:
-                </label>{" "}
+                </label>
                 {/* Label */}
                 <input
                   type="password" // Input type for password
@@ -304,7 +289,7 @@ const Settings = () => {
                 />
                 <span className="text-sm text-gray-400 mt-2 mb-2 flex">
                   This field is only applicable for Non-Google Users
-                </span>{" "}
+                </span>
                 {/* Note */}
               </div>
 
@@ -313,32 +298,29 @@ const Settings = () => {
                   type="submit"
                   className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black"
                 >
-                  {" "}
                   {/* Styling for the button */}
                   Change Password
-                </button>{" "}
+                </button>
                 {/* Submit button for changing password */}
               </div>
-            </form>{" "}
+            </form>
             {/* End of form */}
           </div>
           {/* Section for changing username */}
           <div className="w-1/2 flex justify-center items-center mt-8">
-            {" "}
             {/* Margin top to separate from the previous section */}
             <form
               onSubmit={handleUsernameSubmit} // Handler for form submission
               className="text-2xl font-poppins w-full h-full flex flex-col justify-center items-center"
             >
               <div className="mb-4 p-4 w-full">
-                {" "}
                 {/* Field for new username */}
                 <label
                   htmlFor="newUsername"
                   className="font-semibold mb-2 flex"
                 >
                   New Username:
-                </label>{" "}
+                </label>
                 {/* Label */}
                 <input
                   type="text" // Input type for text
@@ -354,53 +336,46 @@ const Settings = () => {
                 type="submit"
                 className="drop-shadow-lg bg-[#007991] hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-xl border-2 border-black"
               >
-                {" "}
                 {/* Button styling */}
                 Change Username
-              </button>{" "}
+              </button>
               {/* Submit button for changing username */}
               {userMessage && (
                 <p className="text-sm text-black">{userMessage}</p>
-              )}{" "}
+              )}
               {/* Display success message if set */}
-            </form>{" "}
+            </form>
             {/* End of form */}
             {error && ( // If there is an error message, show the error display
               <div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-                {" "}
                 {/* Error display styling */}
-                <ErrorDisplay
-                  errorMessage={error}
-                  handleError={handleError}
-                />{" "}
+                <ErrorDisplay errorMessage={error} handleError={handleError} />
                 {/* Custom error component */}
               </div>
             )}
           </div>
-        </div>{" "}
+        </div>
         {/* End of main content area */}
-      </div>{" "}
+      </div>
       {/* End of main container */}
       {/* Section for unsupported devices */}
       <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
-        {" "}
         {/* Styling for full-screen flex container */}
         <div className="text-center">
-          {" "}
           {/* Centered text container */}
-          <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>{" "}
+          <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>
           {/* Heading for unsupported devices */}
           <p className="text-lg mb-8">
             We're sorry, but our platform is not supported on mobile devices.
-          </p>{" "}
+          </p>
           {/* Explanation */}
           <p className="text-lg">
             Please switch to a larger screen, such as a desktop or tablet, to
             access our platform.
-          </p>{" "}
+          </p>
           {/* Suggestion */}
         </div>
-      </div>{" "}
+      </div>
       {/* End of unsupported device section */}
     </>
   );
