@@ -42,6 +42,8 @@ const Chat = () => {
 			chatTitle: "",
 			chatId: chatId
 		});
+	
+	
 		//Send Message Dropdown Logic
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null)
@@ -193,7 +195,7 @@ const Chat = () => {
 	const handleError = () => {
 		setError(null)
 	}
-
+	console.log(chatDetails);
 	// Return a loading state while the session status is loading
 	if (status === "loading") {
 		return (

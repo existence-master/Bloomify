@@ -169,6 +169,7 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			const responseData = await response.text();
 			console.log(chatId)
 			console.log(responseData)
+			console.log(chatDetails)
 
 			response = await fetch("/api/update-chat", {
 				method: "POST",
