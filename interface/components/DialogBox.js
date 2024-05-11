@@ -95,7 +95,6 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 	
 	const handleMarkingSchemeChange = (e) => {
 		const { name, value } = e.target;
-		console.log("Change event:", name, value);
 		setMarkingScheme((prevState) => ({
 			...prevState,
 			[name]: parseInt(value), // Ensure the value is an integer
@@ -153,7 +152,6 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 		setIsLoading(true);
 
 		const requestData = convertToMessage(query);
-		console.log(requestData)
 		try {
 
 			let response = await fetch(url, {
@@ -169,6 +167,8 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 			}
 
 			const responseData = await response.text();
+			console.log(chatId)
+			console.log(responseData)
 
 			response = await fetch("/api/update-chat", {
 				method: "POST",
