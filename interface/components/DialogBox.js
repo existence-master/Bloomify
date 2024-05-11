@@ -161,7 +161,6 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				headers: {
 					"Content-Type": "application/json",
 				},
-				mode: "cors",
 				body: JSON.stringify(query), // Send user input in the specified format
 			});
 
@@ -176,7 +175,6 @@ const DialogBox = ({ mode = "classification" , reloadChat, chatDetails, universi
 				headers: {
 					"Content-Type": "application/json",
 				},
-				mode: "cors",
 				body: JSON.stringify({
 					chatId,
 					requestData,
