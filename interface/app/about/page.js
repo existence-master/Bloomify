@@ -213,7 +213,6 @@ const About = () => {
                     >
                       GitHub
                     </button>{" "}
-                    // Button to navigate to GitHub
                   </Link>
                 </li>
               </ul>{" "}
