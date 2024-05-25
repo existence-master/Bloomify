@@ -6,10 +6,10 @@ import { getServerSession } from "next-auth/next"; // Import NextAuth session ha
 import { NextResponse } from "next/server"; // Import Next.js server response
 import { getCookie } from "cookies-next"; // Import function to get a cookie
 
-// Establish the database connection
-connect();
 
 export const POST = async (request) => {
+	// Establish the database connection
+	await connect();
 	try {
 		// Get the forgot-password-flow cookie
 		const forgotPasswordFlow = getCookie("forgot-password-flow", {

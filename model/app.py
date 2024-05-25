@@ -205,4 +205,8 @@ async def generate_questions(input: GenerationInput):
     generated_question = response.text
     return generated_question
 
-uvicorn.run(app, host="0.0.0.0", port=10000)
+# Set host and port based on environment variables
+host = os.getenv("HOST", "127.0.0.1")  # Default to 127.0.0.1 if HOST variable is not set
+port = int(os.getenv("PORT", 5000))     # Default to port 5000 if PORT variable is not set
+
+uvicorn.run(app, host=host, port=port)

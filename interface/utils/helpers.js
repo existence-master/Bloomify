@@ -56,7 +56,6 @@ const convertToMessage = (obj, indent = 0) => {
     }
   });
 
-  console.log(message)
   return message;
 }
 

@@ -39,32 +39,19 @@ according to Bloom's taxonomy levels. An example output is also given
 
 Example Output:
 
-**university - degree**
+**University - Degree**
+**Year - Branch**
+**Subject - Subject**
 
-**year - branch**
-
-**subject - subject**
-
-**Question 1 (Marks: marks_for_question_1)**
-
-* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1)  (Taxonomy Level : level_for_sub_question_1.1)**
-    sub_question_text_1.1
-* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_1.2)**
-    sub_question_text_1.2
-* ... (Additional sub-questions if applicable)
-
-or
-
-**Optional Question 1 (Marks: marks_for_optional_question_1)**
-
-* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1) (Taxonomy Level : level_for_sub_question_2.1**
-    sub_question_text_1.1
-* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_2.2**
-    sub_question_text_1.2
-* ... (Additional sub-questions if applicable)
-
-
-... (Repeat for remaining questions)
+| Question                            | Marks | Sub-question                     | Marks (per sub-question) | Taxonomy Level |
+|-------------------------------------|-------|----------------------------------|--------------------------|----------------|
+| Question 1                          | X     | Sub-question 1.1                | X                        | X              |
+|                                     |       | Sub-question 1.2                | X                        | X              |
+|                                     |       | ... (Additional sub-questions)  |                          |                |
+| Optional Question 1                 | X     | Sub-question 1.1                | X                        | X              |
+|                                     |       | Sub-question 1.2                | X                        | X              |
+|                                     |       | ... (Additional sub-questions)  |                          |                |
+| ... (Repeat for remaining questions)|       |                                  |                          |                |
 
 
 Return only the generated paper and no extra information
@@ -102,6 +89,7 @@ Desired Format:
 * The whole paper should have a Bloom's score of {average_blooms_score}. Decide the level of questions accordingly.
 * Alongside each sub question, give the Bloom's taxonomy level of that question.
 * See that the marks are distributed according to the taxonomy level of the question
+* Note that the questions should be in markdown table format
 
 ### Response:
 

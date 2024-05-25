@@ -9,6 +9,7 @@ export const POST = async (request) => {
 		// Extract chatId, requestData, responseData, and mode from the request body
 		const { chatId, requestData, responseData, mode } = await request.json();
 
+		console.log(chatId)
 		await connect(); // Connect to the database
 
 		// Find the chat by its ID
