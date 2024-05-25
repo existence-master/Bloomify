@@ -4,40 +4,81 @@ import bcrypt from "bcryptjs"; // Library for password hashing
 import { authOptions } from "../auth/[...nextauth]/route"; // Import NextAuth options
 import { getServerSession } from "next-auth/next"; // Import NextAuth session handling
 import { NextResponse } from "next/server"; // Import Next.js server response
+import { getCookie } from "cookies-next"; // Import function to get a cookie
+
+// Establish the database connection
+connect();
 
 export const POST = async (request) => {
-	// Get the current user session
-	const session = await getServerSession(authOptions);
-	
-	// Connect to the database
-	await connect();
-	
-	// If the user is not logged in, return unauthorized
-	if (!session || !session.user?.email) {
-		return new NextResponse("Unauthorized", { status: 401 }); // 401 Unauthorized
-	}
-
 	try {
-		const { email: userEmail } = session.user; // Get the user's email from the session
-		const { currentPassword, newPassword } = await request.json(); // Extract current and new passwords from the request
+		// Get the forgot-password-flow cookie
+		const forgotPasswordFlow = getCookie("forgot-password-flow", {
+			req: request,
+		});
 
-		// Validate that current and new passwords are provided
-		if (!currentPassword || !newPassword || newPassword.trim() === "") {
-			return new NextResponse("Current and new password are required", { status: 400 }); // 400 Bad Request
+		let userEmail;
+		let currentPassword;
+		let newPassword;
+
+		if (forgotPasswordFlow) {
+			// If forgot-password-flow cookie is present, get userEmail and newPassword from the request
+			const requestData = await request.json();
+			userEmail = requestData.userEmail;
+			newPassword = requestData.newPassword;
+
+			if (!userEmail || !newPassword || newPassword.trim() === "") {
+				return new NextResponse(
+					"User email and new password are required for password reset",
+					{ status: 400 }
+				); // 400 Bad Request
+			}
+		} else {
+			// Get the current user session
+			const session = await getServerSession(authOptions);
+
+			// If the user is not logged in and forgot-password-flow cookie is not present, return unauthorized
+			if (!session || !session.user?.email) {
+				return new NextResponse("Unauthorized", { status: 401 }); // 401 Unauthorized
+			}
+
+			// Get the user's email from the session
+			userEmail = session.user.email;
+
+			// Extract current and new passwords from the request
+			const requestData = await request.json();
+			currentPassword = requestData.currentPassword;
+			newPassword = requestData.newPassword;
+
+			// Validate that new password is provided
+			if (!newPassword || newPassword.trim() === "") {
+				return new NextResponse("New password is required", {
+					status: 400,
+				}); // 400 Bad Request
+			}
 		}
 
 		// Find the user by their email
 		const user = await User.findOne({ email: userEmail });
 
 		if (!user) {
-			return new NextResponse(`User with email ${userEmail} not found`, { status: 404 }); // 404 Not Found
+			return new NextResponse(`User with email ${userEmail} not found`, {
+				status: 404,
+			}); // 404 Not Found
 		}
 
-		// Check if the current password matches the stored hashed password
-		const isMatch = await bcrypt.compare(currentPassword, user.password);
+		// If forgot-password-flow cookie is not present, validate the current password
+		if (!forgotPasswordFlow) {
+			// Check if the current password matches the stored hashed password
+			const isMatch = await bcrypt.compare(
+				currentPassword,
+				user.password
+			);
 
-		if (!isMatch) {
-			return new NextResponse("Current password is incorrect", { status: 401 }); // 401 Unauthorized
+			if (!isMatch) {
+				return new NextResponse("Current password is incorrect", {
+					status: 401,
+				}); // 401 Unauthorized
+			}
 		}
 
 		// Hash the new password with a salt factor of 12
