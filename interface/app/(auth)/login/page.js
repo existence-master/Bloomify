@@ -53,14 +53,41 @@ const Login = () => {
 		if (res.url) {
 			router.push("/dashboard"); // Redirect to the dashboard on success
 		}
-		else {
-			setError("Invalid email or password"); // Display error message for failed sign-in
-		}
+
+		setError("Invalid email or password"); // Display error message for failed sign-in
 	};
 
-	// Function to clear the error state
-	const handleError = () => {
-		setError(null); // Clear the error message
+	// Handle forgot password
+	const handleForgotPassword = async (e) => {
+		e.preventDefault(); // Prevent the default form submission behavior
+		const email = e.target.form[0].value; // Get the email from the form input
+
+		// Validate email
+		if (!isValidEmail(email)) {
+			setError("Email is invalid"); // Set error message for invalid email
+			return;
+		}
+
+		// Make a POST request to set the changePasswordFlow cookie
+		const response = await fetch("/api/set-cookie", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: "forgot-password-flow",
+				value: "true",
+				maxAge: 3600, // 1 hour
+			}),
+		});
+
+		// Check if the cookie was set successfully
+		if (response.ok) {
+			// Redirect to the verify page with email and forgotPassword query parameters
+			router.push(`/verify?userEmail=${email}&forgotPassword=true`);
+		} else {
+			setError("Failed to initiate password reset. Please try again.");
+		}
 	};
 
 	return (
@@ -136,8 +163,9 @@ const Login = () => {
 												className="text-[#007991] font-medium hover:underline" // Link styling with hover effect
 												href="/signup" // Link to the signup page
 											>
-												Sign up for free
-											</Link>
+												Sign up
+											</Link>{" "}
+											for free
 										</h1>
 										<button
 											className="text-white hover:shadow-lg rounded-lg w-1/5 text-xl font-semibold bg-[#007991] p-2 mb-1" // Submit button styling
@@ -150,13 +178,19 @@ const Login = () => {
 											{error && error}
 										</p>{" "}
 										{/* Display error message if exists */}
-										<div className="text-center text-black mt-5 mb-5">
-											Or
-										</div>{" "}
-										{/* Separator text */}
+										<button
+											className="text-[#007991] font-medium hover:underline" // Button styling with hover effect
+											onClick={handleForgotPassword} // Handle forgot password on click
+										>
+											Forgot Password?
+										</button>{" "}
 									</div>
 								</form>{" "}
 								{/* End of form */}
+								<div className="text-center text-black mt-5 mb-5">
+									Or
+								</div>{" "}
+								{/* Separator text */}
 								<button
 									className="w-1/2 bg-transparent rounded-xl border-2 border-black text-black py-2 flex flex-row justify-center items-center" // Styling for Google login button
 									onClick={() => signIn("google")} // Sign in with Google on click
@@ -213,4 +247,5 @@ const Login = () => {
 	);
 };
 
-export default Login; // Export the login component for use 
+
+export default Login; // Export the login component

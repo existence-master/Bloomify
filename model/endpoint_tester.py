@@ -4,14 +4,14 @@ import requests
 user_input = {"input_text": "What is the definition of a frame buffer?"}
 
 # Make a POST request to the FastAPI endpoint
-response = requests.post("http://localhost:5000/classify/", json=user_input)
+response = requests.post("http://0.0.0.0:10000/classify/", json=user_input)
 
 print(response.json())
 
 user_input = {"input_text": "QUESTION = Define Management Information System. DESIRED LEVEL = APPLY"}
 
 # Make a POST request to the FastAPI endpoint
-response = requests.post("http://localhost:5000/suggest/", json=user_input)
+response = requests.post("http://0.0.0.0:10000/suggest/", json=user_input)
 
 print(response.json())
 
@@ -19,7 +19,7 @@ genstring = "#YEAR OF STUDY = Second Year, #DISCIPLINE OF STUDY = Artificial Int
 
 user_input = {"input_text": genstring}
 
-response = requests.post("http://localhost:5000/generate/", json=user_input)
+response = requests.post("http://0.0.0.0:10000/generate/", json=user_input)
 
 # Print the response from the endpoint
 print(response.text)

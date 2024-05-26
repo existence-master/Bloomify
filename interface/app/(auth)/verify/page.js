@@ -14,7 +14,7 @@ const Verify = () => {
   const [error, setError] = useState(""); // State for error messages
   const [cooldown, setCooldown] = useState(false); // State to indicate if cooldown is active
   const [isAuthorized, setIsAuthorized] = useState(false); // State to track authorization status
-  
+
   const searchParams = useSearchParams(); // Hook to access URL search parameters
   const { status } = useSession(); // Hook to get the current session status
 
@@ -24,14 +24,16 @@ const Verify = () => {
   }
 
   useEffect(() => {
-    // Check the "signup-flow" cookie to determine if the user is authorized
+    // Check the "signup-flow" and "forgotpasswordflow" cookies to determine if the user is authorized
     const signupFlowCookie = getCookie("signup-flow"); // Retrieve the "signup-flow" cookie
-    if (signupFlowCookie === "true") {
-      setIsAuthorized(true); // Mark as authorized if cookie is set
+    const forgotPasswordFlowCookie = getCookie("forgot-password-flow"); // Retrieve the "forgotpasswordflow" cookie
+
+    if (signupFlowCookie === "true" || forgotPasswordFlowCookie === "true") {
+      setIsAuthorized(true); // Mark as authorized if any of the conditions are met
     } else {
-      router.push("/signup"); // Redirect to the signup page if not authorized
+      router.push("/login"); // Redirect to the signup page if not authorized
     }
-  }, [router]); // Dependency array ensures the effect runs once when the component mounts
+  }, [router, searchParams]); // Dependency array ensures the effect runs when the component mounts or searchParams changes
 
   // If the user is not authorized, don't render the component
   if (!isAuthorized) {
@@ -84,33 +86,41 @@ const Verify = () => {
       // If the verification is successful
       if (response.ok) {
         setOtp(""); // Clear the OTP state
-        // Get user session data from the server
-        response = await fetch("/api/get-session", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const forgotPasswordFlowCookie = getCookie("forgot-password-flow"); // Retrieve the "forgotpasswordflow" cookie
 
-        if (response.ok) {
-          // If the session data retrieval is successful, proceed to signup
-          const { userEmail, password } = await response.json(); // Get user details from the server response
-          response = await fetch("/api/signup", {
-            method: "POST",
+        if (forgotPasswordFlowCookie) {
+          // Redirect to the change password page if forgotPassword is true
+          router.push(`/change-password?userEmail=${userEmail}`);
+        } else {
+          // Proceed with the signup flow
+          // Get user session data from the server
+          response = await fetch("/api/get-session", {
+            method: "GET",
             headers: {
-              "Content-Type": "application/json", // Content type for JSON data
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-              userEmail,
-              password,
-            }),
           });
 
           if (response.ok) {
-            // Redirect to the details page with the userEmail as a parameter
-            router.push(`/details?userEmail=${userEmail}`);
-          } else {
-            throw new Error("This email is already registered"); // Error message for existing emails
+            // If the session data retrieval is successful, proceed to signup
+            const { userEmail, password } = await response.json(); // Get user details from the server response
+            response = await fetch("/api/signup", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json", // Content type for JSON data
+              },
+              body: JSON.stringify({
+                userEmail,
+                password,
+              }),
+            });
+
+            if (response.ok) {
+              // Redirect to the details page with the userEmail as a parameter
+              router.push(`/details?userEmail=${userEmail}`);
+            } else {
+              throw new Error("This email is already registered"); // Error message for existing emails
+            }
           }
         }
       } else {
@@ -134,20 +144,31 @@ const Verify = () => {
             alt="books" // Image description for accessibility
           />
         </div>
-        
         {/* Right side for OTP verification */}
-        <div className="h-full w-1/2 bg-[#FFFAE3] flex flex-col justify-center items-center"> {/* Background color for the right side */}
-          <div className="h-full w-1/2 flex"> {/* Container with flex layout */}
-            <div className="w-full h-full flex flex-col justify-center items-center"> {/* Flex layout for centering content */}
-              <Image 
+        <div className="h-full w-1/2 bg-[#FFFAE3] flex flex-col justify-center items-center">
+          {" "}
+          {/* Background color for the right side */}
+          <div className="h-full w-1/2 flex">
+            {" "}
+            {/* Container with flex layout */}
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              {" "}
+              {/* Flex layout for centering content */}
+              <Image
                 src="/navbarlogo.svg" // Source for the logo
                 width={200} // Width of the logo
                 height={50} // Height of the logo
                 alt="Bloomify Logo" // Description for accessibility
                 className="mb-10" // Bottom margin
               />
-              <h1 className="text-3xl font-medium text-black mb-5">Verify your Email</h1> {/* Heading for verification */}
-              <label className="block mb-2 text-xl font-medium text-gray-800">OTP</label> {/* Label for OTP */}
+              <h1 className="text-3xl font-medium text-black mb-5">
+                Verify your Email
+              </h1>{" "}
+              {/* Heading for verification */}
+              <label className="block mb-2 text-xl font-medium text-gray-800">
+                OTP
+              </label>{" "}
+              {/* Label for OTP */}
               <input
                 type="text" // Input type for text
                 value={otp} // Current value of the OTP state
@@ -157,44 +178,56 @@ const Verify = () => {
               />
               <button
                 onClick={otpSent ? handleOTPSubmit : handleSendOtp} // Submit or send OTP based on state
-                className={`w-full p-2 bg-${otpSent ? "green" : "blue"}-500 text-white rounded-xl hover:bg-${otpSent ? "green" : "blue"}-600 focus:outline-none focus:ring focus:ring-${otpSent ? "green" : "blue"}-400 mt-4`} // Button styling based on OTP sent status
+                className={`w-full p-2 ${
+                  otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
+                } text-white rounded-xl hover:${
+                  otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
+                } focus:outline-none focus:ring focus:ring-${
+                  otpSent ? "green-400" : "blue-400"
+                } mt-4`} // Button styling based on OTP sent status
               >
-                {otpSent ? "Submit OTP" : "Send OTP"} 
+                {otpSent ? "Submit OTP" : "Send OTP"}
               </button>
               <button
                 onClick={handleSendOtp} // Handler to resend OTP
                 disabled={cooldown} // Disable if in cooldown
-                className={`mt-4 w-full px-4 py-2 bg-${cooldown ? "gray" : "blue"}-500 text-white rounded-xl hover:bg-${cooldown ? "gray" : "blue"}-600 focus:outline-none focus:ring focus:ring-${cooldown ? "gray" : "blue"}-400`} // Styling based on cooldown status
+                className={`mt-4 w-full px-4 py-2 ${
+                  cooldown ? "bg-gray-500" : "bg-[#007991]"
+                } text-white rounded-xl hover:${
+                  cooldown ? "bg-gray-600" : "bg-[#007991]"
+                } focus:outline-none focus:ring focus:ring-${
+                  cooldown ? "gray-400" : "blue-400"
+                }`} // Styling based on cooldown status
               >
-                {cooldown ? "Resend OTP (wait)" : "Resend OTP"} 
+                {cooldown ? "Resend OTP (wait)" : "Resend OTP"}{" "}
+
               </button>
-              <div className="text-center text-black mt-5 mb-5">Or</div> {/* Separator text */}
-              <button 
-                className="w-1/2 bg-transparent rounded-xl border-2 border-black text-black py-2 flex flex-row justify-center items-center" 
-                onClick={() => signIn("google")} // Sign in with Google handler
-              >
-                <Image 
-                  src="/googlelogo.webp" // Source for Google logo
-                  width={20} // Width of the logo
-                  height={20} // Height of the logo
-                  alt="Google Logo" // Description for accessibility
-                  className="mr-2" // Right margin for spacing
-                />
-                Sign In with Google
-              </button>
-            </div> {/* End of inner container for content */}
             </div>
           </div>
-        </div> {/* End of main container */}
-
+        </div>{" "}
+        {/* End of main container */}
         {/* Section for unsupported devices */}
-        <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen"> {/* Styling for unsupported devices */}
-          <div className="text-center"> {/* Container for centered content */}
-            <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1> {/* Heading for unsupported devices */}
-            <p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p> {/* Explanation */}
-            <p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p> {/* Suggestion to use larger screens */}
+        <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+          {" "}
+          {/* Styling for unsupported devices */}
+          <div className="text-center">
+            {" "}
+            {/* Container for centered content */}
+            <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>{" "}
+            {/* Heading for unsupported devices */}
+            <p className="text-lg mb-8">
+              We're sorry, but our platform is not supported on mobile devices.
+            </p>{" "}
+            {/* Explanation */}
+            <p className="text-lg">
+              Please switch to a larger screen, such as a desktop or tablet, to
+              access our platform.
+            </p>{" "}
+            {/* Suggestion to use larger screens */}
           </div>
-        </div> {/* End of unsupported devices section */}
+        </div>{" "}
+        {/* End of unsupported devices section */}
+      </div>
     </>
   ); // End of component JSX structure
 };

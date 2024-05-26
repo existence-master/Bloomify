@@ -9,6 +9,7 @@ export const POST = async (request) => {
 		// Extract chatId, requestData, responseData, and mode from the request body
 		const { chatId, requestData, responseData, mode } = await request.json();
 
+		console.log(chatId)
 		await connect(); // Connect to the database
 		console.log(chatId)
 		// Find the chat by its ID
@@ -33,9 +34,6 @@ export const POST = async (request) => {
 
 		// Save the updated chat to the database
 		await chat.save();
-
-		console.log("Updated Chat:", chat); // Log the updated chat for debugging
-
 		return new NextResponse("Chat updated", { status: 200 }); // Return a success message with HTTP status 200
 	} catch (error) {
 		console.error("Error updating user chat:", error); // Log the error for debugging

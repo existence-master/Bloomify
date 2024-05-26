@@ -39,35 +39,38 @@ according to Bloom's taxonomy levels. An example output is also given
 
 Example Output:
 
-**university - degree**
+**University - Degree**
+**Year - Branch**
+**Subject - Subject**
 
-**year - branch**
+| Unit   | Question            | Marks | Sub-question                                                                       | Marks (per sub-question) | Taxonomy Level |
+|--------|----------------------|-------|------------------------------------------------------------------------------------|--------------------------|----------------|
+| Unit 1 | Question 1           | 14    | 1.1 Explain the structure and working of Biological Neural Network.                | 7                        | Understand     |
+|        |                      |       | 1.2 Describe the Topology of neural network architecture.                          | 4                        | Apply          |
+|        |                      |       | 1.3 Discuss the Features, Characteristics, and Types of Neural Networks.           | 3                        | Analyze        |
+|        | Optional Question 1  | 14    | 1.4 Compare and contrast BNN and ANN.                                              | 7                        | Analyze        |
+|        |                      |       | 1.5 Explain the Basic learning laws in Neural Networks.                            | 4                        | Understand     |
+|        |                      |       | 1.6 Give few real-world Applications of neural networks.                           | 3                        | Create         |
+|        | Question 2           | 14    | 2.1 Describe the history of Neural Networks.                                       | 5                        | Understand     |
+|        |                      |       | 2.2 Explain the Neural net architecture.                                           | 6                        | Understand     |
+|        |                      |       | 2.3 Discuss the Activation functions and Models of neuron-Mc Culloch & Pitts model, Perceptron, and Adaline model. | 3 | Apply          |
+|        | Optional Question 2  | 14    | 2.4 Explain the working of a Perceptron.                                           | 6                        | Analyze        |
+|        |                      |       | 2.5 Describe the limitations of Adaline.                                           | 4                        | Evaluate       |
+|        |                      |       | 2.6 Discuss the potential ethical implications of using Neural Networks.           | 4                        | Create         |
+| Unit 2 | Question 1           | 14    | 1.1 Explain the structure and working of Biological Neural Network.                | 7                        | Understand     |
+|        |                      |       | 1.2 Describe the Topology of neural network architecture.                          | 4                        | Apply          |
+|        |                      |       | 1.3 Discuss the Features, Characteristics, and Types of Neural Networks.           | 3                        | Analyze        |
+|        | Optional Question 1  | 14    | 1.4 Compare and contrast BNN and ANN.                                              | 7                        | Analyze        |
+|        |                      |       | 1.5 Explain the Basic learning laws in Neural Networks.                            | 4                        | Understand     |
+|        |                      |       | 1.6 Give few real-world Applications of neural networks.                           | 3                        | Create         |
+|        | Question 2           | 14    | 2.1 Describe the history of Neural Networks.                                       | 5                        | Understand     |
+|        |                      |       | 2.2 Explain the Neural net architecture.                                           | 6                        | Understand     |
+|        |                      |       | 2.3 Discuss the Activation functions and Models of neuron-Mc Culloch & Pitts model, Perceptron, and Adaline model. | 3 | Apply          |
+|        | Optional Question 2  | 14    | 2.4 Explain the working of a Perceptron.                                           | 6                        | Analyze        |
+|        |                      |       | 2.5 Describe the limitations of Adaline.                                           | 4                        | Evaluate       |
+|        |                      |       | 2.6 Discuss the potential ethical implications of using Neural Networks.           | 4                        | Create         |
 
-**subject - subject**
-
-**Question 1 (Marks: marks_for_question_1)**
-
-* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1)  (Taxonomy Level : level_for_sub_question_1.1)**
-    sub_question_text_1.1
-* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_1.2)**
-    sub_question_text_1.2
-* ... (Additional sub-questions if applicable)
-
-or
-
-**Optional Question 1 (Marks: marks_for_optional_question_1)**
-
-* **Sub-question 1.1 (Marks: marks_for_sub_question_1.1) (Taxonomy Level : level_for_sub_question_2.1**
-    sub_question_text_1.1
-* **Sub-question 1.2 (Marks: marks_for_sub_question_1.2) (Taxonomy Level : level_for_sub_question_2.2**
-    sub_question_text_1.2
-* ... (Additional sub-questions if applicable)
-
-
-... (Repeat for remaining questions)
-
-
-Return only the generated paper and no extra information
+Return only the generated paper in markdown table format and no extra information
 
 ### Input:
 
@@ -102,6 +105,7 @@ Desired Format:
 * The whole paper should have a Bloom's score of {average_blooms_score}. Decide the level of questions accordingly.
 * Alongside each sub question, give the Bloom's taxonomy level of that question.
 * See that the marks are distributed according to the taxonomy level of the question
+* Note that the questions should be in markdown table format
 
 ### Response:
 
