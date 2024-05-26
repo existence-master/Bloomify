@@ -11,7 +11,7 @@ export const POST = async (request) => {
 
 		console.log(chatId)
 		await connect(); // Connect to the database
-
+		console.log(chatId)
 		// Find the chat by its ID
 		const chat = await Chat.findById(chatId);
 

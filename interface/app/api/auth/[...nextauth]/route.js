@@ -93,23 +93,7 @@ export const authOptions = {
           return false; // Return false to indicate a failure
         }
       }
-
-      return true; // Return true if the sign-in is successful
-    },
-
-    async redirect({ url, baseUrl }) {
-      // If the URL starts with "/details", redirect to that page
-      if (url.startsWith("/details")) {
-        return url; // Return the specific URL
-      }
-
-      // If the URL is the base URL, return the base URL
-      if (url === `${baseUrl}/`) {
-        return baseUrl;
-      }
-
-      // Otherwise, redirect to the dashboard
-      return "/dashboard";
+      return true
     },
   },
 };

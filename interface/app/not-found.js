@@ -24,4 +24,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound; // Export the NotFound component
+export default NotFound; // Export the NotFound component for use

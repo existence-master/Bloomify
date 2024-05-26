@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation"; // Navigation hook for routing
 import { useEffect, useState } from "react"; // React hooks for component logic
 import Image from "next/image"; // Next.js optimized image component
 import Link from "next/link"; // Link component for client-side navigation
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Login = () => {
-	const [error, setError] = useState(""); // State to hold error messages
+	const [error, setError] = useState(null); // State to hold error messages
 	const router = useRouter(); // Router for navigation
 	const session = useSession(); // Get current user session status
 
@@ -43,13 +44,13 @@ const Login = () => {
 
 		// Sign in using credentials and handle redirect
 		const res = await signIn("credentials", {
-			redirect: true, // Redirect upon successful sign-in
+			redirect: false, // Redirect upon successful sign-in
 			email,
 			password,
 		});
 
 		// Check if the sign-in was successful
-		if (res.ok) {
+		if (res.url) {
 			router.push("/dashboard"); // Redirect to the dashboard on success
 		}
 
@@ -208,6 +209,17 @@ const Login = () => {
 						</div>
 					</div>
 				</div>
+				{error && ( // If there is an error message, show the error display
+					<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+						{" "}
+						{/* Error display styling */}
+						<ErrorDisplay
+							errorMessage={error}
+							handleError={handleError}
+						/>{" "}
+						{/* Custom error component */}
+					</div>
+				)}
 			</div>
 			<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
 				{" "}
@@ -234,5 +246,6 @@ const Login = () => {
 		</>
 	);
 };
+
 
 export default Login; // Export the login component

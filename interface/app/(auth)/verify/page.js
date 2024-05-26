@@ -200,6 +200,7 @@ const Verify = () => {
                 }`} // Styling based on cooldown status
               >
                 {cooldown ? "Resend OTP (wait)" : "Resend OTP"}{" "}
+
               </button>
             </div>
           </div>

@@ -5,29 +5,29 @@ import Image from "next/image"; // Next.js optimized image component
 import { useState, useEffect, useRef } from "react"; // React hooks for state management and side effects
 
 const ContactUs = () => {
-  // State to track if the dropdown menu is open
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null); // Reference to the dropdown menu
+	// State to track if the dropdown menu is open
+	const [isOpen, setIsOpen] = useState(false);
+	const dropdownRef = useRef(null); // Reference to the dropdown menu
 
-  // Effect to handle clicks outside the dropdown to close it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false); // Close the dropdown if click is outside
-      }
-    };
+	// Effect to handle clicks outside the dropdown to close it
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setIsOpen(false); // Close the dropdown if click is outside
+			}
+		};
 
-    document.addEventListener("mousedown", handleClickOutside); // Attach the event listener
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside); // Clean up on component unmount
-    };
-  }, []); // Empty dependency array ensures this effect runs once on component mount
+		document.addEventListener("mousedown", handleClickOutside); // Attach the event listener
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside); // Clean up on component unmount
+		};
+	}, []); // Empty dependency array ensures this effect runs once on component mount
 
-  // Toggle the dropdown menu open/close
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev); // Toggle the state
-    console.log("Clicked"); // Log for debugging
-  };
+	// Toggle the dropdown menu open/close
+	const toggleMenu = () => {
+		setIsOpen((prev) => !prev); // Toggle the state
+		console.log("Clicked"); // Log for debugging
+	};
 
   return (
     <>

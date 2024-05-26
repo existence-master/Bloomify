@@ -140,13 +140,24 @@ Thanks goes to these wonderful people:
          <br />
             💻
       </td>
-   
+      <td align="center">
+         <a href="https://github.com/herambpatilofficial"><img src="https://avatars.githubusercontent.com/u/68045041?v=4?s=100" width="100px;" alt=""/>
+            <br />
+            <sub>
+               <b>
+                  Heramb Patil
+               </b>
+            </sub>
+         </a>
+         <br />
+            💻
+      </td>
   </tr>
 </table>
 
 ## License
 
-Distributed under the GNU-GPL License. See [LICENSE](LICENSE.md) for more information.
+Open Core distributed under the GNU-GPL License. See [Open Core License](LICENSE.md) for more information.
 
 ## Code of Conduct
 
