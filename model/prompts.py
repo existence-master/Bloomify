@@ -43,18 +43,34 @@ Example Output:
 **Year - Branch**
 **Subject - Subject**
 
-| Question                            | Marks | Sub-question                     | Marks (per sub-question) | Taxonomy Level |
-|-------------------------------------|-------|----------------------------------|--------------------------|----------------|
-| Question 1                          | X     | Sub-question 1.1                | X                        | X              |
-|                                     |       | Sub-question 1.2                | X                        | X              |
-|                                     |       | ... (Additional sub-questions)  |                          |                |
-| Optional Question 1                 | X     | Sub-question 1.1                | X                        | X              |
-|                                     |       | Sub-question 1.2                | X                        | X              |
-|                                     |       | ... (Additional sub-questions)  |                          |                |
-| ... (Repeat for remaining questions)|       |                                  |                          |                |
+| Unit   | Question            | Marks | Sub-question                                                                       | Marks (per sub-question) | Taxonomy Level |
+|--------|----------------------|-------|------------------------------------------------------------------------------------|--------------------------|----------------|
+| Unit 1 | Question 1           | 14    | 1.1 Explain the structure and working of Biological Neural Network.                | 7                        | Understand     |
+|        |                      |       | 1.2 Describe the Topology of neural network architecture.                          | 4                        | Apply          |
+|        |                      |       | 1.3 Discuss the Features, Characteristics, and Types of Neural Networks.           | 3                        | Analyze        |
+|        | Optional Question 1  | 14    | 1.4 Compare and contrast BNN and ANN.                                              | 7                        | Analyze        |
+|        |                      |       | 1.5 Explain the Basic learning laws in Neural Networks.                            | 4                        | Understand     |
+|        |                      |       | 1.6 Give few real-world Applications of neural networks.                           | 3                        | Create         |
+|        | Question 2           | 14    | 2.1 Describe the history of Neural Networks.                                       | 5                        | Understand     |
+|        |                      |       | 2.2 Explain the Neural net architecture.                                           | 6                        | Understand     |
+|        |                      |       | 2.3 Discuss the Activation functions and Models of neuron-Mc Culloch & Pitts model, Perceptron, and Adaline model. | 3 | Apply          |
+|        | Optional Question 2  | 14    | 2.4 Explain the working of a Perceptron.                                           | 6                        | Analyze        |
+|        |                      |       | 2.5 Describe the limitations of Adaline.                                           | 4                        | Evaluate       |
+|        |                      |       | 2.6 Discuss the potential ethical implications of using Neural Networks.           | 4                        | Create         |
+| Unit 2 | Question 1           | 14    | 1.1 Explain the structure and working of Biological Neural Network.                | 7                        | Understand     |
+|        |                      |       | 1.2 Describe the Topology of neural network architecture.                          | 4                        | Apply          |
+|        |                      |       | 1.3 Discuss the Features, Characteristics, and Types of Neural Networks.           | 3                        | Analyze        |
+|        | Optional Question 1  | 14    | 1.4 Compare and contrast BNN and ANN.                                              | 7                        | Analyze        |
+|        |                      |       | 1.5 Explain the Basic learning laws in Neural Networks.                            | 4                        | Understand     |
+|        |                      |       | 1.6 Give few real-world Applications of neural networks.                           | 3                        | Create         |
+|        | Question 2           | 14    | 2.1 Describe the history of Neural Networks.                                       | 5                        | Understand     |
+|        |                      |       | 2.2 Explain the Neural net architecture.                                           | 6                        | Understand     |
+|        |                      |       | 2.3 Discuss the Activation functions and Models of neuron-Mc Culloch & Pitts model, Perceptron, and Adaline model. | 3 | Apply          |
+|        | Optional Question 2  | 14    | 2.4 Explain the working of a Perceptron.                                           | 6                        | Analyze        |
+|        |                      |       | 2.5 Describe the limitations of Adaline.                                           | 4                        | Evaluate       |
+|        |                      |       | 2.6 Discuss the potential ethical implications of using Neural Networks.           | 4                        | Create         |
 
-
-Return only the generated paper and no extra information
+Return only the generated paper in markdown table format and no extra information
 
 ### Input:
 
