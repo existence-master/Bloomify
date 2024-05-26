@@ -163,7 +163,7 @@ const Login = () => {
 												href="/signup" // Link to the signup page
 											>
 												Sign up
-											</Link>
+											</Link>{" "}
 											for free
 										</h1>
 										<button
@@ -177,14 +177,13 @@ const Login = () => {
 											{error && error}
 										</p>{" "}
 										{/* Display error message if exists */}
+										<button
+											className="text-[#007991] font-medium hover:underline" // Button styling with hover effect
+											onClick={handleForgotPassword} // Handle forgot password on click
+										>
+											Forgot Password?
+										</button>{" "}
 									</div>
-									<button
-										className="text-[#007991] font-medium hover:underline" // Button styling with hover effect
-										onClick={handleForgotPassword} // Handle forgot password on click
-									>
-										Forgot Password?
-									</button>{" "}
-									{/* Forgot Password button text */}
 								</form>{" "}
 								{/* End of form */}
 								<div className="text-center text-black mt-5 mb-5">
