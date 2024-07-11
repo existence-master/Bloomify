@@ -43,6 +43,8 @@ The proposed solution is a chatbot designed to revolutionize the assessment proc
 3. **Generation:** Ability to generate entire question papers by providing details like degree, branch, year, subject, and exam mode (Insem/Endsem/Unit Test for SPPU).
 4. **User-Friendly Interface:** A key design element ensuring seamless integration into the assessment creation process, making the chatbot practical and accessible for educators.
 
+The following image may help to visualize the solution:
+
 ## Criteria
 
 Comparison with Existence's project selection criteria:
@@ -53,7 +55,9 @@ Comparison with Existence's project selection criteria:
    - The chatbot project can be developed as an open-source solution, encouraging transparency and collaboration.
 3. **Monetization Feasibility:**
    - The project has potential for monetization within educational institutions, tutoring services, or as a supplementary tool for educators.
-4. **Impact:**
+4. **Research Facility:**
+   - The project has a research side, which focuses on building our own custom datasets and fine tuned LLMs
+5. **Impact:**
    - The impact of the Bloom's Taxonomy project is significant, with potential for substantial global impact.
 
 ## Contributors
