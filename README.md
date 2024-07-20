@@ -43,12 +43,7 @@ The proposed solution is a chatbot designed to revolutionize the assessment proc
 3. **Generation:** Ability to generate entire question papers by providing details like degree, branch, year, subject, and exam mode (Insem/Endsem/Unit Test for SPPU).
 4. **User-Friendly Interface:** A key design element ensuring seamless integration into the assessment creation process, making the chatbot practical and accessible for educators.
 
-**Resources for Visualization:**
-
-- [Designs](https://www.figma.com/file/Fdse68FQCX0phhGjqC4V1t/Bloomify?type=design&node-id=0%3A1&mode=design&t=K8RRjuxKmWcPTNi7-1)
-- [Prototype](https://www.figma.com/proto/Fdse68FQCX0phhGjqC4V1t/Bloomify?page-id=0%3A1&type=design&node-id=1-63&viewport=141%2C335%2C0.13&t=USLg2zLv94kT1wtX-1&scaling=scale-down&starting-point-node-id=1%3A63&show-proto-sidebar=1&mode=design)
-- [Flow Diagram](https://www.figma.com/file/MuEqYu3SXNl9gePIa9ml1T/Bloomify?type=whiteboard&node-id=0%3A1&t=AIndCYpS6GoYhD0C-1)
-- [Sample Prompts & Answers](https://docs.google.com/document/d/1jAzaLs9wlfR2xooXSUO2T6gJprsC9xQTl012WNRq3cc/view?usp=sharing)
+The following image may help to visualize the solution:
 
 ## Criteria
 
@@ -60,18 +55,10 @@ Comparison with Existence's project selection criteria:
    - The chatbot project can be developed as an open-source solution, encouraging transparency and collaboration.
 3. **Monetization Feasibility:**
    - The project has potential for monetization within educational institutions, tutoring services, or as a supplementary tool for educators.
-4. **Impact:**
+4. **Research Facility:**
+   - The project has a research side, which focuses on building our own custom datasets and fine tuned LLMs
+5. **Impact:**
    - The impact of the Bloom's Taxonomy project is significant, with potential for substantial global impact.
-
-## Roadmap
-
-1. Create a dataset of SPPU questions for all 4 years and all branches.
-2. Use any working model to classify the question, focusing on classification only.
-3. Build a UI around the basic model to create a platform that classifies SPPU questions.
-4. Work on LLM fine-tuning for the suggestions feature.
-5. Update the UI to accommodate the suggestions feature.
-6. Build a stable application for SPPU.
-7. Scale for other universities.
 
 ## Contributors
 
@@ -134,18 +121,6 @@ Thanks goes to these wonderful people:
             <sub>
                <b>
                   Varad Deshpande
-               </b>
-            </sub>
-         </a>
-         <br />
-            💻
-      </td>
-      <td align="center">
-         <a href="https://github.com/herambpatilofficial"><img src="https://avatars.githubusercontent.com/u/68045041?v=4?s=100" width="100px;" alt=""/>
-            <br />
-            <sub>
-               <b>
-                  Heramb Patil
                </b>
             </sub>
          </a>
