@@ -16,7 +16,6 @@ const userSchema = new Schema(
 	},
 	username: {
 	  type: String, // Data type for the username field
-	  unique: true, // Ensures each username is unique
 	  required: false, // Username is optional initially
 	},
 	university: {
