@@ -61,6 +61,7 @@ export const authOptions = {
             // If the user doesn't exist, create a new user
             const newUser = new User({
               email: user.email, // Set the email for the new user
+              username: user.name,
               googleUser: true, // Indicate that the user signed up with Google
             });
 
