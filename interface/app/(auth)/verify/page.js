@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"; // Navigation hook
 import Image from "next/image"; // Next.js optimized image component
 import { getCookie } from "cookies-next"; // Function to get a cookie in Next.js
 import { useSession } from "next-auth/react"; // Next.js authentication hook
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Verify = () => {
   const router = useRouter(); // Instance of the Next.js router
@@ -132,103 +133,122 @@ const Verify = () => {
     }
   };
 
-  return (
-    <>
-      {/* Main container with flex layout */}
-      <div className="xs:max-md:hidden h-screen w-screen flex">
-        {/* Left side with an image */}
-        <div id="left" className="h-full w-1/2">
-          <img
-            className="h-full w-full object-cover" // Image styling
-            src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg" // Image source
-            alt="books" // Image description for accessibility
-          />
-        </div>
-        {/* Right side for OTP verification */}
-        <div className="h-full w-1/2 bg-[#FFFAE3] flex flex-col justify-center items-center">
-          {" "}
-          {/* Background color for the right side */}
-          <div className="h-full w-1/2 flex">
-            {" "}
-            {/* Container with flex layout */}
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              {" "}
-              {/* Flex layout for centering content */}
-              <Image
-                src="/navbarlogo.svg" // Source for the logo
-                width={200} // Width of the logo
-                height={50} // Height of the logo
-                alt="Bloomify Logo" // Description for accessibility
-                className="mb-10" // Bottom margin
-              />
-              <h1 className="text-3xl font-medium text-black mb-5">
-                Verify your Email
-              </h1>{" "}
-              {/* Heading for verification */}
-              <label className="block mb-2 text-xl font-medium text-gray-800">
-                OTP
-              </label>{" "}
-              {/* Label for OTP */}
-              <input
-                type="text" // Input type for text
-                value={otp} // Current value of the OTP state
-                onChange={(e) => setOtp(e.target.value)} // Handler for input change
-                placeholder="Enter OTP" // Placeholder text
-                className="w-full bg-transparent border-2 border-black rounded-xl p-2 h-10" // Styling
-              />
-              <button
-                onClick={otpSent ? handleOTPSubmit : handleSendOtp} // Submit or send OTP based on state
-                className={`w-full p-2 ${
-                  otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
-                } text-white rounded-xl hover:${
-                  otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
-                } focus:outline-none focus:ring focus:ring-${
-                  otpSent ? "green-400" : "blue-400"
-                } mt-4`} // Button styling based on OTP sent status
-              >
-                {otpSent ? "Submit OTP" : "Send OTP"}
-              </button>
-              <button
-                onClick={handleSendOtp} // Handler to resend OTP
-                disabled={cooldown} // Disable if in cooldown
-                className={`mt-4 w-full px-4 py-2 ${
-                  cooldown ? "bg-gray-500" : "bg-[#007991]"
-                } text-white rounded-xl hover:${
-                  cooldown ? "bg-gray-600" : "bg-[#007991]"
-                } focus:outline-none focus:ring focus:ring-${
-                  cooldown ? "gray-400" : "blue-400"
-                }`} // Styling based on cooldown status
-              >
-                {cooldown ? "Resend OTP (wait)" : "Resend OTP"}{" "}
+  const handleError = () => {
+		setError(null);
+  };
 
-              </button>
-            </div>
-          </div>
-        </div>{" "}
-        {/* End of main container */}
-        {/* Section for unsupported devices */}
-        <div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
-          {" "}
-          {/* Styling for unsupported devices */}
-          <div className="text-center">
-            {" "}
-            {/* Container for centered content */}
-            <h1 className="text-3xl font-bold mb-4">Unsupported Device</h1>{" "}
-            {/* Heading for unsupported devices */}
-            <p className="text-lg mb-8">
-              We're sorry, but our platform is not supported on mobile devices.
-            </p>{" "}
-            {/* Explanation */}
-            <p className="text-lg">
-              Please switch to a larger screen, such as a desktop or tablet, to
-              access our platform.
-            </p>{" "}
-            {/* Suggestion to use larger screens */}
-          </div>
-        </div>{" "}
-        {/* End of unsupported devices section */}
-      </div>
-    </>
+  return (
+		<>
+			{/* Main container with flex layout */}
+			<div className="xs:max-md:hidden h-screen w-screen flex">
+				{/* Left side with an image */}
+				<div id="left" className="h-full w-1/2">
+					<img
+						className="h-full w-full object-cover" // Image styling
+						src="https://i.pinimg.com/originals/49/e7/76/49e776c2141c15b50f29833266c69eaa.jpg" // Image source
+						alt="books" // Image description for accessibility
+					/>
+				</div>
+				{/* Right side for OTP verification */}
+				<div className="h-full w-1/2 bg-[#FFFAE3] flex flex-col justify-center items-center">
+					{" "}
+					{/* Background color for the right side */}
+					<div className="h-full w-1/2 flex">
+						{" "}
+						{/* Container with flex layout */}
+						<div className="w-full h-full flex flex-col justify-center items-center">
+							{" "}
+							{/* Flex layout for centering content */}
+							<Image
+								src="/navbarlogo.svg" // Source for the logo
+								width={200} // Width of the logo
+								height={50} // Height of the logo
+								alt="Bloomify Logo" // Description for accessibility
+								className="mb-10" // Bottom margin
+							/>
+							<h1 className="text-3xl font-medium text-black mb-5">
+								Verify your Email
+							</h1>{" "}
+							{/* Heading for verification */}
+							<label className="block mb-2 text-xl font-medium text-gray-800">
+								OTP
+							</label>{" "}
+							{/* Label for OTP */}
+							<input
+								type="text" // Input type for text
+								value={otp} // Current value of the OTP state
+								onChange={(e) => setOtp(e.target.value)} // Handler for input change
+								placeholder="Enter OTP" // Placeholder text
+								className="w-full bg-transparent border-2 border-black rounded-xl p-2 h-10" // Styling
+							/>
+							<button
+								onClick={
+									otpSent ? handleOTPSubmit : handleSendOtp
+								} // Submit or send OTP based on state
+								className={`w-full p-2 ${
+									otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
+								} text-white rounded-xl hover:${
+									otpSent ? "bg-[#7AB6A1]" : "bg-[#007991]"
+								} focus:outline-none focus:ring focus:ring-${
+									otpSent ? "green-400" : "blue-400"
+								} mt-4`} // Button styling based on OTP sent status
+							>
+								{otpSent ? "Submit OTP" : "Send OTP"}
+							</button>
+							<button
+								onClick={handleSendOtp} // Handler to resend OTP
+								disabled={cooldown} // Disable if in cooldown
+								className={`mt-4 w-full px-4 py-2 ${
+									cooldown ? "bg-gray-500" : "bg-[#007991]"
+								} text-white rounded-xl hover:${
+									cooldown ? "bg-gray-600" : "bg-[#007991]"
+								} focus:outline-none focus:ring focus:ring-${
+									cooldown ? "gray-400" : "blue-400"
+								}`} // Styling based on cooldown status
+							>
+								{cooldown ? "Resend OTP (wait)" : "Resend OTP"}{" "}
+							</button>
+						</div>
+					</div>
+					{error && ( // If there is an error message, show the error display
+						<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+							{" "}
+							{/* Error display styling */}
+							<ErrorDisplay
+								errorMessage={error}
+								handleError={handleError}
+							/>{" "}
+							{/* Custom error component */}
+						</div>
+					)}
+				</div>{" "}
+				{/* End of main container */}
+				{/* Section for unsupported devices */}
+				<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+					{" "}
+					{/* Styling for unsupported devices */}
+					<div className="text-center">
+						{" "}
+						{/* Container for centered content */}
+						<h1 className="text-3xl font-bold mb-4">
+							Unsupported Device
+						</h1>{" "}
+						{/* Heading for unsupported devices */}
+						<p className="text-lg mb-8">
+							We're sorry, but our platform is not supported on
+							mobile devices.
+						</p>{" "}
+						{/* Explanation */}
+						<p className="text-lg">
+							Please switch to a larger screen, such as a desktop
+							or tablet, to access our platform.
+						</p>{" "}
+						{/* Suggestion to use larger screens */}
+					</div>
+				</div>{" "}
+				{/* End of unsupported devices section */}
+			</div>
+		</>
   ); // End of component JSX structure
 };
 

@@ -94,7 +94,7 @@ const Details = () => {
 				</div>
 				<div className="h-full w-1/2 bg-amber-100 flex flex-col justify-center items-center">
 					<div className="h-full w-1/2 flex flex-col justify-center items-center">
-						<Image 
+						<Image
 							src="/navbarlogo.svg" // Logo source
 							width={200} // Image width
 							height={50} // Image height
@@ -102,44 +102,75 @@ const Details = () => {
 							className="mb-10" // Extra margin-bottom class
 						/>
 						<div className="w-full flex flex-col justify-center items-center">
-							<h1 className="text-3xl font-medium text-[#007991] mb-2">Enter your details</h1> {/* Section heading */}
-							<form onSubmit={handleSubmit} className="w-full flex flex-col"> {/*Form to submit details*/}
-								<h1 className="text-black text-xl mt-5 mb-2">Username</h1> {/* Label for username input*/}
+							<h1 className="text-3xl font-medium text-[#007991] mb-2">
+								Enter your details
+							</h1>{" "}
+							{/* Section heading */}
+							<form
+								onSubmit={handleSubmit}
+								className="w-full flex flex-col"
+							>
+								{" "}
+								{/*Form to submit details*/}
+								<h1 className="text-black text-xl mt-5 mb-2">
+									Username
+								</h1>{" "}
+								{/* Label for username input*/}
 								<input
 									type="text" // Input type
 									className="form-control border-2 h-10 p-2 border-black rounded-lg bg-amber-100 text-black mb-5" // Input styling
 									placeholder="abc123" // Placeholder text
 									required // Required field
+									name="username"
 								/>
-								<h1 className="text-black text-xl mb-2">University</h1> {/* Label for university select */}
-								<select
-									name="university" // Name attribute for the select input
+								<h1 className="text-black text-xl mb-2">
+									University
+								</h1>{" "}
+								{/* Label for university select */}
+								<input
+									type="text"
+									name="university" // Name attribute for the input
 									className="text-black h-10 rounded-lg p-2 bg-amber-100 border-2 border-black" // Styling
 									required // Required field
-								>
-									<option value="Savitribai Phule Pune University">Savitribai Phule Pune University</option>
-									<option value="COEP Technological University">COEP Technological University</option>
-									<option value="MIT WPU University">MIT WPU University</option>
-								</select> // Dropdown select input for university choice
-								<div className="flex flex-col justify-center items-center mt-10"> {/* Container for submit button*/}
+								/>
+								<div className="flex flex-col justify-center items-center mt-10">
+									{" "}
+									{/* Container for submit button*/}
 									<button
 										className="p-2 text-white w-1/2 shadow-lg rounded-xl border-2 border-black text-2xl font-sans bg-[#007991]" // Styling for submit button
 										type="submit" // Button is for form submission
 									>
 										Finish
-									</button> {/*Text for submit button*/}
+									</button>{" "}
+									{/*Text for submit button*/}
 								</div>
-							</form> {/* End of form */}
+							</form>{" "}
+							{/* End of form */}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen"> // Display message for unsupported devices
-					<div className="text-center"> // Centered text container
-							<h1 className="text-3xl font-bold mb-4">Unsupported Device</h1> // Heading for unsupported device warning
-							<p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p> // Warning message
-							<p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p> // Suggestion to use larger screens
-					</div>
+			<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+				{" "}
+				// Display message for unsupported devices
+				<div className="text-center">
+					{" "}
+					// Centered text container
+					<h1 className="text-3xl font-bold mb-4">
+						Unsupported Device
+					</h1>{" "}
+					// Heading for unsupported device warning
+					<p className="text-lg mb-8">
+						We're sorry, but our platform is not supported on mobile
+						devices.
+					</p>{" "}
+					// Warning message
+					<p className="text-lg">
+						Please switch to a larger screen, such as a desktop or
+						tablet, to access our platform.
+					</p>{" "}
+					// Suggestion to use larger screens
+				</div>
 			</div>
 		</>
 	); // End of JSX structure

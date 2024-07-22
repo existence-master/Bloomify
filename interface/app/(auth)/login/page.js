@@ -90,6 +90,10 @@ const Login = () => {
 		}
 	};
 
+	const handleError = () => {
+		setError(null);
+	};
+
 	return (
 		<>
 			<div className="xs:max-md:hidden">
