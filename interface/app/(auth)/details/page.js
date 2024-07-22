@@ -120,7 +120,7 @@ const Details = () => {
 									<option value="Savitribai Phule Pune University">Savitribai Phule Pune University</option>
 									<option value="COEP Technological University">COEP Technological University</option>
 									<option value="MIT WPU University">MIT WPU University</option>
-								</select> // Dropdown select input for university choice
+								</select> 
 								<div className="flex flex-col justify-center items-center mt-10"> {/* Container for submit button*/}
 									<button
 										className="p-2 text-white w-1/2 shadow-lg rounded-xl border-2 border-black text-2xl font-sans bg-[#007991]" // Styling for submit button
