@@ -11,6 +11,7 @@ import { FlipWords } from "@components/FlipWords";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 import { TextGenerateEffect } from "@components/TextGen";
+import { IconBrandGithub } from "@tabler/icons-react";
 
 const Home = () => {
   /* Home function that is exported as the default */
@@ -76,7 +77,7 @@ const Home = () => {
             <button
               onClick={toggleMenu}
               type="button"
-              class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
               aria-controls="navbar-multi-level"
               aria-expanded="false"
             >
@@ -92,7 +93,7 @@ const Home = () => {
                   stroke="currentColor"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>
@@ -113,7 +114,7 @@ const Home = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/about"
                     class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
                     About
@@ -121,7 +122,7 @@ const Home = () => {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/contactus"
                     class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
                     Contact
@@ -129,11 +130,11 @@ const Home = () => {
                 </li>
                 <li>
                   <a
-                    href="/signup"
+                    href="/login"
                     class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
                     <button className="inline-flex h-8 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#007991,45%,#BCD8C1,55%,#007991)] bg-[length:200%_100%] px-3 font-medium text-lightyellow transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                      Get Started
+                      Login
                     </button>
                   </a>
                 </li>
@@ -178,7 +179,7 @@ const Home = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="/about"
                           className="block py-2 px-3 dark:text-paleRose text-lividBrown hover:text-tickleMePink rounded"
                         >
                           About
@@ -186,7 +187,7 @@ const Home = () => {
                       </li>
                       <li>
                         <a
-                          href="#"
+                          href="/contactus"
                           className="block py-2 px-3 dark:text-paleRose text-lividBrown hover:text-tickleMePink rounded"
                         >
                           Contact Us
@@ -203,13 +204,13 @@ const Home = () => {
           id="hero"
           className="flex flex-col items-center xs:h-[800px] md:h-[1000px] bg-lightyellow"
         >
-          <a href="#betatest">
+          <a href="#github">
             <button className="xs:mt-32 md:mt-28 bg-flax no-underline group cursor-pointer relative shadow-2xl shadow-midnightAzure rounded-full p-px text-xs font-semibold leading-6  text-paleRose inline-block">
               <span className="absolute inset-0 overflow-hidden rounded-full">
                 <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
               </span>
               <div className="relative flex space-x-2 items-center z-10 rounded-full bg-stilleto py-0.5 px-4 ring-1 ring-white/10 ">
-                <span>{`Join our Beta Waitlist now!`}</span>
+                <span>{`Check out the GitHub!`}</span>
                 <svg
                   width="16"
                   height="16"
@@ -358,19 +359,33 @@ const Home = () => {
 
         <section
           id="research"
-          className="flex flex-col items-center px-4 xs:h-[280px] md:h-[400px] bg-lightyellow"
+          className="flex flex-col items-center lg:px-4 xs:h-[280px] md:h-[400px] lg:h-[500px] xl:h-[400px] bg-lightyellow"
         >
-          <div className="xs:hidden md:block w-1/2 px-3 bg-midnightAzure rounded-xl">
+          <div className="xs:hidden md:block md:w-full lg:w-1/2 px-3 bg-lightyellow rounded-xl">
             <TextGenerateEffect words={researchWords} />
           </div>
-          <div className="md:hidden w-full px-3 py-2 text-justify bg-midnightAzure rounded-xl">
-            <p className="text-flax text-center text-3xl font-inter">
-              We 💖 Research
-            </p>
-            <p className="text-lightyellow text-justify text-2xl font-inter">
+          <div className="md:hidden w-full px-3 py-2 text-justify bg-lightyellow rounded-xl">
+            <p className="text-midnightAzure text-center text-2xl leading-snug tracking-wide font-inter font-normal">
               The development of Bloomify is supported by cutting-edge research
               conducted on educational taxonomies, large lanugage models, and
               generative AI.
+            </p>
+          </div>
+        </section>
+        <section class="bg-lightyellow" id="github">
+          <div class="py-8 px-4 mx-auto max-w-screen-md text-center lg:py-16 lg:px-12">
+            <IconBrandGithub className="mx-auto mb-4 w-16 h-16 text-black" />
+            <h1 class="mb-4 text-4xl font-inter font-semibold tracking-tight leading-none text-gray-900 lg:mb-6 md:text-5xl xl:text-6xl">
+              We are open-source.
+            </h1>
+            <p class="font-light text-gray-500 md:text-lg xl:text-xl">
+              All source code is available on{" "}
+              <Link
+                href="https://github.com/existence-master/bloomify"
+                className="text-blue-400 underline hover:cursor-pointer"
+              >
+                GitHub.
+              </Link>
             </p>
           </div>
         </section>

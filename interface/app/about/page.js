@@ -34,184 +34,141 @@ const About = () => {
       <div className="bg-[#fffbe6]">
         {/* Background color for the main container */}
         {/* Navigation bar */}
-        <nav className="bg-transparent mb-20">
-          {/* Transparent background and margin-bottom */}
-          <div className="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto p-4">
-            {/* Flex layout for navigation */}
-            <Link
-              href="/"
-              className="flex items-center space-x-3 rtl:space-x-reverse"
-            >
-              {/* Link to the home page */}
+        <nav class="bg-lightyellow fixed w-screen z-20 top-0 start-0 rounded-b-xl border-b border-2 border-gray-600">
+          <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
               <Image
-                src="navbarlogo.svg"
-                className="h-8"
+                src="/navbarlogo.svg"
+                width={100}
+                height={25}
                 alt="Bloomify Logo"
-                width={183.37}
-                height={45.91}
               />
-              {/* Logo image */}
-            </Link>
-            {/* Mobile navbar section */}
-            <div ref={dropdownRef}>
-              {/* Reference for the dropdown */}
-              <button
-                onClick={toggleMenu} // Toggle the menu on click
-                type="button"
-                className="inline-flex mr-2 items-center bg-transparent p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none" // Styling
-                aria-controls="navbar-default"
-                aria-expanded={isOpen ? "true" : "false"} // Accessibility attributes
-              >
-                <span className="sr-only">Open main menu</span>
-                {/* Accessibility text */}
-                <svg
-                  className="w-5 h-5" // SVG size
-                  aria-hidden="true" // Accessibility attribute
-                  xmlns="http://www.w3.org/2000/svg" // XML namespace for SVG
-                  fill="none" // No fill
-                  viewBox="0 0 17 14" // SVG viewbox
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round" // Rounded line caps
-                    strokeLinejoin="round" // Rounded line joins
-                    strokeWidth="2" // Line thickness
-                    d="M1 1h15M1 7h15M1 13h15" // SVG path data for the hamburger menu icon
-                  />
-                </svg>
-              </button>
-              {/* Dropdown menu when open */}
-              {isOpen && ( // Only render if the menu is open
-                <div className="bg-white absolute right-4 top-10 rounded-xl border-2 border-black">
-                  {/* Styling for the dropdown */}
-                  <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                    {/* Menu items */}
-                    <li>
-                      <Link
-                        href="/"
-                        className="block py-2 px-3 font-bold text-[#007991] rounded md:bg-transparent md:p-0 dark:text-[#007991]"
-                        aria-current="page" // Link to home
-                      >
-                        Home
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/about"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
-                      >
-                        About
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/contactus"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
-                      >
-                        Contact Us
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/login"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
-                      >
-                        Login
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/signup"
-                        className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
-                      >
-                        Signup
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="https://github.com/existence-master/Bloomify/" // Link to GitHub
-                      >
-                        <button
-                          type="button"
-                          className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none" // Styling for the button
-                        >
-                          GitHub
-                        </button>
-                      </Link>
-                    </li>
-                  </ul>
-                  {/* End of dropdown menu items */}
-                </div>
-              )}
-            </div>
-            {/* End of dropdown section */}
-            {/* Default desktop navbar */}
-            <div
-              className="hidden w-full md:block md:w-auto"
-              id="navbar-default"
+            </a>
+            <button
+              onClick={toggleMenu}
+              type="button"
+              class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              aria-controls="navbar-multi-level"
+              aria-expanded="false"
             >
-              {/* Navbar for larger screens */}
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-transparent">
-                {/* Menu items */}
+              <span class="sr-only">Open main menu</span>
+              <svg
+                class="w-5 h-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 17 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  d="M1 1h15M1 7h15M1 13h15"
+                />
+              </svg>
+            </button>
+            <div
+              class="hidden w-full md:block md:w-auto"
+              id="navbar-multi-level"
+            >
+              <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-lightyellow md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                 <li>
-                  <Link
+                  <a
                     href="/"
-                    className="block py-2 px-3 font-bold text-black rounded md:bg-transparent md:p-0 dark:text-black"
-                    aria-current="page" // Link to home
+                    class="block py-2 px-3 text-cerulean rounded md:p-0"
+                    aria-current="page"
                   >
                     Home
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <a
                     href="#"
-                    className="block py-2 px-3 font-bold text-[#007991] rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-[#007991] md:dark:hover:text-[#007991]" // Styling and hover effects
+                    class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
                     About
                   </a>
                 </li>
                 <li>
-                  <Link
+                  <a
                     href="/contactus"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
+                    class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
-                    Contact Us
-                  </Link>
+                    Contact
+                  </a>
                 </li>
                 <li>
-                  <Link
+                  <a
                     href="/login"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
+                    class="block py-2 px-3 text-midnightAzure rounded hover:text-cerulean md:p-0"
                   >
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/signup"
-                    className="block py-2 px-3 font-bold text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-[#007991] md:p-0 dark:text-black md:dark:hover:text-[#007991]" // Styling and hover effects
-                  >
-                    Signup
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://github.com/existence-master/Bloomify/" // Link to GitHub
-                  >
-                    <button
-                      type="button"
-                      className="text-white bg-black hover:bg-[#007991] focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 -translate-y-1 focus:outline-none" // Styling for the GitHub button
-                    >
-                      GitHub
+                    <button className="inline-flex h-8 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#007991,45%,#BCD8C1,55%,#007991)] bg-[length:200%_100%] px-3 font-medium text-lightyellow transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                      Login
                     </button>
-                  </Link>
+                  </a>
                 </li>
               </ul>
-              {/* End of desktop navbar menu items */}
             </div>
-            {/* End of default desktop navbar */}
+            {isOpen && (
+              <div className="fixed inset-0 flex z-50 mt-12">
+                <div className="fixed inset-0 bg-black opacity-50"></div>
+                <div className="absolute inset-y-0 right-0 flex flex-col w-full max-w-lg">
+                  <button
+                    data-collapse-toggle="navbar-sticky"
+                    type="button"
+                    className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-sticky"
+                    aria-expanded="false"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                  <div className="w-full bg-lightyellow rounded-lg">
+                    <ul className="py-4 px-2 space-y-2">
+                      <li>
+                        <a
+                          href="/"
+                          className="block py-2 px-3 dark:text-paleRose text-lividBrown hover:text-tickleMePink rounded"
+                        >
+                          Home
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          className="block py-2 px-3 dark:text-paleRose text-lividBrown hover:text-tickleMePink rounded"
+                        >
+                          About
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="/contactus"
+                          className="block py-2 px-3 dark:text-paleRose text-lividBrown hover:text-tickleMePink rounded"
+                        >
+                          Contact Us
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          {/* End of navigation bar container */}
         </nav>
         {/* End of navigation bar */}
         {/* Content for larger screens */}
