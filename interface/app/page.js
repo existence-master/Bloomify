@@ -202,7 +202,7 @@ const Home = () => {
         </nav>
         <section
           id="hero"
-          className="flex flex-col items-center xs:h-[800px] md:h-[1000px] bg-lightyellow"
+          className="flex flex-col items-center xs:h-[800px] md:h-[1000px] bg-gradient-to-t to-[#fffbe6] from-[#ffffff]"
         >
           <a href="#github">
             <button className="xs:mt-32 md:mt-28 bg-flax no-underline group cursor-pointer relative shadow-2xl shadow-midnightAzure rounded-full p-px text-xs font-semibold leading-6  text-paleRose inline-block">
@@ -243,7 +243,7 @@ const Home = () => {
           </p>
           <div className="flex flex-row gap-4 mt-8 mb-8">
             <Link
-              href="https://youtu.be/kHwuCagHWWg"
+              href="https://youtu.be/urGVaaipzfA"
               className="bg-flax text-lividBrown p-2 rounded-lg text-xl px-4 hover:bg-tickleMePink transition-colors border-2 border-gray-400 duration-300 font-inter"
             >
               Take a Tour
@@ -263,8 +263,8 @@ const Home = () => {
               <iframe
                 width="800"
                 height="515"
-                src="https://www.youtube.com/embed/kHwuCagHWWg?si=si_k-Nimlmpu5qth"
-                title="MindSync Demo Video"
+                src="https://www.youtube.com/embed/urGVaaipzfA?si=MNSln_kLM240hXWb"
+                title="Bloomify Demo Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
@@ -275,8 +275,8 @@ const Home = () => {
               <iframe
                 width="300"
                 height="300"
-                src="https://www.youtube.com/embed/kHwuCagHWWg?si=si_k-Nimlmpu5qth"
-                title="MindSync Demo Video"
+                src="https://www.youtube.com/embed/urGVaaipzfA?si=MNSln_kLM240hXWb"
+                title="Bloomify Demo Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
@@ -288,7 +288,7 @@ const Home = () => {
 
         <section
           id="features"
-          className="flex xs:flex-col xs:gap-y-2 md:flex-row md:gap-x-2 justify-center items-center w-full xs:h-[1400px] md:h-[500px] bg-lightyellow px-2"
+          className="flex xs:flex-col xs:gap-y-2 md:flex-row md:gap-x-2 justify-center items-center w-full xs:h-[1400px] md:h-[500px] bg-gradient-to-t to-[#ffffff] from-[#fffbe6] px-2"
         >
           <div className="max-w-xs w-full group/card">
             <div
@@ -359,9 +359,9 @@ const Home = () => {
 
         <section
           id="research"
-          className="flex flex-col items-center lg:px-4 xs:h-[280px] md:h-[400px] lg:h-[500px] xl:h-[400px] bg-lightyellow"
+          className="flex flex-col items-center lg:px-4 xs:h-[280px] md:h-[420px] lg:h-[500px] xl:h-[540px] bg-lightyellow"
         >
-          <div className="xs:hidden md:block md:w-full lg:w-1/2 px-3 bg-lightyellow rounded-xl">
+          <div className="xs:hidden md:block md:w-full lg:w-2/3 xl:w-1/2 px-3 bg-lightyellow rounded-xl">
             <TextGenerateEffect words={researchWords} />
           </div>
           <div className="md:hidden w-full px-3 py-2 text-justify bg-lightyellow rounded-xl">
@@ -372,7 +372,7 @@ const Home = () => {
             </p>
           </div>
         </section>
-        <section class="bg-lightyellow" id="github">
+        {/* <section class="bg-lightyellow" id="github">
           <div class="py-8 px-4 mx-auto max-w-screen-md text-center lg:py-16 lg:px-12">
             <IconBrandGithub className="mx-auto mb-4 w-16 h-16 text-black" />
             <h1 class="mb-4 text-4xl font-inter font-semibold tracking-tight leading-none text-gray-900 lg:mb-6 md:text-5xl xl:text-6xl">
@@ -388,7 +388,7 @@ const Home = () => {
               </Link>
             </p>
           </div>
-        </section>
+        </section> */}
 
         <footer className="footer-linear-bg">
           {/* start of footer */}
