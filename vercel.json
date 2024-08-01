@@ -1,8 +1,9 @@
 {
 	"git": {
 		"deploymentEnabled": {
-			"master": true,
-			"gemini-next": true
+			"master": false,
+			"alpha": true,
+			"mvp": false,
 		}
 	}
 }
