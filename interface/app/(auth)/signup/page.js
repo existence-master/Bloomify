@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"; // Navigation utilities in Next.js
 import { useEffect, useState } from "react"; // React hooks for state management and side effects
 import Image from "next/image"; // Next.js optimized image component
 import Link from "next/link"; // Link component for client-side navigation
-import { setCookie } from "cookies-next"; // Function to set cookies in Next.js
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Signup = () => {
 	const [error, setError] = useState(""); // State to hold error messages
@@ -77,6 +77,10 @@ const Signup = () => {
 		}
 	};
 
+	const handleError = () => {
+		setError(null);
+	};
+
 	return (
 		<>
 			{/* Main container with flex layout */}
@@ -89,10 +93,13 @@ const Signup = () => {
 						alt="Books" // Image description for accessibility
 					/>
 				</div>
-				
 				{/* Right side for the signup form */}
-				<div className="h-screen w-1/2 bg-[#FFFAE3]"> {/* Background color for the right side */}
-					<div className="h-full w-full flex flex-col justify-center items-center"> {/* Flex layout for centering */}
+				<div className="h-screen w-1/2 bg-[#FFFAE3]">
+					{" "}
+					{/* Background color for the right side */}
+					<div className="h-full w-full flex flex-col justify-center items-center">
+						{" "}
+						{/* Flex layout for centering */}
 						<Image
 							className="mb-10" // Bottom margin
 							src="/navbarlogo.svg" // Logo source
@@ -100,27 +107,46 @@ const Signup = () => {
 							width={200} // Width of the image
 							height={50} // Height of the image
 						/>
-						<div className="w-1/2 flex flex-col justify-center items-center"> {/* Container for the form */}
-							<h1 className="text-3xl font-medium text-black mb-5"> {/* Heading for the form */}
+						<div className="w-1/2 flex flex-col justify-center items-center">
+							{" "}
+							{/* Container for the form */}
+							<h1 className="text-3xl font-medium text-black mb-5">
+								{" "}
+								{/* Heading for the form */}
 								Create Account
 							</h1>
-							<form onSubmit={handleSubmit} className="w-full font-poppins"> {/* Signup form */}
-								<h1 className="text-black text-xl mt-5 mb-2">Email</h1> {/* Label for email input */}
+							<form
+								onSubmit={handleSubmit}
+								className="w-full font-poppins"
+							>
+								{" "}
+								{/* Signup form */}
+								<h1 className="text-black text-xl mt-5 mb-2">
+									Email
+								</h1>{" "}
+								{/* Label for email input */}
 								<input
 									type="text" // Input type
 									className="w-full form-control border-black border-2 rounded-lg bg-[#FFFAE3] text-black mb-5 h-10 p-2" // Styling
 									placeholder="abc@gmail.com" // Placeholder text
 									required // Mark as required
 								/>
-								<h1 class="text-black text-xl mt-5 mb-2">Password</h1> {/* Label for password input */}
+								<h1 class="text-black text-xl mt-5 mb-2">
+									Password
+								</h1>{" "}
+								{/* Label for password input */}
 								<input
 									type="password" // Input type for password
 									className="w-full form-control border-2 border-black rounded-lg bg-[#FFFAE3] text-black mb-5 h-10 p-2" // Styling
 									placeholder="********" // Placeholder for the password
 									required // Mark as required
 								/>
-								<div className="flex flex-col justify-center items-center mb-10"> {/* Container for extra information */}
-									<h1 className="text-black mb-4"> {/* Prompt for existing users */}
+								<div className="flex flex-col justify-center items-center mb-10">
+									{" "}
+									{/* Container for extra information */}
+									<h1 className="text-black mb-4">
+										{" "}
+										{/* Prompt for existing users */}
 										Already have an account?{" "}
 										<Link
 											className="text-blue-600 font-medium hover:underline" // Link styling
@@ -134,37 +160,72 @@ const Signup = () => {
 										type="submit" // Submit the form
 									>
 										Create Account
-									</button> {/* Button to create an account */}
+									</button>{" "}
+									{/* Button to create an account */}
 								</div>
-								
-								{/* Display error message if there is one */}
-								<p className="text-red-600 text-[16px] text-center mb-2">
-									{error && error}
-								</p>
 							</form>
-							
 							{/* Alternative signup option with Google */}
-							<div className="text-center text-black mb-5">Or</div> {/* Separator */}
+							<div className="text-center text-black mb-5">
+								Or
+							</div>{" "}
+							{/* Separator */}
 							<button
 								className="text-xl w-full bg-transparent text-black py-2 rounded-xl border-2 border-black flex flex-row justify-center items-center" // Styling
 								onClick={() => signIn("google")} // Google sign-in handler
 							>
-								<Image src="/googlelogo.webp" width={20} height={20} alt="Google logo" className="mr-2" /> {/* Google logo */}
+								<Image
+									src="/googlelogo.webp"
+									width={20}
+									height={20}
+									alt="Google logo"
+									className="mr-2"
+								/>{" "}
+								{/* Google logo */}
 								Sign up with Google
 							</button>
-						</div> {/* End of form container */}
-					</div> {/* End of right side content */}
-				</div> {/* End of right side */}
-			</div> {/* End of main container */}
-
-			{/* Section for unsupported devices */}
-			<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen"> {/* Styling for the full-screen flex layout */}
-					<div className="text-center"> {/* Centered content */}
-							<h1 className="text-3xl font-bold mb-4">Unsupported device</h1> {/* Heading for unsupported devices */}
-							<p className="text-lg mb-8">We're sorry, but our platform is not supported on mobile devices.</p> {/* Explanation for unsupported devices */}
-							<p className="text-lg">Please switch to a larger screen, such as a desktop or tablet, to access our platform.</p> {/* Suggestion to use a larger screen */}
+						</div>{" "}
+						{/* End of form container */}
+					</div>{" "}
+					{/* End of right side content */}
+				</div>{" "}
+				{/* End of right side */}
+				{error && ( // If there is an error message, show the error display
+					<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+						{" "}
+						{/* Error display styling */}
+						<ErrorDisplay
+							errorMessage={error}
+							handleError={handleError}
+						/>{" "}
+						{/* Custom error component */}
 					</div>
-			</div> {/* End of unsupported device section */}
+				)}
+			</div>{" "}
+			{/* End of main container */}
+			{/* Section for unsupported devices */}
+			<div className="md:hidden bg-[#FFFAE3] flex justify-center items-center h-screen">
+				{" "}
+				{/* Styling for the full-screen flex layout */}
+				<div className="text-center">
+					{" "}
+					{/* Centered content */}
+					<h1 className="text-3xl font-bold mb-4">
+						Unsupported device
+					</h1>{" "}
+					{/* Heading for unsupported devices */}
+					<p className="text-lg mb-8">
+						We're sorry, but our platform is not supported on mobile
+						devices.
+					</p>{" "}
+					{/* Explanation for unsupported devices */}
+					<p className="text-lg">
+						Please switch to a larger screen, such as a desktop or
+						tablet, to access our platform.
+					</p>{" "}
+					{/* Suggestion to use a larger screen */}
+				</div>
+			</div>{" "}
+			{/* End of unsupported device section */}
 		</>
 	);
 };

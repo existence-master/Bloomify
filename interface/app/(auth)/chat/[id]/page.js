@@ -8,6 +8,7 @@ import SignoutButton from "@components/SignoutButton";
 import { useRouter, useParams } from "next/navigation";
 import ChatBubble from "@components/ChatBubble";
 import Image from "next/image";
+import ErrorDisplay from "@components/ErrorDisplay";
 
 const Chat = () => {
 	const router = useRouter();
@@ -24,13 +25,9 @@ const Chat = () => {
 		username: "",
 		university: "",
 	});
-	const [chatFilters, setChatFilters] = useState({
-		degree: "",
-		branch: "",
-		year: "",
-		subject: "",
-	});
+
 	const [filteredChats, setFilteredChats] = useState([]);
+	const [searchQuery, setSearchQuery] = useState("");
 	const [chatDetails, setChatDetails] = useState({
 		chatFilters: {
 			degree: "Degree",
@@ -44,7 +41,7 @@ const Chat = () => {
 	});
 
 	//Send Message Dropdown Logic
-  
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [error, setError] = useState(null);
 	const dropdownRef = useRef(null);
@@ -117,13 +114,11 @@ const Chat = () => {
 				const { chatTitle, chatFilters, chatHistory } =
 					await response.json();
 				setChatDetails((prevState) => ({
-
 					...prevState,
 					chatTitle,
 					chatFilters,
 					chatHistory,
 				}));
-				setChatFilters(chatFilters);
 			} catch (err) {
 				setError(`Error fetching chat details: ${err.message}`);
 			}
@@ -142,10 +137,7 @@ const Chat = () => {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
-						degree: chatFilters.degree,
-						branch: chatFilters.branch,
-						year: chatFilters.year,
-						subject: chatFilters.subject,
+						searchQuery,
 					}),
 				});
 
@@ -163,14 +155,10 @@ const Chat = () => {
 		};
 
 		fetchFilteredChats();
-	}, [chatFilters]);
+	}, [searchQuery]);
 
-	const handleFilterChange = (e) => {
-		const { name, value } = e.target;
-		setChatFilters((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+	const handleSearchChange = (e) => {
+		setSearchQuery(e.target.value);
 	};
 
 	const handleChatClick = (chatId) => {
@@ -209,7 +197,7 @@ const Chat = () => {
 	const handleError = () => {
 		setError(null);
 	};
-  
+
 	// Return a loading state while the session status is loading
 	if (status === "loading") {
 		return (
@@ -287,78 +275,13 @@ const Chat = () => {
 								</ul>
 								{/* Dropdowns */}
 								<div className="bg-[#FFFAE3] mt-4">
-									<div className="flex justify-between">
-										<div className="w-1/2 gap-2">
-											<select
-												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatFilters.degree}
-												name="degree"
-												onChange={handleFilterChange}
-											>
-												<option value="Degree">
-													Degree
-												</option>
-												<option value="BTech">
-													BTech
-												</option>
-												<option value="MTech">
-													MTech
-												</option>
-											</select>
-										</div>
-										<div className="w-1/2">
-											<select
-												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatFilters.branch}
-												name="branch"
-												onChange={handleFilterChange}
-											>
-												<option value="Branch">
-													Branch
-												</option>
-												<option value="AI DS">
-													AI DS
-												</option>
-												<option value="CS">CS</option>
-												<option value="IT">IT</option>
-												<option value="EnTC">
-													EnTC
-												</option>
-											</select>
-										</div>
-									</div>
-									<div className="flex justify-between">
-										<div className="w-1/2">
-											<select
-												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatFilters.year}
-												name="year"
-												onChange={handleFilterChange}
-											>
-												<option value="Year">
-													Year
-												</option>
-												<option value="SE">SE</option>
-												<option value="TE">TE</option>
-												<option value="BE">BE</option>
-											</select>
-										</div>
-										<div className="w-1/2">
-											<select
-												className="block w-full p-2 text-gray-900 bg-transparent shadow-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500"
-												value={chatFilters.subject}
-												name="subject"
-												onChange={handleFilterChange}
-											>
-												<option value="Subject">
-													Subject
-												</option>
-												<option value="ANN">ANN</option>
-												<option value="CS">CS</option>
-												<option value="DS">DS</option>
-											</select>
-										</div>
-									</div>
+									<input
+										type="text"
+										placeholder="Search chats..."
+										value={searchQuery}
+										onChange={handleSearchChange}
+										className="mt-1 block bg-transparent w-full border-black border-2 rounded-xl p-2 mb-4"
+									/>
 								</div>
 							</div>
 							<div
