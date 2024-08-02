@@ -115,11 +115,9 @@ const Dashboard = () => {
 				const { chatId } = await response.json();
 				router.push(`/chat/${chatId}`);
 			} else {
-				console.error("Failed to create chat.");
 				setError("Failed to create chat.");
 			}
 		} catch (error) {
-			console.error("Error creating chat:", error);
 			setError("Error creating chat. Please try again later.");
 		}
 	};

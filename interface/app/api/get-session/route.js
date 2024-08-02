@@ -30,7 +30,11 @@ export const GET = async () => {
 
 		// Create a decipher to decrypt the password
 		const decipher = createDecipheriv("aes-256-cbc", key, iv);
-		let decryptedPassword = decipher.update(encryptedPassword, "hex", "utf8"); // Decrypt the password
+		let decryptedPassword = decipher.update(
+			encryptedPassword,
+			"hex",
+			"utf8"
+		); // Decrypt the password
 		decryptedPassword += decipher.final("utf8"); // Finalize the decryption
 
 		// Return the decrypted session data
@@ -42,7 +46,6 @@ export const GET = async () => {
 			{ status: 200 } // HTTP status 200 OK
 		);
 	} catch (error) {
-		console.error("Error retrieving or decrypting session data:", error); // Log the error for debugging
 		return new NextResponse(
 			JSON.stringify({ error: "Failed to retrieve session data" }),
 			{ status: 500 } // HTTP status 500 Internal Server Error

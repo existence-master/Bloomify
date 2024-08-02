@@ -18,15 +18,17 @@ export const POST = async (request) => {
 
 	try {
 		// Get the email from the session
-		const { email: userEmail } = session.user; 
+		const { email: userEmail } = session.user;
 		// Get the data from the POST request body
-		const { title, degree, branch, year, subject } = await request.json(); 
+		const { title, degree, branch, year, subject } = await request.json();
 
 		// Ensure the user exists
 		const user = await User.findOne({ email: userEmail });
 
 		if (!user) {
-			return new NextResponse(`User with email ${userEmail} not found`, { status: 404 }); // 404 Not Found
+			return new NextResponse(`User with email ${userEmail} not found`, {
+				status: 404,
+			}); // 404 Not Found
 		}
 
 		// Create a new chat with the provided data
@@ -48,7 +50,6 @@ export const POST = async (request) => {
 			{ status: 200 } // 200 OK status
 		);
 	} catch (error) {
-		console.error("Error creating new chat:", error); // Log the error for debugging
 		return new NextResponse("Internal server error", { status: 500 }); // 500 Internal Server Error
 	}
 };

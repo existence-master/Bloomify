@@ -14,18 +14,19 @@ export const POST = async (request) => {
 		const existingUsername = await User.findOne({ username });
 
 		if (existingUsername) {
-			return new NextResponse("This username is already taken", { status: 400 }); // Return 400 if username is taken
+			return new NextResponse("This username is already taken", {
+				status: 400,
+			}); // Return 400 if username is taken
 		}
 
 		// Update the user document with the new username and university
 		await User.findOneAndUpdate(
 			{ email: userEmail }, // Find the user by email
-			{ username, university }, // Update with the new data
+			{ username, university } // Update with the new data
 		);
 
 		return new NextResponse("Username Registered", { status: 200 }); // Return 200 for successful registration
 	} catch (err) {
-		console.error("Error updating user information:", err); // Log the error for debugging
 		return new NextResponse("Internal server error", {
 			status: 500,
 		}); // Return 500 if an internal server error occurs

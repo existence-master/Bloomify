@@ -1,9 +1,8 @@
 import { marked } from "marked";
-import HTMLtoDOCX from 'html-to-docx';
+import HTMLtoDOCX from "html-to-docx";
 import { NextResponse } from "next/server"; // Import Next.js server response
- 
+
 export const POST = async (request) => {
-   
 	const { markdown } = await request.json();
 
 	if (!markdown) {
@@ -12,11 +11,9 @@ export const POST = async (request) => {
 		}); // 400 Bad Request
 	}
 
-	const messageHTML = marked.parse(markdown)
-	console.log(messageHTML)
+	const messageHTML = marked.parse(markdown);
 
 	try {
-
 		const fileBuffer = await HTMLtoDOCX(messageHTML, null, {
 			table: { row: { cantSplit: true } },
 			footer: true,
@@ -35,7 +32,6 @@ export const POST = async (request) => {
 
 		return response;
 	} catch (error) {
-		console.error("Error generating PDF:", error); // Log the error for debugging
 		return new NextResponse("Internal Server Error", { status: 500 }); // 500 Internal Server Error
 	}
 };

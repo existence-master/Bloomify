@@ -8,136 +8,138 @@ import { useSession } from "next-auth/react"; // Next.js authentication hook
 import ErrorDisplay from "@components/ErrorDisplay";
 
 const Verify = () => {
-  const router = useRouter(); // Instance of the Next.js router
-  const [otp, setOtp] = useState(""); // State for storing the OTP
-  const [hash, setHash] = useState(""); // State for storing the hash of the OTP
-  const [otpSent, setOtpSent] = useState(false); // State to indicate whether OTP has been sent
-  const [error, setError] = useState(""); // State for error messages
-  const [cooldown, setCooldown] = useState(false); // State to indicate if cooldown is active
-  const [isAuthorized, setIsAuthorized] = useState(false); // State to track authorization status
+	const router = useRouter(); // Instance of the Next.js router
+	const [otp, setOtp] = useState(""); // State for storing the OTP
+	const [hash, setHash] = useState(""); // State for storing the hash of the OTP
+	const [otpSent, setOtpSent] = useState(false); // State to indicate whether OTP has been sent
+	const [error, setError] = useState(""); // State for error messages
+	const [cooldown, setCooldown] = useState(false); // State to indicate if cooldown is active
+	const [isAuthorized, setIsAuthorized] = useState(false); // State to track authorization status
 
-  const searchParams = useSearchParams(); // Hook to access URL search parameters
-  const { status } = useSession(); // Hook to get the current session status
+	const searchParams = useSearchParams(); // Hook to access URL search parameters
+	const { status } = useSession(); // Hook to get the current session status
 
-  // If the user is authenticated, redirect to the dashboard
-  if (status === "authenticated") {
-    router.push("/dashboard");
-  }
+	// If the user is authenticated, redirect to the dashboard
+	if (status === "authenticated") {
+		router.push("/dashboard");
+	}
 
-  useEffect(() => {
-    // Check the "signup-flow" and "forgotpasswordflow" cookies to determine if the user is authorized
-    const signupFlowCookie = getCookie("signup-flow"); // Retrieve the "signup-flow" cookie
-    const forgotPasswordFlowCookie = getCookie("forgot-password-flow"); // Retrieve the "forgotpasswordflow" cookie
+	useEffect(() => {
+		// Check the "signup-flow" and "forgotpasswordflow" cookies to determine if the user is authorized
+		const signupFlowCookie = getCookie("signup-flow"); // Retrieve the "signup-flow" cookie
+		const forgotPasswordFlowCookie = getCookie("forgot-password-flow"); // Retrieve the "forgotpasswordflow" cookie
 
-    if (signupFlowCookie === "true" || forgotPasswordFlowCookie === "true") {
-      setIsAuthorized(true); // Mark as authorized if any of the conditions are met
-    } else {
-      router.push("/login"); // Redirect to the signup page if not authorized
-    }
-  }, [router, searchParams]); // Dependency array ensures the effect runs when the component mounts or searchParams changes
+		if (
+			signupFlowCookie === "true" ||
+			forgotPasswordFlowCookie === "true"
+		) {
+			setIsAuthorized(true); // Mark as authorized if any of the conditions are met
+		} else {
+			router.push("/login"); // Redirect to the signup page if not authorized
+		}
+	}, [router, searchParams]); // Dependency array ensures the effect runs when the component mounts or searchParams changes
 
-  // If the user is not authorized, don't render the component
-  if (!isAuthorized) {
-    return null; // Return null to prevent unauthorized users from seeing the component
-  }
+	// If the user is not authorized, don't render the component
+	if (!isAuthorized) {
+		return null; // Return null to prevent unauthorized users from seeing the component
+	}
 
-  const userEmail = searchParams.get("userEmail"); // Get the userEmail from the URL search parameters
+	const userEmail = searchParams.get("userEmail"); // Get the userEmail from the URL search parameters
 
-  // Function to send the OTP to the user's email
-  const handleSendOtp = async () => {
-    try {
-      setCooldown(true); // Activate cooldown to prevent multiple requests
-      const response = await fetch("/api/send-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Content type for JSON data
-        },
-        body: JSON.stringify({ userEmail }), // Send the userEmail to the server
-      });
+	// Function to send the OTP to the user's email
+	const handleSendOtp = async () => {
+		try {
+			setCooldown(true); // Activate cooldown to prevent multiple requests
+			const response = await fetch("/api/send-otp", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json", // Content type for JSON data
+				},
+				body: JSON.stringify({ userEmail }), // Send the userEmail to the server
+			});
 
-      // If the response is successful, store the hash and set the OTP as sent
-      if (response.ok) {
-        const hash = await response.text(); // Retrieve the hash from the server response
-        setHash(hash); // Store the hash in state
-        setOtpSent(true); // Mark that OTP has been sent
-        // Set a 60-second cooldown before allowing resend
-        setTimeout(() => setCooldown(false), 60 * 1000); // 60-second cooldown
-      } else {
-        const errorText = await response.text(); // Get error text from the server response
-        throw new Error(`Error response from server: ${errorText}`); // Throw error
-      }
-    } catch (error) {
-      console.error(error); // Log the error for debugging
-      setCooldown(false); // Deactivate cooldown in case of an error
-    }
-  };
+			// If the response is successful, store the hash and set the OTP as sent
+			if (response.ok) {
+				const hash = await response.text(); // Retrieve the hash from the server response
+				setHash(hash); // Store the hash in state
+				setOtpSent(true); // Mark that OTP has been sent
+				// Set a 60-second cooldown before allowing resend
+				setTimeout(() => setCooldown(false), 60 * 1000); // 60-second cooldown
+			} else {
+				const errorText = await response.text(); // Get error text from the server response
+				throw new Error(`Error response from server: ${errorText}`); // Throw error
+			}
+		} catch (error) {
+			setCooldown(false); // Deactivate cooldown in case of an error
+		}
+	};
 
-  // Function to submit the OTP for verification
-  const handleOTPSubmit = async () => {
-    try {
-      // Request server to verify the OTP
-      let response = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Content type for JSON data
-        },
-        body: JSON.stringify({ userEmail, otp, hash }), // Send the OTP and hash for verification
-      });
+	// Function to submit the OTP for verification
+	const handleOTPSubmit = async () => {
+		try {
+			// Request server to verify the OTP
+			let response = await fetch("/api/verify-otp", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json", // Content type for JSON data
+				},
+				body: JSON.stringify({ userEmail, otp, hash }), // Send the OTP and hash for verification
+			});
 
-      // If the verification is successful
-      if (response.ok) {
-        setOtp(""); // Clear the OTP state
-        const forgotPasswordFlowCookie = getCookie("forgot-password-flow"); // Retrieve the "forgotpasswordflow" cookie
+			// If the verification is successful
+			if (response.ok) {
+				setOtp(""); // Clear the OTP state
+				const forgotPasswordFlowCookie = getCookie(
+					"forgot-password-flow"
+				); // Retrieve the "forgotpasswordflow" cookie
 
-        if (forgotPasswordFlowCookie) {
-          // Redirect to the change password page if forgotPassword is true
-          router.push(`/change-password?userEmail=${userEmail}`);
-        } else {
-          // Proceed with the signup flow
-          // Get user session data from the server
-          response = await fetch("/api/get-session", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+				if (forgotPasswordFlowCookie) {
+					// Redirect to the change password page if forgotPassword is true
+					router.push(`/change-password?userEmail=${userEmail}`);
+				} else {
+					// Proceed with the signup flow
+					// Get user session data from the server
+					response = await fetch("/api/get-session", {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					});
 
-          if (response.ok) {
-            // If the session data retrieval is successful, proceed to signup
-            const { userEmail, password } = await response.json(); // Get user details from the server response
-            response = await fetch("/api/signup", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json", // Content type for JSON data
-              },
-              body: JSON.stringify({
-                userEmail,
-                password,
-              }),
-            });
+					if (response.ok) {
+						// If the session data retrieval is successful, proceed to signup
+						const { userEmail, password } = await response.json(); // Get user details from the server response
+						response = await fetch("/api/signup", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json", // Content type for JSON data
+							},
+							body: JSON.stringify({
+								userEmail,
+								password,
+							}),
+						});
 
-            if (response.ok) {
-              // Redirect to the details page with the userEmail as a parameter
-              router.push(`/details?userEmail=${userEmail}`);
-            } else {
-              throw new Error("This email is already registered"); // Error message for existing emails
-            }
-          }
-        }
-      } else {
-        const errorText = await response.text(); // Get error text from the server response
-        throw new Error(`Error response from server: ${errorText}`); // Throw error with server response
-      }
-    } catch (error) {
-      console.error(error); // Log the error for debugging
-    }
-  };
+						if (response.ok) {
+							// Redirect to the details page with the userEmail as a parameter
+							router.push(`/details?userEmail=${userEmail}`);
+						} else {
+							throw new Error("This email is already registered"); // Error message for existing emails
+						}
+					}
+				}
+			} else {
+				const errorText = await response.text(); // Get error text from the server response
+				throw new Error(`Error response from server: ${errorText}`); // Throw error with server response
+			}
+		} catch (error) {}
+	};
 
-  const handleError = () => {
+	const handleError = () => {
 		setError(null);
-  };
+	};
 
-  return (
+	return (
 		<>
 			{/* Main container with flex layout */}
 			<div className="xs:max-md:hidden h-screen w-screen flex">
@@ -249,7 +251,7 @@ const Verify = () => {
 				{/* End of unsupported devices section */}
 			</div>
 		</>
-  ); // End of component JSX structure
+	); // End of component JSX structure
 };
 
 export default Verify; // Export the Verify component for use in Next.js

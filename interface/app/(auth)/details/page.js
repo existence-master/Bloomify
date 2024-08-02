@@ -21,7 +21,6 @@ const Details = () => {
 	useEffect(() => {
 		// Check the cookie to determine if the "signup-flow" is set to `true`
 		const signupFlowCookie = getCookie("signup-flow"); // Retrieve the "signup-flow" cookie
-		console.log(signupFlowCookie)
 		if (signupFlowCookie === "true") {
 			setIsAuthorized(true); // If the cookie is true, the user is authorized
 		} else {
@@ -78,7 +77,6 @@ const Details = () => {
 			}
 		} catch (error) {
 			setError("Error, try again"); // Display error on fetch failure
-			console.error(error); // Log the error for debugging
 		}
 	};
 
@@ -176,4 +174,4 @@ const Details = () => {
 	); // End of JSX structure
 };
 
-export default Details; // Export the component for use elsewhere
+export default Details; // Export the component for use elsewhereconsol

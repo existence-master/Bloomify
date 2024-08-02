@@ -40,9 +40,7 @@ const ChatBubble = ({ role, message, mode }) => {
 			document.body.appendChild(a);
 			a.click();
 			a.remove();
-		} catch (error) {
-			console.error("Error downloading DOCX:", error);
-		}
+		} catch (error) {}
 	};
 
 	return (

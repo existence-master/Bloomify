@@ -6,7 +6,7 @@ import { sessionOptions } from "@utils/session"; // Import session configuration
 
 export const POST = async (req) => {
 	// Extract userEmail and password from the request body
-	const { userEmail, password } = await req.json(); 
+	const { userEmail, password } = await req.json();
 	// Get the current session using Iron-session
 	const session = await getIronSession(cookies(), sessionOptions);
 
@@ -29,9 +29,8 @@ export const POST = async (req) => {
 		await session.save();
 
 		// Return a success message with HTTP status 200
-		return new NextResponse("Session set successfully", { status: 200 }); 
+		return new NextResponse("Session set successfully", { status: 200 });
 	} catch (error) {
-		console.error("Error setting session:", error); // Log the error for debugging
 		return new NextResponse(
 			JSON.stringify({ error: "Failed to set session" }), // Return error message
 			{ status: 400 } // HTTP status 400 Bad Request

@@ -34,7 +34,6 @@ const Home = () => {
   const toggleMenu = () => {
     /* function used for toggling the dropdown menu*/
     setIsOpen((prev) => !prev); //sets the isOpen state to opposite of previous value
-    //console.log("Clicked");
   };
 
   const handleClickOutside = (event) => {

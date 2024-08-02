@@ -6,7 +6,6 @@ import { getServerSession } from "next-auth/next"; // Import NextAuth session ha
 import { NextResponse } from "next/server"; // Import Next.js server response
 import { getCookie } from "cookies-next"; // Import function to get a cookie
 
-
 export const POST = async (request) => {
 	// Establish the database connection
 	await connect();
@@ -93,7 +92,6 @@ export const POST = async (request) => {
 			{ status: 200 }
 		); // 200 OK with a success message
 	} catch (error) {
-		console.error("Error changing password:", error); // Log the error for debugging
 		return new NextResponse("Internal server error", { status: 500 }); // 500 Internal Server Error
 	}
 };

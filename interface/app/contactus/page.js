@@ -26,7 +26,6 @@ const ContactUs = () => {
   // Toggle the dropdown menu open/close
   const toggleMenu = () => {
     setIsOpen((prev) => !prev); // Toggle the state
-    console.log("Clicked"); // Log for debugging
   };
 
   return (

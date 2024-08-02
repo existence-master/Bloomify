@@ -18,7 +18,6 @@ const About = () => {
   // Toggle the dropdown menu open/close status
   const toggleMenu = () => {
     setIsOpen((prev) => !prev); // Toggle the previous state
-    console.log("Clicked"); // Log a message to the console
   };
 
   // Handle clicks outside the dropdown to close it

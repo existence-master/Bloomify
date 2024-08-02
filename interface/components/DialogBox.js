@@ -196,7 +196,6 @@ const DialogBox = ({
 			reloadChat();
 			closeDialog();
 		} catch (error) {
-			console.log(error);
 			setError(
 				"An error occurred while sending the message. Please try again later."
 			);
