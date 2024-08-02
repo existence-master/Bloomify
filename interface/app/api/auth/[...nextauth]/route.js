@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials"; // Credential
 import bcrypt from "bcryptjs"; // Library for hashing and comparing passwords
 import User from "@models/User"; // User model
 import connect from "@utils/db"; // Utility to connect to the database
+import fetch from "node-fetch";
 
 export const authOptions = {
   // Configuration for authentication providers
@@ -65,10 +66,8 @@ export const authOptions = {
               googleUser: true, // Indicate that the user signed up with Google
             });
 
-            await newUser.save(); // Save the new user to the database
-
             // Set the 'signup-flow' cookie to indicate that the user has started the signup process
-            const response = await fetch('/api/set-cookie', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/set-cookie`, {
               method: 'POST',
               headers: {
                 "Content-Type": "application/json",
@@ -83,6 +82,9 @@ export const authOptions = {
               console.error("Failed to set the signup-flow cookie"); // Log an error if setting the cookie fails
               return false; // Return false to indicate a failure
             }
+
+
+            await newUser.save(); // Save the new user to the database  
 
             // If the user is new, redirect to the /details page
             return `/details?userEmail=${user.email}`;

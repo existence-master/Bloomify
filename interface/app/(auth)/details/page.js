@@ -21,6 +21,7 @@ const Details = () => {
 	useEffect(() => {
 		// Check the cookie to determine if the "signup-flow" is set to `true`
 		const signupFlowCookie = getCookie("signup-flow"); // Retrieve the "signup-flow" cookie
+		console.log(signupFlowCookie)
 		if (signupFlowCookie === "true") {
 			setIsAuthorized(true); // If the cookie is true, the user is authorized
 		} else {
@@ -67,8 +68,7 @@ const Details = () => {
 					},
 					body: JSON.stringify({
 						name: "signup-flow",
-						value: "true",
-						maxAge: 0, // Cookie expiration time
+						value: "false",
 					}),
 				});
 
