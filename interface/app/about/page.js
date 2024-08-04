@@ -60,8 +60,8 @@ const About = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
@@ -177,29 +177,19 @@ const About = () => {
             {/* Section styling */}
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-center px-4 sm:px-6 lg:px-4">
               {/* Flex layout */}
-              <div className="w-full md:w-1/2 md:pr-8 flex flex-col items-center md:items-start mb-8 md:mb-0">
+              <div className="w-full h-[700px] md:w-1/2 md:pr-8 flex flex-col justify-center items-center md:items-start mb-8 md:mb-0">
                 {/* Content for larger screens */}
                 <h2 className="text-xl self-center font-bold text-red-800 mb-4">
                   Educational Assessment Redefined
                 </h2>
                 {/* Section heading */}
-                <p className="font-Poppins self-center content-center text-3xl text-gray-600 leading-relaxed mb-8">
+                <p className="font-Poppins text-3xl text-gray-600 leading-relaxed mb-8">
                   {/* Content description */}
-                  There are three main problems we address here. The first one
-                  is the case where universities work on Bloom's taxonomy basis
-                  for the syllabus but not for the question papers. The
-                  prevalent issue in many educational institutions, particularly
-                  in India and elsewhere, lies in the tendency to predominantly
-                  set exam questions at the lower levels of Bloom's Taxonomy.
-                  This practice restricts students to rote memorization and
-                  recall, discouraging deeper understanding, practical
-                  application, and critical thinking. The emphasis on low-level
-                  cognitive skills in exams fosters a culture where students
-                  prioritize memorization over grasping the practical utility of
-                  concepts. As a consequence, the educational system often falls
-                  short in nurturing holistic learning experiences that
-                  encourage analytical thinking, problem-solving, and the
-                  application of acquired knowledge in real-world scenarios.
+                  Educational institutions often prioritize low-level cognitive
+                  skills in exams, hindering students' ability to apply concepts
+                  and fostering a culture of rote memorization. We aim to
+                  address this by revolutionizing the assessment process with a
+                  chatbot that aligns with Bloom's Taxonomy.
                 </p>
                 {/* End of content description */}
               </div>
