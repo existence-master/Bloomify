@@ -38,7 +38,7 @@ export const POST = async (request) => {
 
 		// Save the new user to the database
 		await newUser.save();
-
+		
 		// Return a success message with HTTP status 200
 		return new NextResponse("User is registered", { status: 200 });
 	} catch (error) {

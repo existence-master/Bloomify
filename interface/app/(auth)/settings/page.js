@@ -5,6 +5,8 @@ import Link from "next/link"; // Link component for client-side navigation
 import Image from "next/image"; // Next.js optimized image component
 import SignoutButton from "@components/SignoutButton"; // Component for signing out
 import ErrorDisplay from "@components/ErrorDisplay"; // Component to display error messages
+import { IconInfoCircle } from "@tabler/icons-react";
+import FeedbackForm from "@components/FeedbackForm";
 
 const Settings = () => {
 	// State for various form inputs and error handling
@@ -17,6 +19,8 @@ const Settings = () => {
 		username: "",
 		googleUser: null, // Information about whether the user is a Google user
 	});
+	  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+
 
 	// Fetch user details when the component mounts
 	useEffect(() => {
@@ -118,6 +122,37 @@ const Settings = () => {
 		}
 	};
 
+	const handleReportFeedback = () => {
+		setShowFeedbackForm(true);
+	};
+
+	const handleFeedbackSubmit = async (feedbackText) => {
+		try {
+			const response = await fetch("/api/update-feedback", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					columnName: "General",
+					feedback: feedbackText,
+				}),
+			});
+
+			if (response.ok) {
+				setShowFeedbackForm(false);
+			} else {
+				throw new Error("Failed to submit feedback");
+			}
+		} catch (error) {
+			setError(error.message);
+		}
+	};
+
+	const handleFeedbackCancel = () => {
+		setShowFeedbackForm(false);
+	};
+
 	// Function to clear the error state
 	const handleError = () => {
 		setError(null); // Clear the error message
@@ -190,6 +225,17 @@ const Settings = () => {
 										</span>
 										{/* Text for the link */}
 									</Link>
+								</li>
+								<li>
+									<button
+										onClick={handleReportFeedback}
+										className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-[#007991] group"
+									>
+										<IconInfoCircle />
+										<span className="ms-3">
+											Report Feedback
+										</span>
+									</button>
 								</li>
 							</ul>
 						</div>
@@ -360,6 +406,13 @@ const Settings = () => {
 								/>
 								{/* Custom error component */}
 							</div>
+						)}
+						{showFeedbackForm && (
+							<FeedbackForm
+								feature="General"
+								handleFeedbackCancel={handleFeedbackCancel}
+								handleFeedbackSubmit={handleFeedbackSubmit}
+							/>
 						)}
 					</div>
 				</div>
