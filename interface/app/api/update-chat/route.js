@@ -7,11 +7,10 @@ import { capitalizeFirstLetter } from "@utils/helpers"; // Utility to capitalize
 export const POST = async (request) => {
 	try {
 		// Extract chatId, requestData, responseData, and mode from the request body
-		const { chatId, requestData, responseData, mode } = await request.json();
+		const { chatId, requestData, responseData, mode } =
+			await request.json();
 
-		console.log(chatId)
 		await connect(); // Connect to the database
-		console.log(chatId)
 		// Find the chat by its ID
 		const chat = await Chat.findById(chatId);
 
@@ -36,7 +35,6 @@ export const POST = async (request) => {
 		await chat.save();
 		return new NextResponse("Chat updated", { status: 200 }); // Return a success message with HTTP status 200
 	} catch (error) {
-		console.error("Error updating user chat:", error); // Log the error for debugging
 		return new NextResponse("Internal server error", { status: 500 }); // HTTP status 500 Internal Server Error
 	}
 };

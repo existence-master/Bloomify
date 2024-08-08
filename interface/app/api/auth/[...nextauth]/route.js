@@ -65,24 +65,7 @@ export const authOptions = {
               googleUser: true, // Indicate that the user signed up with Google
             });
 
-            await newUser.save(); // Save the new user to the database
-
-            // Set the 'signup-flow' cookie to indicate that the user has started the signup process
-            const response = await fetch('/api/set-cookie', {
-              method: 'POST',
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                name: "signup-flow", // Name of the cookie
-                value: "true", // Value of the cookie
-              }),
-            });
-
-            if (!response.ok) {
-              console.error("Failed to set the signup-flow cookie"); // Log an error if setting the cookie fails
-              return false; // Return false to indicate a failure
-            }
+            await newUser.save(); // Save the new user to the database  
 
             // If the user is new, redirect to the /details page
             return `/details?userEmail=${user.email}`;
@@ -90,7 +73,6 @@ export const authOptions = {
 
           return true; // If the user exists, no need to set the cookie
         } catch (err) {
-          console.error("Error in signIn callback:", err); // Log errors that occur during sign-in
           return false; // Return false to indicate a failure
         }
       }

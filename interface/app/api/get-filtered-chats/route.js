@@ -37,7 +37,6 @@ export const POST = async (request) => {
 
 		return new NextResponse(JSON.stringify(filteredChats), { status: 200 });
 	} catch (error) {
-		console.error("Error updating user chat:", error);
 		return new NextResponse("Internal server error", { status: 500 });
 	}
 };

@@ -34,7 +34,6 @@ const Home = () => {
   const toggleMenu = () => {
     /* function used for toggling the dropdown menu*/
     setIsOpen((prev) => !prev); //sets the isOpen state to opposite of previous value
-    //console.log("Clicked");
   };
 
   const handleClickOutside = (event) => {
@@ -91,8 +90,8 @@ const Home = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
@@ -204,7 +203,7 @@ const Home = () => {
           id="hero"
           className="flex flex-col items-center xs:h-[800px] md:h-[1000px] bg-gradient-to-t to-[#fffbe6] from-[#ffffff]"
         >
-          <a href="#github">
+          {/* <a href="#github">
             <button className="xs:mt-32 md:mt-28 bg-flax no-underline group cursor-pointer relative shadow-2xl shadow-midnightAzure rounded-full p-px text-xs font-semibold leading-6  text-paleRose inline-block">
               <span className="absolute inset-0 overflow-hidden rounded-full">
                 <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
@@ -229,8 +228,8 @@ const Home = () => {
               </div>
               <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40"></span>
             </button>
-          </a>
-          <h1 className="mt-8 mb-4 md:text-5xl xs:text-4xl font-lora font-normal text-center dark:text-paleRose text-lividBrown">
+          </a> */}
+          <h1 className="mt-32 mb-4 md:text-5xl xs:text-4xl font-lora font-normal text-center dark:text-paleRose text-lividBrown">
             Education
             <span className="underline font-normal text-paleRose">
               <FlipWords words={heroWords} />

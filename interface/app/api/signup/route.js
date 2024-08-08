@@ -38,11 +38,10 @@ export const POST = async (request) => {
 
 		// Save the new user to the database
 		await newUser.save();
-
+		
 		// Return a success message with HTTP status 200
 		return new NextResponse("User is registered", { status: 200 });
 	} catch (error) {
-		console.error("Error registering user:", error); // Log the error for debugging
 		return new NextResponse("Internal server error", { status: 500 }); // HTTP status 500 Internal Server Error
 	}
 };

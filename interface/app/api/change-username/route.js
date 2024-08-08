@@ -18,7 +18,11 @@ export const POST = async (request) => {
 		const { newUsername } = await request.json(); // Extract the new username from the request body
 
 		// Validate the new username
-		if (!newUsername || typeof newUsername !== "string" || newUsername.trim() === "") {
+		if (
+			!newUsername ||
+			typeof newUsername !== "string" ||
+			newUsername.trim() === ""
+		) {
 			return new NextResponse("Invalid username", { status: 400 }); // 400 Bad Request
 		}
 
@@ -35,7 +39,9 @@ export const POST = async (request) => {
 		const user = await User.findOne({ email: userEmail });
 
 		if (!user) {
-			return new NextResponse(`User with email ${userEmail} not found`, { status: 404 }); // 404 Not Found
+			return new NextResponse(`User with email ${userEmail} not found`, {
+				status: 404,
+			}); // 404 Not Found
 		}
 
 		// Update the user's username
@@ -47,7 +53,6 @@ export const POST = async (request) => {
 			{ status: 200 }
 		); // 200 OK with a success message
 	} catch (error) {
-		console.error("Error changing username:", error); // Log the error for debugging
 		return new NextResponse("Internal server error", { status: 500 }); // 500 Internal Server Error
 	}
 };

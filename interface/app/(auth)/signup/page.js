@@ -72,7 +72,26 @@ const Signup = () => {
 				router.push(`/verify?userEmail=${userEmail}`); // Redirect to verify page with email parameter
 			}
 		} catch (error) {
-			console.error("An error occurred:", error); // Log the error for debugging
+			setError("An error occurred. Please try again."); // Set error message for exception handling
+		}
+	};
+
+	const handleSignUpWithGoogle = async () => {
+		try {
+			// Set the "signup-flow" cookie to indicate the user has started the signup process
+			let response = await fetch("/api/set-cookie", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: "signup-flow", // Cookie name
+					value: "true", // Cookie value
+				}),
+			});
+
+			signIn("google");
+		} catch (error) {
 			setError("An error occurred. Please try again."); // Set error message for exception handling
 		}
 	};
@@ -171,7 +190,7 @@ const Signup = () => {
 							{/* Separator */}
 							<button
 								className="text-xl w-full bg-transparent text-black py-2 rounded-xl border-2 border-black flex flex-row justify-center items-center" // Styling
-								onClick={() => signIn("google")} // Google sign-in handler
+								onClick={handleSignUpWithGoogle} // Google sign-in handler
 							>
 								<Image
 									src="/googlelogo.webp"

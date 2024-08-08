@@ -8,17 +8,18 @@ const SignoutButton = () => {
 	// Function to handle the sign-out process
 	const handleSignout = async () => {
 		try {
-			await signOut({ callbackUrl: 'http://localhost:3000/' }); // Sign out and redirect to the specified callback URL
+			await signOut({ callbackUrl: "http://localhost:3000/" }); // Sign out and redirect to the specified callback URL
 		} catch (error) {
-			console.error("Error signing out:", error); // Log any errors encountered during sign-out
 			// You could add additional error handling here, like displaying a message to the user
 		}
 	};
 
 	// Returning a div containing the sign-out icon
 	return (
-		<div onClick={handleSignout} className="relative w-[30px] h-[30px]"> {/* Container for the sign-out icon */}
-			<Image 
+		<div onClick={handleSignout} className="relative w-[30px] h-[30px]">
+			{" "}
+			{/* Container for the sign-out icon */}
+			<Image
 				src="/signout.svg" // Path to the sign-out icon
 				className="cursor-pointer" // Changes cursor style to indicate interactivity
 				width={40} // Width of the icon

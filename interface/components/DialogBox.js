@@ -7,281 +7,286 @@ import { convertToMessage } from "@utils/helpers";
 import ErrorDisplay from "@components/ErrorDisplay";
 
 const DialogBox = ({
-	mode = "classification",
-	reloadChat,
-	chatDetails,
-	university,
+  mode = "classification",
+  reloadChat,
+  chatDetails,
+  university,
 }) => {
-	const { data: session } = useSession();
-	const [isOpen, setIsOpen] = useState(false);
-	const [units, setUnits] = useState([{ unit: 1, content: "" }]);
-	const [markingScheme, setMarkingScheme] = useState({
-		marks_per_unit: 0,
-		main_questions_per_unit: 0,
-		sub_questions_per_main_question: 0,
-		marks_per_main_question: 0,
-	});
+  const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+  const [units, setUnits] = useState([{ unit: 1, content: "" }]);
+  const [markingScheme, setMarkingScheme] = useState({
+    marks_per_unit: 0,
+    main_questions_per_unit: 0,
+    sub_questions_per_main_question: 0,
+    marks_per_main_question: 0,
+  });
+  const [subMarkScheme, setSubMarkScheme] = useState(false);
+  const [subSyllabus, setSubSyllabus] = useState(false);
 
-	const { chatId, chatFilters } = chatDetails;
+  const { chatId, chatFilters } = chatDetails;
 
-	// Default state initialization based on the mode
-	const initialQueryState = {
-		classification: {
-			question: "",
-		},
-		suggestion: {
-			question: "",
-			desired_level: "",
-		},
-		generation: {
-			university: university,
-			degree: chatFilters.degree,
-			branch: chatFilters.branch,
-			year: chatFilters.year,
-			subject: chatFilters.subject,
-			syllabus: [{ unit: 1, content: "" }],
-			marking_scheme: {
-				marks_per_unit: 0,
-				main_questions_per_unit: 0,
-				sub_questions_per_main_question: 0,
-				marks_per_main_question: 0,
-			},
-			average_blooms_score: 3,
-		},
-	};
+  // Default state initialization based on the mode
+  const initialQueryState = {
+    classification: {
+      question: "",
+    },
+    suggestion: {
+      question: "",
+      desired_level: "",
+    },
+    generation: {
+      university: university,
+      degree: chatFilters.degree,
+      branch: chatFilters.branch,
+      year: chatFilters.year,
+      subject: chatFilters.subject,
+      syllabus: [{ unit: 1, content: "" }],
+      marking_scheme: {
+        marks_per_unit: 0,
+        main_questions_per_unit: 0,
+        sub_questions_per_main_question: 0,
+        marks_per_main_question: 0,
+      },
+      average_blooms_score: 3,
+    },
+  };
 
-	const [query, setQuery] = useState(initialQueryState[mode] || {});
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState(null);
+  const [query, setQuery] = useState(initialQueryState[mode] || {});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-	// Conditional url
-	let baseUrl;
+  // Conditional url
+  let baseUrl;
 
-	if (process.env.NODE_ENV === "development") {
-		// Development environment: Use localhost URLs
-		baseUrl = "http://localhost:5000";
-	} else if (process.env.NODE_ENV === "production") {
-		// Production environment: Use Render deployment URLs
-		baseUrl = "https://bloomify-gd0v.onrender.com";
-	}
+  if (process.env.NODE_ENV === "development") {
+    // Development environment: Use localhost URLs
+    baseUrl = "http://localhost:5000";
+  } else if (process.env.NODE_ENV === "production") {
+    // Production environment: Use Render deployment URLs
+    baseUrl = "https://bloomify-gd0v.onrender.com";
+  }
 
-	let url =
-		mode === "classification"
-			? `${baseUrl}/classify`
-			: mode === "suggestion"
-			? `${baseUrl}/suggest`
-			: mode === "generation"
-			? `${baseUrl}/generate`
-			: "";
+  let url =
+    mode === "classification"
+      ? `${baseUrl}/classify`
+      : mode === "suggestion"
+      ? `${baseUrl}/suggest`
+      : mode === "generation"
+      ? `${baseUrl}/generate`
+          : "";
+  
+  let feature = 
+    mode === "classification"
+      ? "Classify"
+      : mode === "suggestion"
+      ? "Suggest"
+      : mode === "generation"
+      ? "Generate"
+          : "";
 
-	// Function to add a new unit to the syllabus
-	const addUnit = () => {
-		setUnits((prevUnits) => [
-			...prevUnits,
-			{ unit: prevUnits.length + 1, content: "" },
-		]);
-	};
+  // Function to add a new unit to the syllabus
+  const addUnit = () => {
+    setUnits((prevUnits) => [
+      ...prevUnits,
+      { unit: prevUnits.length + 1, content: "" },
+    ]);
+  };
 
-	// Function to handle changes in the unit inputs
-	const handleUnitChange = (index, event) => {
-		const updatedUnits = [...units];
-		updatedUnits[index].content = event.target.value;
-		setUnits(updatedUnits);
-	};
+  // Function to handle changes in the unit inputs
+  const handleUnitChange = (index, event) => {
+    const updatedUnits = [...units];
+    updatedUnits[index].content = event.target.value;
+    setUnits(updatedUnits);
+  };
 
-	// Function to remove a unit
-	const handleRemoveUnit = (indexToRemove) => {
-		setUnits((prevUnits) =>
-			prevUnits
-				.filter((_, index) => index !== indexToRemove)
-				.map((unit, index) => ({ ...unit, unit: index + 1 }))
-		);
-	};
+  // Function to remove a unit
+  const handleRemoveUnit = (indexToRemove) => {
+    setUnits((prevUnits) =>
+      prevUnits
+        .filter((_, index) => index !== indexToRemove)
+        .map((unit, index) => ({ ...unit, unit: index + 1 }))
+    );
+  };
 
-	const openDialog = () => {
-		setIsOpen(true);
-	};
+  const openDialog = () => {
+    setIsOpen(true);
+    setSubSyllabus(false);
+    setSubMarkScheme(false);
+  };
 
-	const handleMarkingSchemeChange = (e) => {
-		const { name, value } = e.target;
-		setMarkingScheme((prevState) => ({
-			...prevState,
-			[name]: parseInt(value), // Ensure the value is an integer
-		}));
-	};
+  const handleMarkingSchemeChange = (e) => {
+    const { name, value } = e.target;
+    setMarkingScheme((prevState) => ({
+      ...prevState,
+      [name]: parseInt(value), // Ensure the value is an integer
+    }));
+  };
 
-	const handleInput = (e) => {
-		const { name, value } = e.target; // Get the name and value of the input field
-		setQuery((prevState) => ({
-			...prevState,
-			[name]: value, // Dynamically update the property based on the name
-		}));
-	};
+  const handleInput = (e) => {
+    const { name, value } = e.target; // Get the name and value of the input field
+    setQuery((prevState) => ({
+      ...prevState,
+      [name]: value, // Dynamically update the property based on the name
+    }));
+  };
 
-	const handleFormInput = (e) => {
-		e.preventDefault(); // Prevent default form submission behavior
+  const handleFormInput = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
 
-		// Collect form data
-		const formData = new FormData(e.target);
-		const formName = e.target.name;
-		let formDetails = null;
+    // Collect form data
+    const formData = new FormData(e.target);
+    const formName = e.target.name;
+    let formDetails = null;
 
-		if (formName === "marking_scheme") {
-			// Create an object to store the marking scheme data
-			formDetails = {};
+    if (formName === "marking_scheme") {
+      // Create an object to store the marking scheme data
+      formDetails = {};
 
-			for (const [key, value] of formData.entries()) {
-				formDetails[key] = value;
-			}
-		} else if (formName === "syllabus") {
-			formDetails = [];
-			for (const [key, value] of formData.entries()) {
-				formDetails.push({
-					unit: parseInt(key),
-					content: value,
-				});
-			}
-		}
+      for (const [key, value] of formData.entries()) {
+        formDetails[key] = value;
+      }
+      setSubMarkScheme(true);
+    } else if (formName === "syllabus") {
+      formDetails = [];
+      for (const [key, value] of formData.entries()) {
+        formDetails.push({
+          unit: parseInt(key),
+          content: value,
+        });
+      }
+      setSubSyllabus(true);
+    }
 
-		setQuery((prevState) => ({
-			...prevState,
-			[formName]: formDetails, // Dynamically update the property based on the name
-		}));
-	};
+    setQuery((prevState) => ({
+      ...prevState,
+      [formName]: formDetails, // Dynamically update the property based on the name
+    }));
+  };
 
-	const closeDialog = () => {
-		setIsOpen(false);
-	};
+  const closeDialog = () => {
+    setIsOpen(false);
+  };
 
-	const sendMessage = async (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setIsLoading(true);
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsLoading(true);
 
-		const requestData = convertToMessage(query);
-		try {
-			let response = await fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				mode: "cors",
-				body: JSON.stringify(query), // Send user input in the specified format
-			});
+    const requestData = convertToMessage(query);
+    try {
+      let response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify(query), // Send user input in the specified format
+      });
 
-			if (!response.ok) {
-				throw new Error("Failed to send query");
-			}
+      if (!response.ok) {
+        throw new Error("Failed to send query");
+      }
 
-			const responseData = await response.text();
+      const responseData = await response.text();
 
-			response = await fetch("/api/update-chat", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				mode: "cors",
-				body: JSON.stringify({
-					chatId,
-					requestData,
-					responseData,
-					mode,
-				}), // Send user input in the specified format
-			});
+      response = await fetch("/api/update-chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+        body: JSON.stringify({
+          chatId,
+          requestData,
+          responseData,
+          mode,
+        }), // Send user input in the specified format
+      });
 
-			if (!response.ok) {
-				throw new Error("Failed to update chat");
-			}
+      if (!response.ok) {
+        throw new Error("Failed to update chat");
+      }
 
-			reloadChat();
-			closeDialog();
-		} catch (error) {
-			console.log(error);
-			setError(
-				"An error occurred while sending the message. Please try again later."
-			);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+      reloadChat(feature);
+      closeDialog();
+    } catch (error) {
+      setError(
+        "An error occurred while sending the message. Please try again later."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-	const handleError = () => {
-		setError(null);
-	};
+  const handleError = () => {
+    setError(null);
+  };
 
-	// Can declare like this instead of return
-	const classificationForm = (
-		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-			<h3 className="text-2xl text-[#007991] flex leading-6 font-medium font-Quicksand mb-2">
-				<Image
-					src="/classifyicon.svg"
-					width={25}
-					height={25}
-					alt="Classify Icon"
-					className="mr-2"
-				/>
-				Classify
-			</h3>
-			<input
-				type="text"
-				name="question"
-				placeholder="Enter your question"
-				value={query.question}
-				onChange={handleInput}
-				className="p-2 shadow-lg mt-2 w-full border-2 border-[#007991] rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-			/>
-			{error && (
-				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay
-						errorMessage={error}
-						handleError={handleError}
-					/>
-				</div>
-			)}{" "}
-		</div>
-	);
+  // Can declare like this instead of return
+  const classificationForm = (
+    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
+      <h3 className="text-2xl text-[#007991] flex leading-6 font-medium font-Quicksand mb-2">
+        <Image
+          src="/classifyicon.svg"
+          width={25}
+          height={25}
+          alt="Classify Icon"
+          className="mr-2"
+        />
+        Classify
+      </h3>
+      <input
+        type="text"
+        name="question"
+        placeholder="Enter your question"
+        value={query.question}
+        onChange={handleInput}
+        className="p-2 shadow-lg mt-2 w-full border-2 border-[#007991] rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+      />
+    </div>
+  );
 
-	const suggestionForm = (
-		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
-			<h3 className="text-2xl text-[#007991] mb-4 font-Quicksand leading-6 font-medium flex">
-				<Image
-					src="/suggesticon.svg"
-					width={25}
-					height={25}
-					alt="Classify Icon"
-					className="mr-2"
-				/>
-				Suggest
-			</h3>
-			<input
-				type="text"
-				name="question"
-				placeholder="Enter question"
-				value={query.question}
-				onChange={handleInput}
-				className="mb-3 p-2 w-full border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-			/>
-			<input
-				type="text"
-				name="desired_level"
-				placeholder="Enter desired level"
-				value={query.desired_level}
-				onChange={handleInput}
-				className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-			/>
-			{error && (
-				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay
-						errorMessage={error}
-						handleError={handleError}
-					/>
-				</div>
-			)}{" "}
-		</div>
-	);
+  const suggestionForm = (
+    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
+      <h3 className="text-2xl text-[#007991] mb-4 font-Quicksand leading-6 font-medium flex">
+        <Image
+          src="/suggesticon.svg"
+          width={25}
+          height={25}
+          alt="Classify Icon"
+          className="mr-2"
+        />
+        Suggest
+      </h3>
+      <input
+        type="text"
+        name="question"
+        placeholder="Enter question"
+        value={query.question}
+        onChange={handleInput}
+        className="mb-3 p-2 w-full border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+      />
+      <select
+        type="text"
+        name="desired_level"
+        placeholder="Enter desired level"
+        value={query.desired_level}
+        onChange={handleInput}
+        className="w-full p-2 border-[#007991] border-2 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+      >
+        <option value="Remember">Remember</option>
+        <option value="Understand">Understand</option>
+        <option value="Apply">Apply</option>
+        <option value="Analyze">Analyze</option>
+        <option value="Evaluate">Evaluate</option>
+        <option value="Create">Create</option>
+      </select>
+    </div>
+  );
 
-	// Varad, create separate forms for syllabus and marking scheme input in generationForm
-	const generationForm = (
+  // Varad, create separate forms for syllabus and marking scheme input in generationForm
+  const generationForm = (
 		<div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 sm:flex sm:flex-col sm:items-start">
 			<h3 className="text-2xl text-[#007991] mb-4 font-Quicksand leading-6 font-medium flex">
 				<Image
@@ -332,7 +337,7 @@ const DialogBox = ({
 					type="submit"
 					className="mt-3 px-4 py-2 bg-[#7AB6A1] text-white rounded-md"
 				>
-					Submit Syllabus
+					{subSyllabus ? "Submitted!" : "Submit Syllabus"}
 				</button>
 			</form>
 			<form
@@ -380,7 +385,7 @@ const DialogBox = ({
 					type="submit"
 					className="mt-3 px-4 py-2 bg-[#7AB6A1] text-white rounded-md"
 				>
-					Submit Marking Scheme
+					{subMarkScheme ? "Submitted!" : "Submit Marking Scheme"}
 				</button>
 				<div className="mt-4">
 					<label for="steps-range" className="text-xl font-semibold">
@@ -403,46 +408,56 @@ const DialogBox = ({
 					/>
 				</div>
 			</form>
-			{error && (
-				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
-					<ErrorDisplay
-						errorMessage={error}
-						handleError={handleError}
-					/>
-				</div>
-			)}
 		</div>
-	);
+  );
 
-	return (
+  return (
 		<div className="flex justify-center items-center">
 			<button onClick={openDialog} className="bg-transparent">
 				{mode === "classification" && (
-					<Image
-						src="/classifyicon.svg"
-						alt="Classify Icon"
-						className="w-8 h-8 mx-auto my-2 cursor-pointer"
-						width={8}
-						height={8}
-					/>
+					<div className="group">
+						<Image
+							src="/classifyicon.svg"
+							alt="Classify Icon"
+							className="w-8 h-8 mx-auto my-2 cursor-pointer"
+							width={8}
+							height={8}
+						/>
+						<div className="group-hover:block hidden absolute right-12 top-1 rounded-md p-2 w-20 border-2 border-cerulean bg-gray-300">
+							{" "}
+							Classify{" "}
+						</div>
+					</div>
 				)}
 				{mode === "suggestion" && (
-					<Image
-						src="/suggesticon.svg"
-						alt="Suggest Icon"
-						className="w-8 h-8 mx-auto my-2 cursor-pointer"
-						width={8}
-						height={8}
-					/>
+					<div className="group">
+						<Image
+							src="/suggesticon.svg"
+							alt="Suggest Icon"
+							className="w-8 h-8 mx-auto my-2 cursor-pointer"
+							width={8}
+							height={8}
+						/>
+						<div className="group-hover:block hidden absolute right-12 top-12 rounded-md p-2 w-20 border-2 border-cerulean bg-gray-300">
+							{" "}
+							Suggest{" "}
+						</div>
+					</div>
 				)}
 				{mode === "generation" && (
-					<Image
-						src="/generateicon.svg"
-						alt="Generate Icon"
-						className="w-8 h-8 mx-auto my-2 cursor-pointer"
-						width={8}
-						height={8}
-					/>
+					<div className="group ">
+						<Image
+							src="/generateicon.svg"
+							alt="Generate Icon"
+							className="w-8 h-8 mx-auto my-2 cursor-pointer"
+							width={8}
+							height={8}
+						/>
+						<div className="group-hover:block hidden absolute right-12 top-24 rounded-md p-2 w-24 border-2 border-cerulean bg-gray-300">
+							{" "}
+							Generate{" "}
+						</div>
+					</div>
 				)}
 			</button>
 			{isOpen && (
@@ -494,8 +509,16 @@ const DialogBox = ({
 					</div>
 				</div>
 			)}
+			{error && (
+				<div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
+					<ErrorDisplay
+						errorMessage={error}
+						handleError={handleError}
+					/>
+				</div>
+			)}
 		</div>
-	);
+  );
 };
 
 export default DialogBox;
