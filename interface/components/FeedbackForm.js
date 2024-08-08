@@ -1,18 +1,20 @@
 import { useState } from "react";
 
-const FeedbackForm = ({ feature, handleFeedbackSubmit, handleFeedbackCancel }) => {
+const FeedbackForm = ({
+  feature,
+  handleFeedbackSubmit,
+  handleFeedbackCancel,
+  submitState,
+}) => {
   const [feedbackText, setFeedbackText] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleTextChange = (e) => {
     setFeedbackText(e.target.value);
   };
 
   const handleSubmit = (e) => {
-    setIsSubmitting(true);
     e.preventDefault();
     handleFeedbackSubmit(feedbackText);
-    setIsSubmitting(false);
   };
 
   const handleCancel = () => {
@@ -25,12 +27,14 @@ const FeedbackForm = ({ feature, handleFeedbackSubmit, handleFeedbackCancel }) =
       style={{ zIndex: "9999999" }}
       onSubmit={handleSubmit}
     >
-      <div className="bg-paleRose dark:bg-stilleto border-2 border-tickleMePink md:p-6 xs:w-[300px] md:w-[600px] xs:p-3 rounded-lg shadow-lg w-1/3">
+      <div className="bg-lightyellow dark:bg-stilleto border-2 border-cerulean md:p-6 xs:w-[300px] md:w-[600px] xs:p-3 rounded-lg shadow-lg w-1/3">
         <h2 className="text-lg font-bold mb-4 text-center">
-          {feature !== "General" ? `We'd love to hear your feedback about the ${feature} feature. This is a one time feedback so do try the feature extensively before reporting. We appreciate your input!` : "We'd love to hear your feedback about Bloomify. We appreciate your input!"}
+          {feature !== "General"
+            ? `We'd love to hear your feedback about the ${feature} feature. This is a one time feedback so do try the feature extensively before reporting. We appreciate your input!`
+            : "We'd love to hear your feedback about Bloomify. We appreciate your input!"}
         </h2>
         <textarea
-          className="w-full p-2 border border-tickleMePink rounded mb-4 dark:bg-lividBrown dark:text-white"
+          className="w-full p-2 border-2 border-cerulean text-black rounded mb-4"
           value={feedbackText}
           onChange={handleTextChange}
           placeholder="Your feedback"
@@ -38,9 +42,9 @@ const FeedbackForm = ({ feature, handleFeedbackSubmit, handleFeedbackCancel }) =
         <div className="flex justify-end space-x-4">
           <button
             type="submit"
-            className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-tickleMePink bg-[linear-gradient(110deg,#8A2846,45%,#B9375E,55%,#522E38)] bg-[length:200%_100%] px-6 font-medium text-paleRose transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+            className="inline-flex h-12 px-8 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#007991,45%,#BCD8C1,55%,#007991)] bg-[length:200%_100%] font-medium text-lightyellow transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
           >
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {submitState ? "Submitting..." : "Submit"}
           </button>
           <button
             type="button"
