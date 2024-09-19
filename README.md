@@ -136,7 +136,7 @@ Open Core distributed under the GNU-GPL License. See [Open Core License](LICENSE
 
 ## Code of Conduct
 
-Please review our [Code Of Conduct](CODE_OF_CONDUCT.md) to maintain a rightful atmosphere in the club
+Please review our [Code Of Conduct](CODE_OF_CONDUCT.md) to maintain the expected decorum in this esteemed GitHub repository. 
 
 ## Contributing
 
