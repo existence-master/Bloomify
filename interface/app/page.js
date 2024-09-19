@@ -236,7 +236,7 @@ const Home = () => {
             </span>
           </h1>
           <p className="text-2xl text-center dark:text-paleRose text-lividBrown font-inter px-2">
-            An Open Source Chatbot Designed to{" "}
+            A LLM based chatbot designed to{" "}
             <span className="font-bold">revolutionize</span> the assessment
             process.
           </p>
