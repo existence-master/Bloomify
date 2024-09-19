@@ -2,7 +2,7 @@
 	"git": {
 		"deploymentEnabled": {
 			"master": false,
-			"alpha": true,
+			"alpha": false,
 			"mvp": false
 		}
 	}
