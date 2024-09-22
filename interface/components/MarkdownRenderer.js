@@ -3,6 +3,9 @@
 
 import ReactMarkdown from 'react-markdown'; // Importing the ReactMarkdown component
 import remarkGfm from 'remark-gfm'; // Import the remark-gfm plugin
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css"; // Import KaTeX CSS for styling
 
 
 const MarkdownRenderer = ({ message }) => { // Component receives a message prop containing Markdown content
@@ -10,7 +13,8 @@ const MarkdownRenderer = ({ message }) => { // Component receives a message prop
 		<div>
 			{/* Render the Markdown content within a div */}
 			<ReactMarkdown
-				remarkPlugins={[remarkGfm]}
+				remarkPlugins={[remarkGfm, remarkMath]}
+				rehypePlugins={[rehypeKatex]}
 				components={{
 					table: ({ node, ...props }) => (
 						<table
