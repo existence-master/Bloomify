@@ -140,4 +140,4 @@ Please review our [Code Of Conduct](CODE_OF_CONDUCT.md) to maintain the expected
 
 ## Contributing
 
-Contributions are welcome! Check our [Contributing Guide](CONTRIBUTING.md) to start contributing to Bloomify
+Contributions are welcome! Check our [Contributing Guide](CONTRIBUTING.md) to start contributing to Bloomify.
