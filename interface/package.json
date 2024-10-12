@@ -20,6 +20,7 @@
     "googleapis": "^140.0.1",
     "html-to-docx": "^1.8.0",
     "iron-session": "^8.0.1",
+    "katex": "^0.16.11",
     "marked": "^12.0.2",
     "mongoose": "^8.3.3",
     "next": "14.2.3",
@@ -31,7 +32,9 @@
     "react-dom": "^18",
     "react-icons": "^5.2.0",
     "react-markdown": "^9.0.1",
+    "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
