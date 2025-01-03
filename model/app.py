@@ -171,21 +171,21 @@ class GenerationInput(BaseModel):
 async def helloWorld():
     return "hello world"
 
-@app.post("/classify", response_class=PlainTextResponse)
+@app.post("/classify/", response_class=PlainTextResponse)
 async def classify_question(input: ClassificationInput):
     prompt = classification_prompt.format(input.question)
     response = classify_convo.send_message(prompt)
     level = response.text
     return level
 
-@app.post("/suggest", response_class=PlainTextResponse)
+@app.post("/suggest/", response_class=PlainTextResponse)
 async def suggest_question(input: SuggestionInput):
     prompt = suggestion_prompt.format(input.question, "Apply")
     response = suggest_convo.send_message(prompt)
     transformed_question = response.text
     return transformed_question
 
-@app.post("/generate", response_class=PlainTextResponse)
+@app.post("/generate/", response_class=PlainTextResponse)
 async def generate_questions(input: GenerationInput):
     prompt = generation_prompt.format(
         university=input.university,

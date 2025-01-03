@@ -69,11 +69,11 @@ const DialogBox = ({
 
   let url =
     mode === "classification"
-      ? `${baseUrl}/classify`
+      ? `${baseUrl}/classify/`
       : mode === "suggestion"
-      ? `${baseUrl}/suggest`
+      ? `${baseUrl}/suggest/`
       : mode === "generation"
-      ? `${baseUrl}/generate`
+      ? `${baseUrl}/generate/`
           : "";
   
   let feature = 
