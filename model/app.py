@@ -180,7 +180,7 @@ async def classify_question(input: ClassificationInput):
 
 @app.post("/suggest/", response_class=PlainTextResponse)
 async def suggest_question(input: SuggestionInput):
-    prompt = suggestion_prompt.format(input.question, "Apply")
+    prompt = suggestion_prompt.format(input.question, input.desired_level)
     response = suggest_convo.send_message(prompt)
     transformed_question = response.text
     return transformed_question
