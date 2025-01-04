@@ -25,7 +25,7 @@ const Chat = () => {
   const { id: chatId } = useParams();
   const [userDetails, setUserDetails] = useState({
     username: "",
-    university: "",
+    university: "university",
   });
 
   const [filteredChats, setFilteredChats] = useState([]);
@@ -451,23 +451,49 @@ const Chat = () => {
             </div>
             <div className="bg-[#FFFAE3] flex flex-col flex-grow mt-4 p-4 overflow-y-auto">
               {/* Iterate over the chatHistory object and render chat bubbles */}
-              {chatDetails.chatHistory?.map((message, index) => (
-                <div key={index} className="w-full">
-                  {/* Render the input message */}
-                  <ChatBubble
-                    role="User"
-                    message={message.input}
-                    mode={message.mode}
-                  />
-                  {/* Render the response message */}
-                  <ChatBubble
-                    role="Bloomify"
-                    message={message.response}
-                    mode={message.mode}
-                  />
-                </div>
-              ))}
+              {chatDetails.chatHistory?.map((message, index) => {
+                //  Alter the message.input to desired format
+                let alteredInput = message.input;
+                
+                // as pre is used we have to use markdown instead of html
+                alteredInput = alteredInput.replace(/(University)/, `***$1***`);
+                
+                alteredInput = alteredInput.replace(/(Degree)(.*?)(Degree)/,`***$1***$2${chatDetails.chatFilters.degree}`);
+                alteredInput = alteredInput.replace(/(Branch)(.*?)(Branch)/, `***$1***$2${chatDetails.chatFilters.branch}`);
+                alteredInput = alteredInput.replace(/(Year)(.*?)(Year)/, `***$1***$2${chatDetails.chatFilters.year}`);
+                alteredInput = alteredInput.replace(/(Subject)(.*?)(Subject)/, `***$1***$2${chatDetails.chatFilters.subject}`);
+                
+                alteredInput = alteredInput.replace(/(Syllabus)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Content)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marking Scheme)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marks Per Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Main Questions Per Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Sub Questions Per Main Question)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marks Per Main Question)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Average Blooms Score)/, `***$1***`);
+
+                return (
+                  <div key={index} className="w-full">
+                    {/* Render the altered input message */}
+                    <ChatBubble
+                      role="User"
+                      message={alteredInput}
+                      mode={message.mode}
+                    />
+                    {/* {console.log(alteredInput)}  Debugging the altered message */}
+
+                    {/* Render the response message */}
+                    <ChatBubble
+                      role="Bloomify"
+                      message={message.response}
+                      mode={message.mode}
+                    />
+                  </div>
+                );
+              })}
             </div>
+
           </div>
           {error && (
             <div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">
