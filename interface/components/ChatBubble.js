@@ -115,10 +115,10 @@ const ChatBubble = ({ role, message, mode }) => {
 				</div>{" "}
 				{/* End of icon and mode label section */}
 				{/* Display the message content using MarkdownRenderer */}
-				<p className="text-xl font-normal py-2.5 text-gray-900">
+				<pre className="whitespace-pre-wrap text-x font-normal py-2.5 text-gray-900">
 					<MarkdownRenderer message={message} />{" "}
 					{/* Render the message content */}
-				</p>{" "}
+				</pre>{" "}
 				{/* End of message content */}
 			</div>{" "}
 			{/* End of chat bubble */}
