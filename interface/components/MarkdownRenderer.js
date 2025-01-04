@@ -7,11 +7,19 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css"; // Import KaTeX CSS for styling
 
+const MarkdownRenderer = ({ message }) => {
+	// Define custom padding for each header by text or identifier
+	const headerPaddingMap = {
+		"U": "12px",
+		"Q": "10px",
+		"M": "10px",
+		"S": "108px",
+		"T": "10px",
+		"Default": "8px"
+	};
 
-const MarkdownRenderer = ({ message }) => { // Component receives a message prop containing Markdown content
 	return (
 		<div>
-			{/* Render the Markdown content within a div */}
 			<ReactMarkdown
 				remarkPlugins={[remarkGfm, remarkMath]}
 				rehypePlugins={[rehypeKatex]}
@@ -25,16 +33,25 @@ const MarkdownRenderer = ({ message }) => { // Component receives a message prop
 							{...props}
 						/>
 					),
-					th: ({ node, ...props }) => (
-						<th
-							style={{
-								border: "1px solid black",
-								padding: "8px",
-								textAlign: "left",
-							}}
-							{...props}
-						/>
-					),
+					th: ({ node, children, ...props }) => {
+						// Determine the padding based on header text
+						const headerText = children[0];
+						// console.log(headerText);
+						const padding = headerPaddingMap[headerText] || headerPaddingMap["Default"];
+						
+						return (
+							<th
+								style={{
+									border: "1px solid black",
+									padding: `${headerPaddingMap["Default"]} ${padding}`,
+									textAlign: "left",
+								}}
+								{...props}
+							>
+								{children}
+							</th>
+						);
+					},
 					td: ({ node, ...props }) => (
 						<td
 							style={{
@@ -52,5 +69,6 @@ const MarkdownRenderer = ({ message }) => { // Component receives a message prop
 		</div>
 	);
 };
+
 
 export default MarkdownRenderer; // Export the MarkdownRenderer component
