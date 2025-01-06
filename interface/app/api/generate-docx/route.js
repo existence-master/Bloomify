@@ -1,61 +1,62 @@
 import { marked } from "marked";
-import HTMLtoDOCX from "html-to-docx";
-import { NextResponse } from "next/server"; // Import Next.js server response
-import katex from "katex"; // Import KaTeX for LaTeX rendering
-import "katex/dist/katex.min.css"; // Import KaTeX CSS
+import { NextResponse } from "next/server"; 
+import katex from "katex"; 
+import "katex/dist/katex.min.css"; 
 
-// Configure marked to use KaTeX for LaTeX rendering
+// Custom renderer for marked
+const renderer = new marked.Renderer();
+
+renderer.paragraph = (text) => {
+  // Convert LaTeX expressions in paragraphs
+  const latexConverted = text
+    .replace(/\$\$(.*?)\$\$/g, (_, expr) => {
+      try {
+        // Render block equations in display mode
+        return `\n$$\n${expr}\n$$\n`; // Keep it in Markdown format
+      } catch (e) {
+        return expr; 
+      }
+    })
+    .replace(/\$(.*?)\$/g, (_, expr) => {
+      try {
+        // Render inline equations in inline mode
+        return `$${expr}$`; // Keep it in Markdown format
+      } catch (e) {
+        return expr;
+      }
+    });
+
+  return `${latexConverted}\n`; // Return as plain text
+};
+
+// Set marked options
 marked.setOptions({
-  // Handle LaTeX expressions (both inline and block)
-  renderer: new marked.Renderer(),
+  renderer: renderer,
 });
 
 export const POST = async (request) => {
-  const { markdown } = await request.json();
+  const { markdown } = await request.json(); // Get markdown from request body
 
   if (!markdown) {
     return new NextResponse("Bad Request: No Markdown content provided", {
       status: 400,
-    }); // 400 Bad Request
+    });
   }
 
-  // Convert LaTeX expressions in markdown to HTML using KaTeX
-  const markdownWithLatex = markdown.replace(/\$\$(.*?)\$\$/g, (_, expr) => {
-    try {
-      return katex.renderToString(expr, { throwOnError: false, displayMode: true });
-    } catch (e) {
-      return expr; // In case of error, return the raw expression
-    }
-  }).replace(/\$(.*?)\$/g, (_, expr) => {
-    try {
-      return katex.renderToString(expr, { throwOnError: false });
-    } catch (e) {
-      return expr;
-    }
-  });
+  // Convert markdown to HTML (if needed, but not necessary for .md file)
+  const messageHTML = marked(markdown);
 
-  // Convert markdown to HTML
-  const messageHTML = marked.parse(markdownWithLatex);
+  // Prepare the Markdown content for download
+  const markdownContent = markdown; // Use the original markdown content
 
   try {
-    const fileBuffer = await HTMLtoDOCX(messageHTML, null, {
-      table: { row: { cantSplit: true } },
-      footer: true,
-      pageNumber: true,
-    });
-
-    const response = new NextResponse(fileBuffer, { status: 200 });
-    response.headers.set(
-      "Content-Type",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    );
-    response.headers.set(
-      "Content-Disposition",
-      "attachment; filename=Generated Paper.docx"
-    );
+    const response = new NextResponse(markdownContent, { status: 200 });
+    response.headers.set("Content-Type", "text/markdown");
+    response.headers.set("Content-Disposition", "attachment; filename=Natural_Equation.md");
 
     return response;
   } catch (error) {
-    return new NextResponse("Internal Server Error", { status: 500 }); // 500 Internal Server Error
+    console.error("Error generating Markdown file:", error); // Log the error for debugging
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
