@@ -36,7 +36,7 @@ const DialogBox = ({
       desired_level: "",
     },
     generation: {
-      university: university,
+      university: university || "no-university",
       degree: chatFilters.degree,
       branch: chatFilters.branch,
       year: chatFilters.year,
