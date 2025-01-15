@@ -11,6 +11,9 @@ import Image from "next/image";
 import ErrorDisplay from "@components/ErrorDisplay";
 import { IconInfoCircle } from "@tabler/icons-react";
 import FeedbackForm from "@components/FeedbackForm";
+import ChatButton from "@components/showOptions";
+
+import axios from "axios";
 
 const Chat = () => {
   const router = useRouter();
@@ -186,6 +189,29 @@ const Chat = () => {
     router.push(`/chat/${chatId}`);
   };
 
+  const renameChat = async (chatId, newTitle) => {
+    try {
+      const response = await axios.put('/api/rename-chat', { chatId, newTitle });
+      if (response.status === 200) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.error('Error renaming chat:', error);
+    }
+  };
+
+
+  const deleteChat = async (chatId) => {
+    try {
+      const response = await axios.delete(`/api/delete-chat`, {
+        params: { id: chatId },
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Error deleting chat:", error.response?.data || error.message);
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (featureFeedback[feature] === false) {
@@ -356,12 +382,13 @@ const Chat = () => {
               <div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
                 {filteredChats.map((chat, index) => (
                   <div key={index} id="filtered-chat">
-                    <button
-                      className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2"
-                      onClick={() => handleChatClick(chat._id)}
-                    >
-                      {chat.title}
-                    </button>
+                    <ChatButton
+                      chat={chat}
+                      handleChatClick={handleChatClick}
+                      renameChat={renameChat}
+                      deleteChat={deleteChat}
+                    />
+
                   </div>
                 ))}
               </div>
@@ -454,15 +481,15 @@ const Chat = () => {
               {chatDetails.chatHistory?.map((message, index) => {
                 //  Alter the message.input to desired format
                 let alteredInput = message.input;
-                
+
                 // as pre is used we have to use markdown instead of html
                 alteredInput = alteredInput.replace(/(University)/, `***$1***`);
-                
-                alteredInput = alteredInput.replace(/(Degree)(.*?)(Degree)/,`***$1***$2${chatDetails.chatFilters.degree}`);
+
+                alteredInput = alteredInput.replace(/(Degree)(.*?)(Degree)/, `***$1***$2${chatDetails.chatFilters.degree}`);
                 alteredInput = alteredInput.replace(/(Branch)(.*?)(Branch)/, `***$1***$2${chatDetails.chatFilters.branch}`);
                 alteredInput = alteredInput.replace(/(Year)(.*?)(Year)/, `***$1***$2${chatDetails.chatFilters.year}`);
                 alteredInput = alteredInput.replace(/(Subject)(.*?)(Subject)/, `***$1***$2${chatDetails.chatFilters.subject}`);
-                
+
                 alteredInput = alteredInput.replace(/(Syllabus)/, `***$1***`);
                 alteredInput = alteredInput.replace(/(Unit)/, `***$1***`);
                 alteredInput = alteredInput.replace(/(Content)/, `***$1***`);

@@ -9,6 +9,7 @@ import Image from "next/image";
 import ErrorDisplay from "@components/ErrorDisplay";
 import { IconInfoCircle } from "@tabler/icons-react";
 import FeedbackForm from "@components/FeedbackForm";
+import ChatButton from "@components/showOptions";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -101,6 +102,28 @@ const Dashboard = () => {
 
   const handleChatClick = (chatId) => {
     router.push(`/chat/${chatId}`);
+  };
+
+  const renameChat = async (chatId, newTitle) => {
+    try {
+      const response = await axios.put('/api/rename-chat', { chatId, newTitle });
+      if (response.status === 200) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.error('Error renaming chat:', error);
+    }
+  };
+
+  const deleteChat = async (chatId) => {
+    try {
+      const response = await axios.delete(`/api/delete-chat`, {
+        params: { id: chatId },
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Error deleting chat:", error.response?.data || error.message);
+    }
   };
 
   const handleCreateNewChat = async (e) => {
@@ -265,12 +288,12 @@ const Dashboard = () => {
               <div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
                 {filteredChats.map((chat, index) => (
                   <div key={index} id="filtered-chat">
-                    <button
-                      className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2"
-                      onClick={() => handleChatClick(chat._id)}
-                    >
-                      {chat.title}
-                    </button>
+                     <ChatButton 
+                     chat={chat}
+                     handleChatClick={handleChatClick}
+                    //  renameChat={renameChat}
+                     deleteChat={deleteChat}
+                     />
                   </div>
                 ))}
               </div>
