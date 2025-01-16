@@ -291,7 +291,7 @@ const Dashboard = () => {
                      <ChatButton 
                      chat={chat}
                      handleChatClick={handleChatClick}
-                    //  renameChat={renameChat}
+                     renameChat={renameChat}
                      deleteChat={deleteChat}
                      />
                   </div>

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 const ChatButton = ({ chat, handleChatClick, renameChat, deleteChat }) => {
   const [showOptions, setShowOptions] = useState(false); // For options dropdown
   const [isEditing, setIsEditing] = useState(false); // For rename mode
   const [newTitle, setNewTitle] = useState(chat.title); // Manage new chat title
+  const optionsRef = useRef(null); // Reference for options menu
+  const buttonRef = useRef(null); // Reference for the button
 
   const toggleOptions = (e) => {
     e.stopPropagation(); // Prevent parent button click
@@ -17,10 +20,25 @@ const ChatButton = ({ chat, handleChatClick, renameChat, deleteChat }) => {
     setShowOptions(false); // Close menu
   };
 
+  // Close options menu if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (optionsRef.current && !optionsRef.current.contains(e.target) && buttonRef.current && !buttonRef.current.contains(e.target)) {
+        setShowOptions(false); // Close options menu
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="relative w-full">
       {/* Main Chat Button */}
       <button
+        ref={buttonRef}
         className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2 flex justify-between items-center"
         onClick={() => handleChatClick(chat._id)}
       >
@@ -46,25 +64,42 @@ const ChatButton = ({ chat, handleChatClick, renameChat, deleteChat }) => {
 
       {/* Dropdown Menu */}
       {showOptions && !isEditing && (
-        <div className="absolute right-2 mt-2 bg-white text-black shadow-md p-2 rounded z-10">
+        <div
+          ref={optionsRef}
+          className="absolute right-0 top-full bg-gray-200 text-black shadow-md p-2 rounded-2xl z-10"
+        >
           <button
-            className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+            className="flex bg-[#00b8dd] text-black rounded-2xl border-2 border-black block w-full text-left px-4 py-2 "
             onClick={(e) => {
               e.stopPropagation(); // Prevent parent button click
               setIsEditing(true); // Enter rename mode
               setShowOptions(false); // Close dropdown
             }}
           >
+            <Image
+              src="/rename.svg"
+              className="cursor-pointer mr-3"
+              width={25}
+              height={25}
+              alt="Rename"
+            />
             Rename
           </button>
           <button
-            className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+            className="flex bg-red-500 text-black rounded-2xl border-2 border-black block w-full text-left px-4 py-2 mt-2"
             onClick={(e) => {
               e.stopPropagation(); // Prevent parent button click
               deleteChat(chat._id); // Call delete function
               setShowOptions(false); // Close dropdown
             }}
           >
+            <Image
+              src="/delete.svg"
+              className="cursor-pointer mr-3"
+              width={25}
+              height={25}
+              alt="Delete"
+            />
             Delete
           </button>
         </div>
@@ -72,7 +107,7 @@ const ChatButton = ({ chat, handleChatClick, renameChat, deleteChat }) => {
 
       {/* Save button for renaming */}
       {isEditing && (
-        <div className="absolute right-2 mt-2 bg-white text-black shadow-md p-2 rounded z-10 flex items-center gap-2">
+        <div className="absolute right-0 mt-2 bg-white text-black shadow-md p-2 rounded z-10 flex items-center gap-2">
           <button
             className="bg-green-500 text-white px-3 py-1 rounded"
             onClick={handleRename}

@@ -433,7 +433,7 @@ const Chat = () => {
           <div id="right" className="flex flex-col h-dvh w-full">
             <div
               id="chat-title"
-              className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300"
+              className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300 pb-3 pt-3"
             >
               {chatDetails.chatTitle}
             </div>
