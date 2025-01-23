@@ -64,7 +64,7 @@ const DialogBox = ({
     baseUrl = "http://localhost:5000";
   } else if (process.env.NODE_ENV === "production") {
     // Production environment: Use Render deployment URLs
-    baseUrl = "https://bloomify-gd0v.onrender.com";
+    baseUrl = process.env.NEXT_PUBLIC_NGROK_URL;
   }
 
   let url =
@@ -75,7 +75,6 @@ const DialogBox = ({
         : mode === "generation"
           ? `${baseUrl}/generate/`
           : "";
-
   let feature =
     mode === "classification"
       ? "Classify"
