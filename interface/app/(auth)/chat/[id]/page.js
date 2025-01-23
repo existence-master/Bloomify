@@ -304,10 +304,10 @@ const Chat = () => {
   if (status === "authenticated") {
     return (
       <>
-        <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex">
+        <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex justify-end">
           <aside
             id="left-sidebar"
-            className="border-r-2 border-black flex w-1/5 h-dvh transition-transform -translate-x-full sm:translate-x-0"
+            className="border-r-2 border-black flex w-1/5 transition-transform -translate-x-full fixed left-0 sm:translate-x-0 h-full"
             aria-label="Sidebar"
           >
             <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
@@ -441,7 +441,7 @@ const Chat = () => {
               </div>
             </div>
           </aside>
-          <div id="right" className="flex flex-col h-dvh w-full">
+          <div id="right" className="flex flex-col w-4/5 h-dvh">
             <div
               id="chat-title"
               className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300 pb-3 pt-3"
@@ -487,7 +487,7 @@ const Chat = () => {
                 )}
               </div>
             </div>
-            <div className="bg-[#FFFAE3] flex flex-col flex-grow mt-4 p-4 overflow-y-auto">
+            <div className="bg-[#FFFAE3] flex flex-col mt-4 p-4">
               {/* Iterate over the chatHistory object and render chat bubbles */}
               {chatDetails.chatHistory?.map((message, index) => {
                 //  Alter the message.input to desired format
