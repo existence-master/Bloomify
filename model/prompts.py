@@ -22,7 +22,7 @@ You are an AI agent expert on the subject of Bloom's taxonomy. I will send you a
 
 Question: {}
 
-Current Bloom's Taxonomy Level: {}
+
 Desired Bloom's Taxonomy Level: {}
 
 ### Response: 

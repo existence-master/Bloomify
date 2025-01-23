@@ -11,6 +11,10 @@ import Image from "next/image";
 import ErrorDisplay from "@components/ErrorDisplay";
 import { IconInfoCircle } from "@tabler/icons-react";
 import FeedbackForm from "@components/FeedbackForm";
+import ChatButton from "@components/showOptions";
+import { Tooltip } from 'react-tooltip'
+
+import axios from "axios";
 
 const Chat = () => {
   const router = useRouter();
@@ -25,7 +29,7 @@ const Chat = () => {
   const { id: chatId } = useParams();
   const [userDetails, setUserDetails] = useState({
     username: "",
-    university: "",
+    university: "university",
   });
 
   const [filteredChats, setFilteredChats] = useState([]);
@@ -186,6 +190,29 @@ const Chat = () => {
     router.push(`/chat/${chatId}`);
   };
 
+  const renameChat = async (chatId, newTitle) => {
+    try {
+      const response = await axios.put('/api/rename-chat', { chatId, newTitle });
+      if (response.status === 200) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.error('Error renaming chat:', error);
+    }
+  };
+
+
+  const deleteChat = async (chatId) => {
+    try {
+      const response = await axios.delete(`/api/delete-chat`, {
+        params: { id: chatId },
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Error deleting chat:", error.response?.data || error.message);
+    }
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (featureFeedback[feature] === false) {
@@ -277,10 +304,10 @@ const Chat = () => {
   if (status === "authenticated") {
     return (
       <>
-        <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex">
+        <div className="xs:max-md:hidden bg-[#FFFAE3] w-screen h-screen flex justify-end">
           <aside
             id="left-sidebar"
-            className="border-r-2 border-black flex w-1/5 h-dvh transition-transform -translate-x-full sm:translate-x-0"
+            className="border-r-2 border-black flex w-1/5 transition-transform -translate-x-full fixed left-0 sm:translate-x-0 h-full"
             aria-label="Sidebar"
           >
             <div className="w-full h-full px-3 py-4 flex flex-col justify-between overflow-y-auto bg-[#FFFAE3]">
@@ -356,21 +383,26 @@ const Chat = () => {
               <div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
                 {filteredChats.map((chat, index) => (
                   <div key={index} id="filtered-chat">
-                    <button
-                      className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2"
-                      onClick={() => handleChatClick(chat._id)}
-                    >
-                      {chat.title}
-                    </button>
+                    <ChatButton
+                      chat={chat}
+                      handleChatClick={handleChatClick}
+                      renameChat={renameChat}
+                      deleteChat={deleteChat}
+                    />
+
                   </div>
                 ))}
               </div>
               <div id="left-bottom" className="gap-2 flex">
                 <div className="group">
-                  <SignoutButton />
-                  <div className="group-hover:block hidden absolute left-2 bottom-14 rounded-md p-2 w-28 border-2 border-cerulean bg-gray-300">
-                    Logout
-                  </div>
+                  <a
+                    data-tooltip-id="logout-tooltip"
+                    data-tooltip-content="Logout"
+                    data-tooltip-place="top"
+                  >
+                    <SignoutButton />
+                  </a>
+                  <Tooltip id="logout-tooltip" />
                 </div>
                 <Link href="/settings" className="flex">
                   <div className="text-xl font-bold">
@@ -378,35 +410,41 @@ const Chat = () => {
                   </div>
                 </Link>
                 <div className="absolute right-4 bottom-4 group">
-                  <Link href="/dashboard">
-                    <div className="rounded-full p-1 bg-[#007991]">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="white"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="3"
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
-                      </svg>
-                    </div>
-                    <div className="group-hover:block hidden absolute right-0 bottom-10 rounded-md p-2 w-28 border-2 border-cerulean bg-gray-300">
-                      Create Chat
-                    </div>
-                  </Link>
+                  <div className="group">
+                    <a
+                      data-tooltip-id="create-tooltip"
+                      data-tooltip-content="Create Chat"
+                      data-tooltip-place="top"
+                    >
+                      <Link href="/dashboard">
+                        <div className="rounded-full p-1 bg-[#007991]">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="white"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="3"
+                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                            />
+                          </svg>
+                        </div>
+                      </Link>
+                    </a>
+                    <Tooltip id="create-tooltip" />
+                  </div>
                 </div>
               </div>
             </div>
           </aside>
-          <div id="right" className="flex flex-col h-dvh w-full">
+          <div id="right" className="flex flex-col w-4/5 h-dvh">
             <div
               id="chat-title"
-              className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300"
+              className="w-full rounded-b-lg flex items-center justify-center text-white text-2xl font-Poppins font-semibold bg-[#007991] border-b border-gray-300 pb-3 pt-3"
             >
               {chatDetails.chatTitle}
             </div>
@@ -449,25 +487,51 @@ const Chat = () => {
                 )}
               </div>
             </div>
-            <div className="bg-[#FFFAE3] flex flex-col flex-grow mt-4 p-4 overflow-y-auto">
+            <div className="bg-[#FFFAE3] flex flex-col mt-4 p-4">
               {/* Iterate over the chatHistory object and render chat bubbles */}
-              {chatDetails.chatHistory?.map((message, index) => (
-                <div key={index} className="w-full">
-                  {/* Render the input message */}
-                  <ChatBubble
-                    role="User"
-                    message={message.input}
-                    mode={message.mode}
-                  />
-                  {/* Render the response message */}
-                  <ChatBubble
-                    role="Bloomify"
-                    message={message.response}
-                    mode={message.mode}
-                  />
-                </div>
-              ))}
+              {chatDetails.chatHistory?.map((message, index) => {
+                //  Alter the message.input to desired format
+                let alteredInput = message.input;
+
+                // as pre is used we have to use markdown instead of html
+                alteredInput = alteredInput.replace(/(University)/, `***$1***`);
+
+                alteredInput = alteredInput.replace(/(Degree)(.*?)(Degree)/, `***$1***$2${chatDetails.chatFilters.degree}`);
+                alteredInput = alteredInput.replace(/(Branch)(.*?)(Branch)/, `***$1***$2${chatDetails.chatFilters.branch}`);
+                alteredInput = alteredInput.replace(/(Year)(.*?)(Year)/, `***$1***$2${chatDetails.chatFilters.year}`);
+                alteredInput = alteredInput.replace(/(Subject)(.*?)(Subject)/, `***$1***$2${chatDetails.chatFilters.subject}`);
+
+                alteredInput = alteredInput.replace(/(Syllabus)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Content)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marking Scheme)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marks Per Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Main Questions Per Unit)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Sub Questions Per Main Question)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Marks Per Main Question)/, `***$1***`);
+                alteredInput = alteredInput.replace(/(Average Blooms Score)/, `***$1***`);
+
+                return (
+                  <div key={index} className="w-full">
+                    {/* Render the altered input message */}
+                    <ChatBubble
+                      role="User"
+                      message={alteredInput}
+                      mode={message.mode}
+                    />
+                    {/* {console.log(alteredInput)}  Debugging the altered message */}
+
+                    {/* Render the response message */}
+                    <ChatBubble
+                      role="Bloomify"
+                      message={message.response}
+                      mode={message.mode}
+                    />
+                  </div>
+                );
+              })}
             </div>
+
           </div>
           {error && (
             <div className="fixed inset-0 flex justify-center items-center bg-transparent z-50">

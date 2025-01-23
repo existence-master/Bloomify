@@ -9,6 +9,8 @@ import Image from "next/image";
 import ErrorDisplay from "@components/ErrorDisplay";
 import { IconInfoCircle } from "@tabler/icons-react";
 import FeedbackForm from "@components/FeedbackForm";
+import ChatButton from "@components/showOptions";
+import { Tooltip } from 'react-tooltip'
 
 const Dashboard = () => {
   const router = useRouter();
@@ -101,6 +103,28 @@ const Dashboard = () => {
 
   const handleChatClick = (chatId) => {
     router.push(`/chat/${chatId}`);
+  };
+
+  const renameChat = async (chatId, newTitle) => {
+    try {
+      const response = await axios.put('/api/rename-chat', { chatId, newTitle });
+      if (response.status === 200) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.error('Error renaming chat:', error);
+    }
+  };
+
+  const deleteChat = async (chatId) => {
+    try {
+      const response = await axios.delete(`/api/delete-chat`, {
+        params: { id: chatId },
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Error deleting chat:", error.response?.data || error.message);
+    }
   };
 
   const handleCreateNewChat = async (e) => {
@@ -265,21 +289,25 @@ const Dashboard = () => {
               <div id="filtered-chats" className="h-full mt-10 overflow-y-auto">
                 {filteredChats.map((chat, index) => (
                   <div key={index} id="filtered-chat">
-                    <button
-                      className="bg-[#007991] text-white rounded-2xl border-2 border-black p-2 w-full mt-2"
-                      onClick={() => handleChatClick(chat._id)}
-                    >
-                      {chat.title}
-                    </button>
+                    <ChatButton
+                      chat={chat}
+                      handleChatClick={handleChatClick}
+                      renameChat={renameChat}
+                      deleteChat={deleteChat}
+                    />
                   </div>
                 ))}
               </div>
               <div id="left-bottom" className="gap-2 flex">
                 <div className="group">
-                  <SignoutButton />
-                  <div className="group-hover:block hidden absolute left-2 bottom-14 rounded-md p-2 w-28 border-2 border-cerulean bg-gray-300">
-                    Logout
-                  </div>
+                  <a
+                    data-tooltip-id="logout-tooltip"
+                    data-tooltip-content="Logout"
+                    data-tooltip-place="top"
+                  >
+                    <SignoutButton />
+                  </a>
+                  <Tooltip id="logout-tooltip" />
                 </div>
                 <Link href="/settings" className="flex">
                   <div className="text-xl font-bold">
@@ -287,27 +315,35 @@ const Dashboard = () => {
                   </div>
                 </Link>
                 <div className="absolute right-4 bottom-4 group">
-                  <Link href="/dashboard">
-                    <div className="rounded-full p-1 bg-[#007991]">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="white"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="3"
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
-                      </svg>
-                    </div>
-                    <div className="group-hover:block hidden absolute right-0 bottom-10 rounded-md p-2 w-28 border-2 border-cerulean bg-gray-300">
-                      Create Chat
-                    </div>
-                  </Link>
+
+                  <div className="group">
+                    <a
+                      data-tooltip-id="create-tooltip"
+                      data-tooltip-content="Create Chat"
+                      data-tooltip-place="top"
+                    >
+                      <Link href="/dashboard">
+                        <div className="rounded-full p-1 bg-[#007991]">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="white"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="3"
+                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                            />
+                          </svg>
+                        </div>
+                      </Link>
+                    </a>
+                    <Tooltip id="create-tooltip" />
+                  </div>
+
                 </div>
               </div>
             </div>
