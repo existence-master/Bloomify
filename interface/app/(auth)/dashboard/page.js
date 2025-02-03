@@ -12,6 +12,8 @@ import FeedbackForm from "@components/FeedbackForm";
 import ChatButton from "@components/showOptions";
 import { Tooltip } from 'react-tooltip'
 
+import axios from "axios";
+
 const Dashboard = () => {
   const router = useRouter();
   const { status } = useSession();
