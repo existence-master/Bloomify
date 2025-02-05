@@ -273,8 +273,8 @@ const Home = () => {
             <div className="md:hidden">
               <iframe
                 width="300"
-                height="300"
-                src="https://www.youtube.com/embed/urGVaaipzfA?si=MNSln_kLM240hXWb"
+                height="169"
+                src="https://www.youtube.com/embed/INfTnqzUdDU?si=JPti1tS2BoAsegGi"
                 title="Bloomify Demo Video"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
